@@ -1,0 +1,1194 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Belajar Interaktif - BRONDI STUDIOS</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Aplikasi -->
+    <header class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
+                <div class="bg-indigo-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-xl shadow-md shadow-indigo-100">
+                    B
+                </div>
+                <div>
+                    <h1 class="text-base md:text-lg font-extrabold text-slate-900 leading-none">BRONDI STUDIOS</h1>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 font-medium">Platform Edukasi &amp; Tryout Mandiri</p>
+                </div>
+            </div>
+            
+            <div id="header-badge" class="hidden sm:flex items-center space-x-2 bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-indigo-100">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                <span id="current-subject-badge">Bahasa Indonesia</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8 flex flex-col justify-center">
+        
+        <!-- SECTION 1: MENU UTAMA (SUBJECT SELECTOR) -->
+        <section id="menu-section" class="space-y-8 py-4">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Dashboard Pembelajaran</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Pilih Mata Pelajaran Kamu</h2>
+                <p class="text-slate-500 text-sm md:text-base">Selamat datang! Silakan pilih salah satu mata pelajaran di bawah ini untuk memulai latihan soal secara mandiri.</p>
+            </div>
+
+            <!-- Grid Kartu Pelajaran -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                
+                <!-- Card 1: Bahasa Indonesia (AKTIF) -->
+                <div onclick="selectSubject('Bahasa Indonesia')" 
+                     class="group relative bg-white rounded-2xl border-2 border-indigo-500/20 hover:border-indigo-500 p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 transform hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                            🇮🇩
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">Bahasa Indonesia</h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">Berisi soal-soal LHO, Anekdot, Hikayat, Negosiasi, Biografi, dan Puisi sesuai kisi-kisi.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <span class="text-xs font-bold text-indigo-600">50 Soal Tersedia</span>
+                        <span class="text-xs bg-indigo-50 text-indigo-700 font-semibold px-2.5 py-1 rounded-lg">Mulai Latihan →</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Matematika (SEGERA HADIR) -->
+                <div class="relative bg-white rounded-2xl border border-slate-100 p-6 shadow-sm opacity-65 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-2xl text-slate-400">
+                            📐
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-400">Matematika Wajib</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Logika Matematika, Eksponen, Logaritma, Persamaan Kuadrat, dan Trigonometri.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <span class="text-xs font-bold text-slate-400">0 Soal</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">Segera Hadir</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Bahasa Inggris (SEGERA HADIR) -->
+                <div class="relative bg-white rounded-2xl border border-slate-100 p-6 shadow-sm opacity-65 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-2xl text-slate-400">
+                            🇬🇧
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-400">Bahasa Inggris</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Narrative Text, Analytical Exposition, passive voice, dan conditional sentences.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <span class="text-xs font-bold text-slate-400">0 Soal</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">Segera Hadir</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: SETUP JUMLAH SOAL -->
+        <section id="setup-section" class="hidden bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm space-y-6 max-w-2xl mx-auto w-full">
+            <button onclick="goHome()" class="text-xs text-indigo-600 hover:text-indigo-800 font-bold flex items-center space-x-1">
+                <span>← Kembali ke Menu</span>
+            </button>
+            
+            <div class="border-b border-slate-100 pb-4">
+                <h2 id="setup-title" class="text-2xl font-bold text-slate-900">Konfigurasi Soal</h2>
+                <p class="text-slate-500 text-sm mt-1">Sesuaikan kuis sebelum menekan tombol mulai ujian.</p>
+            </div>
+
+            <!-- Kisi-kisi Detail -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Materi Uji Bahasa Indonesia:</h3>
+                <div class="grid grid-cols-2 gap-2 text-[11px] md:text-xs text-slate-600">
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>LHO (Definisi)</span>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>Anekdot (Nilai Hidup)</span>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>Hikayat (Arkais &amp; Ciri)</span>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>Negosiasi (Struktur &amp; Surat)</span>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>Biografi (Kaidah &amp; Langkah)</span>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center space-x-1.5">
+                        <span class="text-indigo-600">✔</span> <span>Puisi (Majas &amp; Rima)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Input Input -->
+            <div class="bg-indigo-50/50 border border-indigo-100/70 rounded-xl p-5 space-y-3">
+                <label for="question-count" class="block font-bold text-slate-800 text-sm md:text-base">
+                    Berapa jumlah soal yang ingin kamu kerjakan? (Maks 50)
+                </label>
+                <div class="flex items-center space-x-3">
+                    <input type="number" id="question-count" min="1" max="50" value="15" 
+                           class="w-24 px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-center text-lg font-bold bg-white"
+                           oninput="validateInput(this)">
+                    <span class="text-slate-500 text-xs md:text-sm">Silakan ketik angka bebas (1 s.d. 50). Soal akan diacak sistem.</span>
+                </div>
+            </div>
+
+            <!-- Custom Alert Banner if empty -->
+            <div id="validation-alert" class="hidden bg-rose-50 border border-rose-100 rounded-xl p-4 text-xs text-rose-700 font-medium">
+                Peringatan: Masukkan jumlah soal antara 1 hingga 50 terlebih dahulu!
+            </div>
+
+            <button onclick="startQuiz()" 
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white py-4 rounded-xl font-bold shadow-lg shadow-indigo-100 transition-all text-center text-base">
+                Mulai Kuis Sekarang
+            </button>
+        </section>
+
+        <!-- SECTION 3: QUIZ INTERFACE -->
+        <section id="quiz-section" class="hidden space-y-6">
+            <!-- Progress & Timer -->
+            <div class="bg-white rounded-xl border border-slate-100 p-4 shadow-sm flex items-center justify-between">
+                <div class="flex-grow mr-6">
+                    <div class="flex justify-between text-xs font-semibold text-slate-500 mb-1.5">
+                        <span>Progress Pengerjaan</span>
+                        <span id="progress-text">Soal 1 dari 15</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-indigo-600 h-2 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-right flex-shrink-0">
+                    <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">Durasi</span>
+                    <span id="timer" class="font-mono font-bold text-slate-700 text-lg">00:00</span>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm space-y-6">
+                <div class="flex justify-between items-center">
+                    <span id="question-category" class="bg-indigo-50 text-indigo-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-100/50">
+                        Kategori Soal
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium" id="question-number-badge">Soal #1</span>
+                </div>
+
+                <div class="space-y-4">
+                    <p id="question-text" class="text-base md:text-lg font-semibold text-slate-900 leading-relaxed">
+                        Memuat pertanyaan...
+                    </p>
+                </div>
+
+                <!-- Options -->
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Dinamis terisi oleh JS -->
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center pt-5 border-t border-slate-100">
+                    <button id="prev-btn" onclick="prevQuestion()" 
+                            class="px-5 py-3 border border-slate-200 rounded-xl font-semibold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-40 disabled:pointer-events-none text-sm">
+                        Kembali
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" 
+                            class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-100 transition-all text-sm">
+                        Lanjut
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: RESULT INTERFACE -->
+        <section id="result-section" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm text-center space-y-6">
+                <div class="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600 text-4xl shadow-inner animate-bounce">
+                    🏆
+                </div>
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900">Selesai! Ini Hasil Evaluasimu</h2>
+                    <p class="text-slate-500 text-sm">Analisis skor kuis di bawah ini untuk melihat pemahaman materi kamu.</p>
+                </div>
+
+                <!-- Score Board -->
+                <div class="grid grid-cols-3 gap-3 max-w-md mx-auto py-2">
+                    <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-50">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold block mb-1">Skor Akhir</span>
+                        <span id="final-score" class="text-2xl md:text-3xl font-extrabold text-indigo-700">0</span>
+                    </div>
+                    <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-50">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold block mb-1">Jawaban Benar</span>
+                        <span id="correct-count" class="text-2xl md:text-3xl font-extrabold text-emerald-700">0</span>
+                    </div>
+                    <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-50">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold block mb-1">Jawaban Salah</span>
+                        <span id="wrong-count" class="text-2xl md:text-3xl font-extrabold text-rose-700">0</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-4">
+                    <button onclick="goHome()" 
+                            class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-xl font-semibold shadow-md transition-all text-sm">
+                        Menu Utama
+                    </button>
+                    <a href="#review-anchor" onclick="scrollToReview()" 
+                            class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 px-4 rounded-xl font-semibold transition-all block text-center text-sm">
+                        Pembahasan Detail
+                    </a>
+                </div>
+            </div>
+
+            <!-- Review List -->
+            <div id="review-anchor" class="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm space-y-6">
+                <div class="border-b border-slate-100 pb-3">
+                    <h3 class="text-lg font-bold text-slate-900">Kunci Jawaban &amp; Pembahasan Lengkap</h3>
+                    <p class="text-xs text-slate-400 mt-1">Gunakan pembahasan di bawah ini untuk memahami kesalahan menjawab.</p>
+                </div>
+                <div id="review-container" class="space-y-6 divide-y divide-slate-100">
+                    <!-- Dinamis diisi JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer BRONDI STUDIOS -->
+    <footer class="bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400">
+        <div class="max-w-5xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-600">BRONDI STUDIOS</p>
+            <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT & DATA BANK SOAL (50 SOAL) -->
+    <script>
+        // Bank Soal lengkap 50 soal berdasarkan rincian kisi-kisi Bahasa Indonesia
+        const bankSoalBahasaIndonesia = [
+            // ================= 1. KALIMAT DEFINISI DALAM TEKS LHO (Soal 1-8) =================
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Manakah di bawah ini yang merupakan pengertian paling akurat dari kalimat definisi?",
+                pilihan: [
+                    "A. Kalimat yang menjelaskan sifat, ciri fisik, atau karakteristik khusus suatu objek.",
+                    "B. Kalimat yang memuat pandangan pribadi penulis tentang objek yang diamati.",
+                    "C. Kalimat yang merumuskan penjelasan umum mengenai identitas, arti, atau hakikat suatu objek.",
+                    "D. Kalimat yang berisi ajakan untuk menjaga keberadaan suatu objek alam."
+                ],
+                jawaban: 2,
+                penjelasan: "Kalimat definisi menjelaskan hakikat, identitas, atau arti umum dari suatu objek, biasanya ditandai oleh verba kopula seperti 'adalah', 'ialah', 'merupakan'."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Perhatikan kalimat-kalimat berikut!\n(1) Kucing merupakan hewan mamalia karnivora yang banyak dipelihara manusia.\n(2) Bulunya yang halus berwarna abu-abu pekat menghiasi seluruh badannya.\n(3) Kucing memiliki taring tajam untuk mengoyak daging.\n(4) Binatang menyusui ini dikelompokkan ke dalam keluarga Felidae.\n\nKalimat yang termasuk kalimat definisi ditunjukkan oleh nomor...",
+                pilihan: [
+                    "A. (1) dan (2)",
+                    "B. (1) dan (4)",
+                    "C. (2) dan (3)",
+                    "D. (3) dan (4)"
+                ],
+                jawaban: 1,
+                penjelasan: "Kalimat (1) menggunakan verba 'merupakan' dan kalimat (4) memberikan klasifikasi definitif ('dikelompokkan ke dalam...'). Kalimat (2) dan (3) adalah kalimat deskripsi fisik."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Verba penghubung (kopula) yang paling sering digunakan untuk menandai sebuah kalimat definisi adalah...",
+                pilihan: [
+                    "A. Dan, atau, tetapi, melainkan",
+                    "B. Sangat, amat, cukup, sekali",
+                    "C. Adalah, ialah, merupakan, yaitu",
+                    "D. Pergi, datang, melihat, mendengar"
+                ],
+                jawaban: 2,
+                penjelasan: "Kata 'adalah, ialah, merupakan, yaitu' merupakan penanda utama kalimat definisi karena menghubungkan subjek dengan penjelas definisinya."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Manakah kalimat berikut yang menggunakan struktur kalimat definisi yang tepat?",
+                pilihan: [
+                    "A. Hutan bakau tumbuh subur di wilayah pesisir pantai tropis.",
+                    "B. Wayang kulit merupakan seni pertunjukan tradisional yang tumbuh dan berkembang di masyarakat Jawa.",
+                    "C. Burung hantu berburu mangsa pada malam hari dengan mata tajamnya.",
+                    "D. Sampah plastik sangat berbahaya bagi ekosistem biota laut."
+                ],
+                jawaban: 1,
+                penjelasan: "Kalimat 'Wayang kulit merupakan...' mendefinisikan objek secara umum dengan verba kopula 'merupakan'."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Dalam teks LHO, setelah menyusun kalimat definisi pada bagian pembuka (pernyataan umum), paragraf selanjutnya idealnya berisi...",
+                pilihan: [
+                    "A. Opini-opini subjektif penulis",
+                    "B. Kalimat-kalimat deskripsi bagian yang menjelaskan ciri khusus objek",
+                    "C. Kritik terhadap objek yang diobservasi",
+                    "D. Cerita fiksi yang melatarbelakangi sejarah objek"
+                ],
+                jawaban: 1,
+                penjelasan: "Dalam struktur LHO, setelah definisi/pernyataan umum di awal, bagian selanjutnya diisi oleh deskripsi bagian (klasifikasi dan penjelasan detail ciri fisik/fungsi)."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Kalimat mana yang tidak boleh ada dalam struktur pendefinisian objek LHO yang bersifat ilmiah?",
+                pilihan: [
+                    "A. 'Mamalia darat terbesar adalah gajah.'",
+                    "B. 'Menurut saya pribadi, gajah adalah hewan yang paling lucu di dunia.'",
+                    "C. 'Gajah Sumatra (Elephas maximus sumatranus) merupakan subspesies dari gajah asia.'",
+                    "D. 'Herbivor ialah istilah bagi organisme pemakan tumbuh-tumbuhan.'"
+                ],
+                jawaban: 1,
+                penjelasan: "Teks LHO bersifat objektif dan ilmiah, sehingga kalimat opini subjektif seperti 'menurut saya pribadi... paling lucu' tidak boleh ada."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Cermatilah kalimat berikut: 'Ekosistem ialah suatu sistem ekologi yang terbentuk oleh hubungan timbal balik tak terpisahkan antara makhluk hidup dengan lingkungannya.' Kalimat tersebut didefinisikan secara...",
+                pilihan: [
+                    "A. Deskriptif",
+                    "B. Subjektif",
+                    "C. Klasifikasi umum",
+                    "D. Saintifik/Definisi Teoretis"
+                ],
+                jawaban: 3,
+                penjelasan: "Kalimat ini mendefinisikan konsep ekosistem secara ilmiah/saintifik teoretis menggunakan verba penanda 'ialah'."
+            },
+            {
+                kategori: "Kalimat Definisi (Teks LHO)",
+                pertanyaan: "Kalimat definisi yang berupa pengelompokan ditandai dengan frasa...",
+                pilihan: [
+                    "A. Memiliki ciri-ciri",
+                    "B. Terdiri atas / diklasifikasikan menjadi",
+                    "C. Sangat indah bila dilihat",
+                    "D. Berfungsi untuk merusak"
+                ],
+                jawaban: 1,
+                penjelasan: "Definisi klasifikasi (pengelompokan) biasanya ditandai dengan kata 'terdiri atas', 'dikelompokkan menjadi', atau 'diklasifikasikan menjadi'."
+            },
+
+            // ================= 2. TEKS ANEKDOT NILAI KEHIDUPAN (Soal 9-16) =================
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Nilai moral utama yang biasanya ingin disampaikan penulis melalui sebuah teks anekdot sindiran politik adalah...",
+                pilihan: [
+                    "A. Rakyat harus selalu mengalah kepada penguasa.",
+                    "B. Pentingnya menjaga kejujuran dan amanah bagi pemegang kekuasaan negara.",
+                    "C. Korupsi adalah hal yang lumrah dalam kehidupan.",
+                    "D. Pengadilan tidak perlu dihormati oleh masyarakat."
+                ],
+                jawaban: 1,
+                penjelasan: "Teks anekdot politik umumnya menyindir ketidakjujuran atau keserakahan oknum penguasa untuk mengingatkan pentingnya nilai moral kejujuran dan amanah."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Dalam teks anekdot, nilai sosial yang sering dikritik lewat kisah kelucuan tokohnya berkaitan dengan...",
+                pilihan: [
+                    "A. Keindahan alam pedesaan yang mulai punah",
+                    "B. Kesenjangan sosial dan ketidakpedulian masyarakat terhadap aturan umum",
+                    "C. Kemajuan teknologi kecerdasan buatan",
+                    "D. Hubungan harmonis antara keluarga di kerajaan kuno"
+                ],
+                jawaban: 1,
+                penjelasan: "Nilai sosial dalam anekdot sering kali menyoroti perilaku negatif masyarakat sehari-hari, seperti ketidakpedulian sosial atau pelanggaran aturan."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Anekdot tidak hanya menyajikan humor belaka. Hal fundamental yang membedakan anekdot dengan lelucon biasa adalah...",
+                pilihan: [
+                    "A. Panjang pendeknya teks cerita.",
+                    "B. Adanya amanat, kritik, atau pesan moral kehidupan yang disisipkan.",
+                    "C. Penggunaan kata-kata yang sulit dimengerti.",
+                    "D. Jumlah tokoh yang terlibat di dalam cerita."
+                ],
+                jawaban: 1,
+                penjelasan: "Lelucon biasa hanya bertujuan menghibur (humor belaka), sedangkan anekdot memiliki tujuan kritis untuk menyampaikan pesan moral atau kritik sosial."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Seorang siswa menyindir fasilitas sekolah yang rusak berat dengan berkata, 'Wah, sekolah kita sangat estetik, jendelanya ventilasi alamiah tanpa kaca.' Nilai kehidupan yang dilanggar pihak sekolah berdasarkan sindiran ini adalah...",
+                pilihan: [
+                    "A. Nilai estetika arsitektur",
+                    "B. Nilai tanggung jawab sarana prasarana pendidikan",
+                    "C. Nilai kesopanan berbicara siswa",
+                    "D. Nilai kebebasan berpendapat guru"
+                ],
+                jawaban: 1,
+                penjelasan: "Sindiran siswa tersebut merujuk pada rusaknya fasilitas kelas, yang melanggar nilai tanggung jawab penyediaan sarana pendidikan yang layak."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Mengapa nilai kejujuran menjadi nilai yang paling sering diangkat dalam teks anekdot hukum?",
+                pilihan: [
+                    "A. Karena kejujuran tidak memiliki nilai jual.",
+                    "B. Karena penegakan hukum sering kali dicederai oleh kebohongan dan ketidakadilan oknum.",
+                    "C. Karena semua hakim menyukai cerita bohong.",
+                    "D. Agar pembaca takut pada polisi."
+                ],
+                jawaban: 1,
+                penjelasan: "Sindiran hukum pada anekdot kerap menyoroti praktik manipulasi atau kebohongan dalam persidangan demi memenangkan pihak yang bersalah."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Nilai budaya yang sering kali dikritik dalam teks anekdot masyarakat urban modern adalah...",
+                pilihan: [
+                    "A. Budaya gotong royong yang sangat kuat",
+                    "B. Sikap konsumtif dan ketergantungan berlebih pada gadget/media sosial",
+                    "C. Pelestarian tarian daerah",
+                    "D. Kebiasaan makan bersama keluarga besar"
+                ],
+                jawaban: 1,
+                penjelasan: "Anekdot modern sering menyindir perilaku kecanduan media sosial atau perilaku konsumtif yang menjadi budaya buruk baru di era digital."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Dalam anekdot 'Maling Sandal vs Koruptor', seorang pemuda dihukum berat karena mencuri sandal, sementara koruptor dihukum ringan. Nilai kehidupan yang tersirat adalah kritik terhadap...",
+                pilihan: [
+                    "A. Kurangnya jumlah sandal di masjid",
+                    "B. Ketidakadilan dan ketimpangan hukum di suatu negara",
+                    "C. Perilaku konsumtif pemuda",
+                    "D. Mahalnya harga sandal jepit"
+                ],
+                jawaban: 1,
+                penjelasan: "Cerita populer ini mengkritik tajam nilai keadilan hukum yang tumpul ke atas (terhadap koruptor) tapi tajam ke bawah (terhadap rakyat kecil)."
+            },
+            {
+                kategori: "Teks Anekdot (Nilai Kehidupan)",
+                pertanyaan: "Bagian struktur teks anekdot yang memuat reaksi tokoh terhadap konflik, yang biasanya memicu gelak tawa sekaligus memuat nilai kebenaran disebut...",
+                pilihan: [
+                    "A. Abstraksi",
+                    "B. Orientasi",
+                    "C. Krisis",
+                    "D. Reaksi"
+                ],
+                jawaban: 3,
+                penjelasan: "Reaksi adalah tanggapan atas krisis yang terjadi, di mana kelucuan berpadu dengan kritik moral yang disampaikan tokoh utama."
+            },
+
+            // ================= 3. CIRI-CIRI DAN KATA ARKAIS DALAM HIKAYAT (Soal 17-24) =================
+            {
+                kategori: "Hikayat (Kata Arkais)",
+                pertanyaan: "Manakah di bawah ini yang merupakan arti dari kata arkais 'Syahdan' dalam teks hikayat?",
+                pilihan: [
+                    "A. Kasihan sekali",
+                    "B. Selanjutnya / kemudian / lalu",
+                    "C. Istana raja",
+                    "D. Senjata sakti"
+                ],
+                jawaban: 1,
+                penjelasan: "Kata 'Syahdan' adalah kata arkais penghubung kalimat yang berarti 'selanjutnya', 'lalu', atau 'kemudian'."
+            },
+            {
+                kategori: "Hikayat (Ciri-ciri)",
+                pertanyaan: "Di dalam hikayat sering ditemukan peristiwa yang tidak masuk akal sehat, seperti bayi lahir membawa panah sakti. Karakteristik ini disebut...",
+                pilihan: [
+                    "A. Istanasentris",
+                    "B. Anonim",
+                    "C. Kemustahilan / Kemukjizatan",
+                    "D. Statis"
+                ],
+                jawaban: 2,
+                penjelasan: "Kemustahilan dalam hikayat merujuk pada unsur cerita yang tidak logis atau di luar nalar manusia modern."
+            },
+            {
+                kategori: "Hikayat (Kata Arkais)",
+                pertanyaan: "Arti kata arkais 'alkisah' pada awal paragraf hikayat adalah...",
+                pilihan: [
+                    "A. Cerita ini pun dimulai / konon ceritanya",
+                    "B. Akhir dari sebuah kisah menyedihkan",
+                    "C. Sebuah kerajaan kuno",
+                    "D. Nama raja yang bijaksana"
+                ],
+                jawaban: 0,
+                penjelasan: "'Alkisah' adalah kata penghubung arkais penanda awal mula sebuah cerita (setara dengan 'konon kisahnya')."
+            },
+            {
+                kategori: "Hikayat (Ciri-ciri)",
+                pertanyaan: "Hikayat memiliki sifat 'statis'. Maksud dari sifat statis pada karya sastra melayu klasik tersebut adalah...",
+                pilihan: [
+                    "A. Selalu berubah-ubah tema setiap ditulis ulang.",
+                    "B. Memiliki struktur formula cerita yang baku dan mirip satu sama lain.",
+                    "C. Ditulis oleh penulis yang dinamis.",
+                    "D. Ceritanya sangat cepat selesai."
+                ],
+                jawaban: 1,
+                penjelasan: "Sifat statis berarti pola penceritaan, penokohan, tema, dan konflik hikayat cenderung tetap dan mirip antara hikayat satu dengan lainnya."
+            },
+            {
+                kategori: "Hikayat (Kata Arkais)",
+                pertanyaan: "Kata arkais 'titah' memiliki sinonim makna dengan kata...",
+                pilihan: [
+                    "A. Perintah / Sabda (dari penguasa/raja)",
+                    "B. Hadiah emas permata",
+                    "C. Hukuman pancung",
+                    "D. Perjalanan jauh"
+                ],
+                jawaban: 0,
+                penjelasan: "'Titah' merujuk pada perkataan atau perintah resmi yang dikeluarkan oleh seorang raja atau penguasa."
+            },
+            {
+                kategori: "Hikayat (Ciri-ciri)",
+                pertanyaan: "Tokoh utama dalam hikayat biasanya digambarkan memiliki kelebihan luar biasa, sakti mandraguna, dan selalu menang. Karakteristik penokohan ini dikenal sebagai...",
+                pilihan: [
+                    "A. Karakter realistis",
+                    "B. Karakter kesaktian / karomah",
+                    "C. Karakter melankolis",
+                    "D. Karakter pasif"
+                ],
+                jawaban: 1,
+                penjelasan: "Kesaktian tokoh merupakan ciri khas hikayat di mana tokoh utama dibekali kemampuan magis untuk mengatasi segala rintangan berat."
+            },
+            {
+                kategori: "Hikayat (Kata Arkais)",
+                pertanyaan: "Bila kita membaca kalimat 'Maka dipersuntinglah tuan putri oleh sang indra', kata 'dipersunting' bermakna...",
+                pilihan: [
+                    "A. Diusir dari istana",
+                    "B. Dipelihara dengan baik",
+                    "C. Dinikahi / dijadikan istri",
+                    "D. Diberi gelar pahlawan"
+                ],
+                jawaban: 2,
+                penjelasan: "Kata 'dipersunting' merupakan kata arkais/sastra klasik yang bermakna dipinang atau dinikahi."
+            },
+            {
+                kategori: "Hikayat (Ciri-ciri)",
+                pertanyaan: "Hikayat menyebarkan nilai-nilai didaktis kepada pembacanya. Istilah 'didaktis' memiliki arti...",
+                pilihan: [
+                    "A. Bersifat menghibur dan melucu",
+                    "B. Mengandung unsur sejarah masa penjajahan",
+                    "C. Bersifat mendidik moral atau memberikan ajaran hidup",
+                    "D. Berisi ramalan masa depan dunia"
+                ],
+                jawaban: 2,
+                penjelasan: "Didaktis artinya mendidik. Hikayat ditulis untuk menyampaikan pelajaran moral, keagamaan, dan etika kehidupan kepada pembacanya."
+            },
+
+            // ================= 4. TEKS NEGOSIASI (Soal 25-33) =================
+            {
+                kategori: "Teks Negosiasi",
+                pertanyaan: "Tujuan utama diadakannya suatu proses negosiasi adalah...",
+                pilihan: [
+                    "A. Mencari pihak yang paling bersalah dalam suatu masalah.",
+                    "B. Mencapai kesepakatan yang saling menguntungkan kedua belah pihak (win-win solution).",
+                    "C. Memaksakan kehendak sepihak agar dituruti mitra bisnis.",
+                    "D. Memperpanjang perdebatan tanpa kesimpulan."
+                ],
+                jawaban: 1,
+                penjelasan: "Negosiasi ditujukan untuk mengatasi perbedaan demi mencapai kesepakatan yang memuaskan kedua belah pihak tanpa ada yang dirugikan."
+            },
+            {
+                kategori: "Teks Negosiasi",
+                pertanyaan: "Bagian orientasi pada teks negosiasi berisi tentang...",
+                pilihan: [
+                    "A. Penyampaian maksud utama atau pengajuan barang.",
+                    "B. Tawar-menawar harga puncak.",
+                    "C. Salam pembuka, sapaan, atau pengenalan awal perbincangan.",
+                    "D. Penandatanganan berkas kontrak kerja sama."
+                ],
+                jawaban: 2,
+                penjelasan: "Orientasi merupakan bagian awal teks negosiasi berupa pembukaan, salam, sapaan hangat, atau basa-basi pengenalan topik."
+            },
+            {
+                kategori: "Teks Negosiasi (Jenis)",
+                pertanyaan: "Jenis negosiasi yang menghasilkan keputusan di mana salah satu pihak merasa dirugikan dan pihak lain mendapat keuntungan penuh disebut...",
+                pilihan: [
+                    "A. Negosiasi Kolaboratif (Win-Win)",
+                    "B. Negosiasi Dominasi (Win-Lose)",
+                    "C. Negosiasi Menghindar (Lose-Lose)",
+                    "D. Negosiasi Kompromi (Lose-Lose)"
+                ],
+                jawaban: 1,
+                penjelasan: "Negosiasi Dominasi (Win-Lose) terjadi jika salah satu pihak menekan pihak lain hingga memperoleh keuntungan maksimal sementara pihak lawan terpaksa mengalah."
+            },
+            {
+                kategori: "Teks Negosiasi (Unsur Pembangun)",
+                pertanyaan: "Bahasa yang digunakan dalam negosiasi harus bersifat 'persuasif'. Arti kata persuasif adalah...",
+                pilihan: [
+                    "A. Membujuk atau memengaruhi secara halus agar pihak lain setuju.",
+                    "B. Memaksa dengan ancaman hukum.",
+                    "C. Menggunakan bahasa daerah yang kental.",
+                    "D. Berbicara dengan nada tinggi dan marah."
+                ],
+                jawaban: 0,
+                penjelasan: "Persuasif bermakna bersifat membujuk, menarik perhatian, atau meyakinkan mitra bicara agar menyetujui kesepakatan secara sukarela."
+            },
+            {
+                kategori: "Teks Negosiasi (Surat Penawaran)",
+                pertanyaan: "Dalam surat penawaran produk, pencantuman diskon atau potongan harga biasanya diletakkan pada bagian...",
+                pilihan: [
+                    "A. Alamat pengirim",
+                    "B. Isi surat (spesifikasi penawaran)",
+                    "C. Penutup surat",
+                    "D. Kop surat perusahaan"
+                ],
+                jawaban: 1,
+                penjelasan: "Diskon, spesifikasi produk, harga, dan cara pembayaran dibahas dalam paragraf isi surat penawaran."
+            },
+            {
+                kategori: "Teks Negosiasi",
+                pertanyaan: "Jika dalam negosiasi jual beli mobil bekas tidak tercapai kesepakatan harga karena jarak harga penawaran terlalu jauh, maka tindakan yang diambil adalah...",
+                pilihan: [
+                    "A. Memaksa pembeli membayar harga penjual.",
+                    "B. Menyepakati kondisi tanpa transaksi (No Deal) secara sopan.",
+                    "C. Melaporkan pembeli ke polisi.",
+                    "D. Merusak mobil tersebut."
+                ],
+                jawaban: 1,
+                penjelasan: "Jika kesepakatan gagal diraih, negosiasi diakhiri dengan kesepakatan untuk tidak bertransaksi (no deal) secara damai."
+            },
+            {
+                kategori: "Teks Negosiasi (Unsur Pembangun)",
+                pertanyaan: "Siapakah yang disebut sebagai 'partisipan' di dalam teks negosiasi?",
+                pilihan: [
+                    "A. Penonton pertunjukan drama.",
+                    "B. Pihak-pihak yang terlibat aktif dalam proses tawar-menawar.",
+                    "C. Penulis teks cerita sejarah.",
+                    "D. Pemerintah daerah setempat."
+                ],
+                jawaban: 1,
+                penjelasan: "Partisipan adalah pelaku atau pihak-pihak yang melakukan negosiasi (misalnya penjual dan pembeli, atau karyawan dan pengusaha)."
+            },
+            {
+                kategori: "Teks Negosiasi (Surat Penawaran)",
+                pertanyaan: "Kalimat penutup surat penawaran niaga yang paling santun dan tepat adalah...",
+                pilihan: [
+                    "A. Cepat beli barang kami sebelum kehabisan!",
+                    "B. Demikian penawaran kami, kami tunggu pesanan Anda secepatnya.",
+                    "C. Atas perhatian dan kerja sama Bapak/Ibu, kami ucapkan terima kasih.",
+                    "D. Surat ini harus dibalas dalam waktu 2x24 jam."
+                ],
+                jawaban: 2,
+                penjelasan: "Pilihan C menunjukkan tata krama korespondensi resmi yang profesional, sopan, dan berterima kasih atas perhatian calon pembeli."
+            },
+            {
+                kategori: "Teks Negosiasi (Jenis)",
+                pertanyaan: "Negosiasi antara serikat buruh dengan direksi perusahaan mengenai kenaikan gaji yang ditengahi oleh Dinas Tenaga Kerja merupakan contoh jenis negosiasi...",
+                pilihan: [
+                    "A. Negosiasi dengan Mediator (Pihak Ketiga)",
+                    "B. Negosiasi Monolog",
+                    "C. Negosiasi Nonformal",
+                    "D. Negosiasi Sepihak"
+                ],
+                jawaban: 0,
+                penjelasan: "Keterlibatan Dinas Tenaga Kerja berfungsi sebagai mediator/penengah pihak ketiga yang menjembatani konflik kedua belah pihak."
+            },
+
+            // ================= 5. TEKS BIOGRAFI (Soal 34-42) =================
+            {
+                kategori: "Teks Biografi (Pengertian)",
+                pertanyaan: "Tujuan utama penulisan teks biografi tokoh inspiratif bagi pembaca adalah...",
+                pilihan: [
+                    "A. Membeberkan aib dan keburukan masa lalu tokoh secara detail.",
+                    "B. Menghibur pembaca dengan cerita fantasi fiktif.",
+                    "C. Memberikan keteladanan, motivasi, dan inspirasi hidup dari perjuangan tokoh.",
+                    "D. Mempromosikan produk jualan milik tokoh tersebut."
+                ],
+                jawaban: 2,
+                penjelasan: "Biografi ditulis agar kisah hidup, kerja keras, keteguhan, dan kesuksesan tokoh dapat menginspirasi serta memotivasi pembaca."
+            },
+            {
+                kategori: "Teks Biografi (Langkah Menyusun)",
+                pertanyaan: "Setelah mengumpulkan bahan referensi tokoh, langkah selanjutnya dalam penyusunan biografi adalah membuat outline/kerangka karangan berdasarkan struktur...",
+                pilihan: [
+                    "A. Abstraksi - Evaluasi - Resolusi",
+                    "B. Orientasi - Kejadian/Peristiwa Penting - Reorientasi",
+                    "C. Tesis - Argumentasi - Penegasan Ulang",
+                    "D. Pembukaan - Isi - Lampiran Nilai"
+                ],
+                jawaban: 1,
+                penjelasan: "Struktur standar teks biografi terdiri dari Orientasi (pengenalan), Kejadian/Peristiwa Penting (perjuangan tokoh), dan Reorientasi (pandangan penulis/penutup)."
+            },
+            {
+                kategori: "Teks Biografi (Kaidah Kebahasaan)",
+                pertanyaan: "Dalam teks biografi banyak ditemukan kata kerja tindakan (verba material). Contoh kata kerja tindakan adalah...",
+                pilihan: [
+                    "A. Membaca, menulis, mendirikan, membangun",
+                    "B. Merupakan, adalah, ialah",
+                    "C. Sangat pandai, luar biasa hebat, rajin",
+                    "D. Dia, ia, beliau"
+                ],
+                jawaban: 0,
+                penjelasan: "Verba material/tindakan mengekspresikan tindakan fisik nyata yang dilakukan tokoh, seperti membaca, menulis, mendirikan, membangun."
+            },
+            {
+                kategori: "Teks Biografi (Jenis)",
+                pertanyaan: "Berdasarkan masalah yang dibahas, biografi yang berfokus pada perjalanan karier seseorang dari titik bawah hingga sukses profesional disebut...",
+                pilihan: [
+                    "A. Biografi Politik",
+                    "B. Biografi Karier / Biografi Perjalanan Karier",
+                    "C. Biografi Intelektual",
+                    "D. Biografi Jurnalistik"
+                ],
+                jawaban: 1,
+                penjelasan: "Biografi karier memfokuskan penceritaan pada langkah-langkah perjuangan pekerjaan, profesi, dan kesuksesan karier tokoh."
+            },
+            {
+                kategori: "Teks Biografi (Kaidah Kebahasaan)",
+                pertanyaan: "Kata adjektiva (kata sifat) sering digunakan dalam biografi untuk mendeskripsikan karakter unggul tokoh. Contoh kata adjektiva adalah...",
+                pilihan: [
+                    "A. Bekerja keras",
+                    "B. Disiplin, cerdas, berani, tekun",
+                    "C. Di Yogyakarta",
+                    "D. Menemukan formula"
+                ],
+                jawaban: 1,
+                penjelasan: "Disiplin, cerdas, berani, tekun adalah contoh kata sifat (adjektiva) yang menggambarkan watak atau kepribadian tokoh."
+            },
+            {
+                kategori: "Teks Biografi (Langkah Menyusun)",
+                pertanyaan: "Mengapa wawancara langsung dengan tokoh atau keluarga dekatnya sangat berharga dalam proses penyusunan biografi?",
+                pilihan: [
+                    "A. Agar buku biografi cepat habis terjual.",
+                    "B. Untuk mendapatkan data primer yang otentik dan kisah personal yang akurat.",
+                    "C. Untuk meminta uang saku penelitian.",
+                    "D. Agar tokoh merasa terganggu privasinya."
+                ],
+                jawaban: 1,
+                penjelasan: "Wawancara langsung menghasilkan data primer tingkat pertama yang sangat valid dan menyajikan detail emosional tokoh yang tidak ada di internet."
+            },
+            {
+                kategori: "Teks Biografi (Kaidah Kebahasaan)",
+                pertanyaan: "Perhatikan kalimat: 'B.J. Habibie kuliah di Jerman kemudian beliau bekerja di industri penerbangan terkemuka.' Kata hubung (konjungsi) temporal dalam kalimat tersebut adalah...",
+                pilihan: [
+                    "A. Di",
+                    "B. Kemudian",
+                    "C. Kuliah",
+                    "D. Bekerja"
+                ],
+                jawaban: 1,
+                penjelasan: "Konjungsi temporal adalah kata hubung yang menerangkan hubungan waktu kejadian, dalam hal ini ditunjukkan oleh kata 'kemudian'."
+            },
+            {
+                kategori: "Teks Biografi (Jenis)",
+                pertanyaan: "Sebuah teks biografi yang ditulis tanpa seizin atau tanpa sepengetahuan tokoh yang diceritakan (biasanya karena tokoh sudah wafat atau kontroversial) dikategorikan sebagai...",
+                pilihan: [
+                    "A. Authorized Biography",
+                    "B. Unauthorized Biography",
+                    "C. Biografi Politik",
+                    "D. Biografi Mandiri"
+                ],
+                jawaban: 1,
+                penjelasan: "Unauthorized biography ditulis tanpa persetujuan resmi atau otorisasi dari tokoh yang bersangkutan."
+            },
+            {
+                kategori: "Teks Biografi (Pengertian)",
+                pertanyaan: "Bagian reorientasi dalam teks biografi bersifat opsional (boleh ada, boleh tidak). Bagian ini umumnya berisi...",
+                pilihan: [
+                    "A. Daftar pustaka rujukan penulisan.",
+                    "B. Pandangan evaluatif, kesimpulan, atau komentar subjektif penulis terhadap kisah hidup tokoh.",
+                    "C. Silsilah keluarga lengkap nenek moyang tokoh.",
+                    "D. Foto-foto dokumentasi masa kecil tokoh."
+                ],
+                jawaban: 1,
+                penjelasan: "Reorientasi adalah simpulan penutup berupa opini penulis mengenai teladan atau dampak perjuangan tokoh bagi masa depan."
+            },
+
+            // ================= 6. PUISI (Soal 43-50) =================
+            {
+                kategori: "Puisi (Pengertian)",
+                pertanyaan: "Unsur pembangun puisi terdiri atas unsur fisik dan unsur batin. Manakah di bawah ini yang tergolong dalam unsur batin puisi?",
+                pilihan: [
+                    "A. Tipografi, diksi, rima",
+                    "B. Tema, rasa, nada, amanat",
+                    "C. Majas, citraan, rima",
+                    "D. Bait, baris, tanda baca"
+                ],
+                jawaban: 1,
+                penjelasan: "Unsur batin puisi berhubungan dengan jiwa atau isi pikiran penyair, meliputi: Tema (sense), Rasa (feeling), Nada (tone), dan Amanat (intention)."
+            },
+            {
+                kategori: "Puisi (Majas)",
+                pertanyaan: "Bait puisi: 'Teriakanmu membakar semangat jiwaku yang dingin membeku.' Majas dominan pada kutipan puisi tersebut adalah...",
+                pilihan: [
+                    "A. Majas Litotes",
+                    "B. Majas Asosiasi",
+                    "C. Majas Hiperbola",
+                    "D. Majas Personifikasi"
+                ],
+                jawaban: 2,
+                penjelasan: "Majas hiperbola mengekspresikan sesuatu secara berlebihan ('teriakan membakar semangat yang membeku') untuk menciptakan efek dramatis."
+            },
+            {
+                kategori: "Puisi (Rima)",
+                pertanyaan: "Persamaan atau pengulangan bunyi akhir baris pada bait puisi untuk menambah keindahan musikalisasi disebut...",
+                pilihan: [
+                    "A. Diksi",
+                    "B. Rima / Ritme",
+                    "C. Enjambemen",
+                    "D. Imaji"
+                ],
+                jawaban: 1,
+                penjelasan: "Rima adalah pengulangan bunyi vokal atau konsonan di ujung baris puisi yang berfungsi membentuk ritme dan keindahan musikal saat dibaca."
+            },
+            {
+                kategori: "Puisi (Unsur Intrinsik)",
+                pertanyaan: "Imaji pendengaran (auditif) dalam puisi dirangsang melalui diksi yang membuat pembaca seolah-olah...",
+                pilihan: [
+                    "A. Melihat pemandangan alam secara langsung.",
+                    "B. Mendengar suara, bunyi, atau desau yang dideskripsikan.",
+                    "C. Merasakan dinginnya embun pagi hari.",
+                    "D. Mencium bau harum bunga melati."
+                ],
+                jawaban: 1,
+                penjelasan: "Imaji pendengaran (auditif) menggunakan kata-kata yang memicu respons indra pendengar pembaca seolah mendengar suara riil."
+            },
+            {
+                kategori: "Puisi (Majas)",
+                pertanyaan: "Cermatilah bait puisi berikut!\n'Kertas putih menerima coretan pena dengan sabar'\n\nMajas yang digunakan pada larik puisi di atas adalah...",
+                pilihan: [
+                    "A. Majas Personifikasi",
+                    "B. Majas Metafora",
+                    "C. Majas Ironi",
+                    "D. Majas Pleonasme"
+                ],
+                jawaban: 0,
+                penjelasan: "Kertas digambarkan memiliki sifat manusia ('menerima dengan sabar'), sehingga dikategorikan sebagai majas personifikasi."
+            },
+            {
+                kategori: "Puisi (Unsur Intrinsik)",
+                pertanyaan: "Amanat di dalam puisi disampaikan oleh penyair kepada pembaca secara...",
+                pilihan: [
+                    "A. Tersurat jelas dalam bentuk undang-undang.",
+                    "B. Tersirat di balik pilihan kata, kiasan, dan tema keseluruhan puisi.",
+                    "C. Tertulis di judul puisi saja.",
+                    "D. Melalui catatan kaki di bagian paling bawah halaman buku."
+                ],
+                jawaban: 1,
+                penjelasan: "Amanat puisi bersifat implisit/tersirat, pembaca harus mengapresiasi dan menghayati diksi serta suasana puisi secara utuh untuk memahaminya."
+            },
+            {
+                kategori: "Puisi (Rima)",
+                pertanyaan: "Bait puisi berikut memiliki rima silang. Manakah pola yang tepat untuk rima silang?",
+                pilihan: [
+                    "A. a - a - a - a",
+                    "B. a - a - b - b",
+                    "C. a - b - a - b",
+                    "D. a - b - b - a"
+                ],
+                jawaban: 2,
+                penjelasan: "Rima silang memiliki pola sajak silang bergantian bunyi, yaitu baris 1 sama dengan 3, dan baris 2 sama dengan 4 (a-b-a-b)."
+            },
+            {
+                kategori: "Puisi (Pengertian)",
+                pertanyaan: "Karya sastra puisi terikat oleh konsentrasi bahasa. Maksud dari 'konsentrasi bahasa' pada puisi adalah...",
+                pilihan: [
+                    "A. Bahasanya harus panjang seperti cerita novel.",
+                    "B. Penggunaan kata-kata yang ringkas, padat makna, dan kaya akan majas kiasan.",
+                    "C. Puisi tidak boleh memiliki makna sama sekali.",
+                    "D. Penggunaan istilah asing yang rumit dipahami."
+                ],
+                jawaban: 1,
+                penjelasan: "Konsentrasi bahasa berarti bahasa puisi sangat padat, di mana satu kata dipilih secara mendalam untuk mewakili imajinasi dan makna luas."
+            }
+        ];
+
+        // State Aplikasi
+        let selectedSubjectName = "";
+        let currentQuestions = [];
+        let currentIdx = 0;
+        let userAnswers = {}; 
+        let timerInterval = null;
+        let secondsElapsed = 0;
+
+        // Validasi input manual
+        function validateInput(input) {
+            let val = parseInt(input.value);
+            if (val > 50) {
+                input.value = 50;
+            } else if (val < 1) {
+                input.value = 1;
+            }
+        }
+
+        // Fungsi Memilih Mapel dari Menu Utama
+        function selectSubject(subjectName) {
+            selectedSubjectName = subjectName;
+            
+            // Atur Visual Header & Setup Title
+            document.getElementById('current-subject-badge').textContent = subjectName;
+            document.getElementById('header-badge').classList.remove('hidden');
+            document.getElementById('setup-title').textContent = `Ujian Mandiri: ${subjectName}`;
+            
+            // Sembunyikan Menu Utama, Tampilkan Form Setup
+            document.getElementById('menu-section').classList.add('hidden');
+            document.getElementById('setup-section').classList.remove('hidden');
+        }
+
+        // Kembali ke Menu Utama
+        function goHome() {
+            clearInterval(timerInterval);
+            document.getElementById('header-badge').classList.add('hidden');
+            document.getElementById('menu-section').classList.remove('hidden');
+            document.getElementById('setup-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+        }
+
+        // Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Memulai Jalannya Kuis
+        function startQuiz() {
+            const countInput = document.getElementById('question-count');
+            const alertBanner = document.getElementById('validation-alert');
+            let count = parseInt(countInput.value);
+
+            // Validasi Input
+            if (isNaN(count) || count < 1 || count > 50) {
+                alertBanner.classList.remove('hidden');
+                return;
+            }
+            alertBanner.classList.add('hidden');
+
+            // Ambil bank soal bahasa Indonesia (sementara default)
+            let baseBank = [...bankSoalBahasaIndonesia];
+            if (count > baseBank.length) {
+                count = baseBank.length;
+                countInput.value = baseBank.length;
+            }
+
+            // Acak & Potong sesuai jumlah input
+            const shuffled = shuffleArray(baseBank);
+            currentQuestions = shuffled.slice(0, count);
+
+            // Reset seluruh State
+            currentIdx = 0;
+            userAnswers = {};
+            secondsElapsed = 0;
+
+            // Navigasi Section UI
+            document.getElementById('setup-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+
+            // Jalankan Timer & Render Pertanyaan
+            startTimer();
+            renderQuestion();
+        }
+
+        // Detak Detik Timer
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                const secs = (secondsElapsed % 60).toString().padStart(2, '0');
+                timerElement.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // Tampilkan Butir Pertanyaan Aktif
+        function renderQuestion() {
+            const currentQ = currentQuestions[currentIdx];
+
+            // Update Progress Bar
+            document.getElementById('progress-text').textContent = `Soal ${currentIdx + 1} dari ${currentQuestions.length}`;
+            const progressPercent = ((currentIdx + 1) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // Badge & Teks Pertanyaan
+            document.getElementById('question-category').textContent = currentQ.kategori;
+            document.getElementById('question-number-badge').textContent = `Soal ${currentIdx + 1} dari ${currentQuestions.length}`;
+            document.getElementById('question-text').innerHTML = currentQ.pertanyaan.replace(/\n/g, '<br>');
+
+            // Render Opsi Jawaban
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            currentQ.pilihan.forEach((pilihanText, idx) => {
+                const isSelected = userAnswers[currentIdx] === idx;
+                
+                const button = document.createElement('button');
+                button.className = `w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-start space-x-3 group ${
+                    isSelected 
+                    ? 'border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium' 
+                    : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700'
+                }`;
+                
+                button.onclick = () => selectOption(idx);
+                
+                // Indikator Huruf Pilihan (A, B, C, D)
+                const bullet = document.createElement('span');
+                bullet.className = `w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
+                    isSelected 
+                    ? 'border-indigo-600 bg-indigo-600 text-white shadow-sm' 
+                    : 'border-slate-300 bg-slate-50 text-slate-500 group-hover:border-slate-400'
+                }`;
+                bullet.textContent = String.fromCharCode(65 + idx);
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'flex-grow text-sm md:text-base leading-relaxed';
+                textSpan.textContent = pilihanText.substring(3);
+
+                button.appendChild(bullet);
+                button.appendChild(textSpan);
+                optionsContainer.appendChild(button);
+            });
+
+            // Status Tombol Navigasi
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            prevBtn.disabled = currentIdx === 0;
+
+            if (currentIdx === currentQuestions.length - 1) {
+                nextBtn.textContent = "Selesaikan Ujian";
+                nextBtn.className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold shadow-md shadow-emerald-100 transition-all text-sm";
+            } else {
+                nextBtn.textContent = "Lanjut";
+                nextBtn.className = "px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-100 transition-all text-sm";
+            }
+        }
+
+        // Catat Jawaban Pilihan Siswa
+        function selectOption(optionIdx) {
+            userAnswers[currentIdx] = optionIdx;
+            renderQuestion();
+        }
+
+        // Navigasi Kembali
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                renderQuestion();
+            }
+        }
+
+        // Navigasi Lanjut
+        function nextQuestion() {
+            if (userAnswers[currentIdx] === undefined) {
+                alert("Pilih salah satu opsi jawaban sebelum berpindah halaman!");
+                return;
+            }
+
+            if (currentIdx < currentQuestions.length - 1) {
+                currentIdx++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        // Tampilkan Ringkasan Evaluasi
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
+            let correct = 0;
+            let wrong = 0;
+
+            currentQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.jawaban) {
+                    correct++;
+                } else {
+                    wrong++;
+                }
+            });
+
+            const scorePercent = Math.round((correct / currentQuestions.length) * 100);
+
+            document.getElementById('final-score').textContent = scorePercent;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('wrong-count').textContent = wrong;
+
+            // Bangun Lembar Koreksi & Pembahasan
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = '';
+
+            currentQuestions.forEach((q, idx) => {
+                const userAnsIdx = userAnswers[idx];
+                const isCorrect = userAnsIdx === q.jawaban;
+
+                const itemBox = document.createElement('div');
+                itemBox.className = "pt-6 space-y-3";
+
+                const header = document.createElement('div');
+                header.className = "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2";
+
+                const category = document.createElement('span');
+                category.className = "bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md";
+                category.textContent = `Soal ${idx + 1}: ${q.kategori}`;
+
+                const badge = document.createElement('span');
+                if (isCorrect) {
+                    badge.className = "bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full border border-emerald-100 flex items-center";
+                    badge.innerHTML = "✔ Benar";
+                } else {
+                    badge.className = "bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full border border-rose-100 flex items-center";
+                    badge.innerHTML = "❌ Salah";
+                }
+
+                header.appendChild(category);
+                header.appendChild(badge);
+
+                const textQ = document.createElement('p');
+                textQ.className = "font-semibold text-slate-800 text-sm md:text-base leading-relaxed";
+                textQ.innerHTML = q.pertanyaan.replace(/\n/g, '<br>');
+
+                // Daftar Pilihan
+                const optionsList = document.createElement('div');
+                optionsList.className = "space-y-1.5 pl-2.5 border-l-2 border-slate-100";
+
+                q.pilihan.forEach((pil, pIdx) => {
+                    const row = document.createElement('div');
+                    row.className = "text-xs md:text-sm p-2 rounded-lg flex items-center space-x-2";
+
+                    if (pIdx === q.jawaban) {
+                        row.className += " bg-emerald-50/60 text-emerald-900 border border-emerald-100";
+                        row.innerHTML = `<span class="font-bold text-emerald-700">✔ ${String.fromCharCode(65+pIdx)}.</span> <span>${pil.substring(3)}</span>`;
+                    } else if (pIdx === userAnsIdx && !isCorrect) {
+                        row.className += " bg-rose-50/60 text-rose-900 border border-rose-100";
+                        row.innerHTML = `<span class="font-bold text-rose-700">✖ ${String.fromCharCode(65+pIdx)}.</span> <span>${pil.substring(3)} (Pilihanmu)</span>`;
+                    } else {
+                        row.className += " text-slate-500";
+                        row.innerHTML = `<span class="font-bold">${String.fromCharCode(65+pIdx)}.</span> <span>${pil.substring(3)}</span>`;
+                    }
+                    optionsList.appendChild(row);
+                });
+
+                // Penjelasan akademis
+                const expl = document.createElement('div');
+                expl.className = "bg-slate-50 border border-slate-100 p-3.5 rounded-xl text-xs md:text-sm text-slate-600 leading-relaxed";
+                expl.innerHTML = `<strong class="text-indigo-900 font-bold block mb-1">Pembahasan:</strong> ${q.penjelasan}`;
+
+                itemBox.appendChild(header);
+                itemBox.appendChild(textQ);
+                itemBox.appendChild(optionsList);
+                itemBox.appendChild(expl);
+
+                reviewContainer.appendChild(itemBox);
+            });
+
+            // Tampilkan Layar Hasil
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+
+        // Scroll Halus
+        function scrollToReview() {
+            document.getElementById('review-anchor').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
+```
