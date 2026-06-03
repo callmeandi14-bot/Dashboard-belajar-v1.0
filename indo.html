@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Bahasa Indonesia - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Bahasa Indonesia</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Teks LHO (Kalimat Definisi)</div>
+                        <div>✔ Teks Anekdot (Nilai & Kritik)</div>
+                        <div>✔ Hikayat Klasik & Kata Arkais</div>
+                        <div>✔ Struktur Negosiasi & Surat</div>
+                        <div>✔ Struktur Teks Biografi Tokoh</div>
+                        <div>✔ Unsur Intrinsik Puisi</div>
+                        <div>✔ Kaidah Kebahasaan & Kata Baku</div>
+                        <div>✔ Jenis Majas, Rima & Citraan</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Bahasa Indonesia</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Bahasa Indonesia.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA BAHASA INDONESIA -->
+    <script>
+        // BANK DATA BAHASA INDONESIA (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E)
+        const bankSoal = [
+            { q: "Manakah di bawah ini yang merupakan pengertian paling akurat dari kalimat definisi?", o: ["A. Kalimat yang menjelaskan sifat, ciri fisik, atau karakteristik khusus suatu objek.", "B. Kalimat yang memuat pandangan pribadi penulis tentang objek yang diamati.", "C. Kalimat yang merumuskan penjelasan umum mengenai identitas, arti, atau hakikat suatu objek.", "D. Kalimat yang berisi ajakan untuk menjaga keberadaan suatu objek alam.", "E. Kalimat yang menceritakan asal-usul terbentuknya suatu benda sejarah."], a: 2, p: "Kalimat definisi menjelaskan identitas, esensi, atau makna umum suatu benda secara objektif, sering menggunakan kata kerja kopula seperti 'adalah', 'ialah', 'merupakan'." },
+            { q: "Perhatikan kalimat berikut! (1) Kucing merupakan mamalia karnivora. (2) Bulunya halus berwarna abu-abu. (3) Kucing memiliki taring tajam. (4) Binatang menyusui ini dikelompokkan ke dalam Felidae. Kalimat definisi ditunjukkan oleh...", o: ["A. (1) dan (2)", "B. (1) dan (4)", "C. (2) dan (3)", "D. (3) dan (4)", "E. (1) dan (3)"], a: 1, p: "Kalimat (1) mendefinisikan objek dengan kata 'merupakan', sedangkan kalimat (4) mengklasifikasikan kelas biologisnya secara baku." },
+            { q: "Verba penghubung (kopula) yang paling sering digunakan untuk menandai sebuah kalimat definisi adalah...", o: ["A. Dan, atau, tetapi, melainkan", "B. Sangat, amat, cukup, sekali", "C. Adalah, ialah, merupakan, yaitu", "D. Pergi, datang, melihat, mendengar", "E. Bahwa, karena, sehingga, lalu"], a: 2, p: "Kata 'adalah, ialah, merupakan, yaitu' merupakan verba relasional penanda struktur definisi dasar." },
+            { q: "Manakah kalimat berikut yang menggunakan struktur kalimat definisi yang tepat?", o: ["A. Hutan bakau tumbuh subur di wilayah pesisir pantai tropis.", "B. Wayang kulit merupakan seni pertunjukan tradisional yang tumbuh dan berkembang di masyarakat Jawa.", "C. Burung hantu berburu mangsa pada malam hari dengan mata tajamnya.", "D. Sampah plastik sangat berbahaya bagi ekosistem biota laut.", "E. Bunga mawar memiliki duri tajam di bagian tangkainya."], a: 1, p: "Kalimat pilihan B merinci identitasWayang Kulit secara generik memakai relator 'merupakan'." },
+            { q: "Dalam teks LHO, setelah menyusun kalimat definisi pada bagian pembuka (pernyataan umum), paragraf selanjutnya idealnya berisi...", o: ["A. Opini-opini subjektif penulis", "B. Kalimat-kalimat deskripsi bagian yang menjelaskan ciri khusus objek", "C. Kritik terhadap objek yang diobservasi", "D. Cerita fiksi yang melatarbelakangi sejarah objek", "E. Imbauan moral agar menjaga kelestarian alam"], a: 1, p: "Struktur LHO bergulir runtut dari pernyataan umum (definisi) menuju deskripsi bagian (klasifikasi/rincian fisik)." },
+            { q: "Kalimat mana yang tidak boleh ada dalam struktur pendefinisian objek LHO yang bersifat ilmiah?", o: ["A. 'Mamalia darat terbesar adalah gajah.'", "B. 'Menurut saya pribadi, gajah adalah hewan yang paling lucu di dunia.'", "C. 'Gajah Sumatra (Elephas maximus sumatranus) merupakan subspesies dari gajah asia.'", "D. 'Herbivor ialah istilah bagi organisme pemakan tumbuh-tumbuhan.'", "E. 'Harimau digolongkan sebagai salah satu kucing besar yang soliter.'"], a: 1, p: "Teks LHO harus bebas dari opini atau penilaian pribadi subjektif seperti 'hewan paling lucu menurut saya'." },
+            { q: "Cermatilah kalimat berikut: 'Ekosistem ialah suatu sistem ekologi yang terbentuk oleh hubungan timbal balik tak terpisahkan antara makhluk hidup dengan lingkungannya.' Kalimat tersebut didefinisikan secara...", o: ["A. Deskriptif fisik", "B. Subjektif opini", "C. Klasifikasi umum", "D. Saintifik/Teoretis", "E. Naratif cerita"], a: 3, p: "Kalimat tersebut memuat batasan pengertian ekosistem secara ilmiah teoretis (saintifik)." },
+            { q: "Kalimat definisi yang berupa pengelompokan ditandai dengan frasa...", o: ["A. Memiliki ciri-ciri khusus", "B. Terdiri atas / diklasifikasikan menjadi", "C. Sangat indah bila dilihat dari kejauhan", "D. Berfungsi untuk merusak ekosistem", "E. Diyakini oleh para penduduk setempat"], a: 1, p: "Definisi klasifikasi mengelompokkan objek menggunakan frasa seperti 'diklasifikasikan menjadi', 'terdiri atas'." },
+            { q: "Nilai moral utama yang biasanya ingin disampaikan penulis melalui sebuah teks anekdot sindiran politik adalah...", o: ["A. Rakyat harus selalu mengalah kepada penguasa.", "B. Pentingnya menjaga kejujuran dan amanah bagi pemegang kekuasaan negara.", "C. Korupsi adalah hal yang lumrah dalam kehidupan.", "D. Pengadilan tidak perlu dihormati oleh masyarakat.", "E. Pejabat berhak membatasi kritik rakyat."], a: 1, p: "Anekdot politik mengemas kritik sosial menjadi kelucuan untuk mengingatkan pemimpin akan moral kepemimpinan dan kejujuran." },
+            { q: "Dalam teks anekdot, nilai sosial yang sering dikritik lewat kisah kelucuan tokohnya berkaitan dengan...", o: ["A. Keindahan alam pedesaan yang mulai punah", "B. Kesenjangan sosial dan ketidakpedulian masyarakat terhadap aturan umum", "C. Kemajuan teknologi kecerdasan buatan", "D. Hubungan harmonis antara keluarga di kerajaan kuno", "E. Pelestarian kebudayaan tari adat"], a: 1, p: "Aspek sosial anekdot umumnya menyindir perilaku masyarakat yang kurang tertib atau abai terhadap aturan." },
+            { q: "Anekdot tidak hanya menyajikan humor belaka. Hal fundamental yang membedakan anekdot dengan lelucon biasa adalah...", o: ["A. Panjang pendeknya teks cerita.", "B. Adanya amanat, kritik, atau pesan moral kehidupan yang disisipkan.", "C. Penggunaan kata-kata yang sulit dimengerti.", "D. Jumlah tokoh yang terlibat di dalam cerita.", "E. Jenis media penyiaran ceritanya."], a: 1, p: "Lelucon sekadar menghibur, sedangkan anekdot memiliki muatan makna kritik, sindiran, atau pesan moral yang berguna bagi kehidupan." },
+            { q: "Seorang siswa menyindir fasilitas sekolah yang rusak berat dengan berkata, 'Wah, sekolah kita sangat estetik, jendelanya ventilasi alamiah tanpa kaca.' Nilai kehidupan yang dilanggar pihak sekolah berdasarkan sindiran ini adalah...", o: ["A. Nilai estetika arsitektur", "B. Nilai tanggung jawab sarana prasarana pendidikan", "C. Nilai kesopanan berbicara siswa", "D. Nilai kebebasan berpendapat guru", "E. Nilai kegotongroyongan warga sekolah"], a: 1, p: "Sindiran bernuansa ironi tersebut ditujukan pada kelalaian pengelolaan fasilitas belajar (tanggung jawab sarana sekolah)." },
+            { q: "Mengapa nilai kejujuran menjadi nilai yang paling sering diangkat dalam teks anekdot hukum?", o: ["A. Karena kejujuran tidak memiliki nilai jual.", "B. Karena penegakan hukum sering kali dicederai oleh kebohongan dan ketidakadilan oknum.", "C. Karena semua hakim menyukai cerita bohong.", "D. Agar pembaca takut pada polisi.", "E. Agar pelaku kejahatan mendapat simpati."], a: 1, p: "Anekdot hukum menyoroti ketimpangan integritas dan kejujuran para penegak hukum di meja persidangan." },
+            { q: "Nilai budaya yang sering kali dikritik dalam teks anekdot masyarakat urban modern adalah...", o: ["A. Budaya gotong royong yang sangat kuat", "B. Sikap konsumtif dan ketergantungan berlebih pada gadget/media sosial", "C. Pelestarian tarian daerah", "D. Kebiasaan makan bersama keluarga besar", "E. Ketertarikan mempelajari naskah kuno"], a: 1, p: "Anekdot kontemporer sering menyentil kecanduan dunia maya dan budaya konsumtif masyarakat kota." },
+            { q: "Dalam anekdot 'Maling Sandal vs Koruptor', seorang pemuda dihukum berat karena mencuri sandal, sementara koruptor dihukum ringan. Nilai kehidupan yang tersirat adalah kritik terhadap...", o: ["A. Kurangnya jumlah sandal di masjid", "B. Ketidakadilan dan ketimpangan hukum di suatu negara", "C. Perilaku konsumtif pemuda", "D. Mahalnya harga sandal jepit", "E. Rendahnya efektivitas pengamanan masjid"], a: 1, p: "Cerita populer ini menyindir prinsip keadilan hukum yang kerap tidak berimbang antara perkara kecil rakyat kecil dan kejahatan kelas atas." },
+            { q: "Bagian struktur teks anekdot yang memuat reaksi tokoh terhadap konflik, yang biasanya memicu gelak tawa sekaligus memuat nilai kebenaran disebut...", o: ["A. Abstraksi", "B. Orientasi", "C. Krisis", "D. Reaksi", "E. Koda"], a: 3, p: "Reaksi adalah kelanjutan dari krisis, berisi langkah tanggapan tokoh yang memuat puncak humor/kritikan." },
+            { q: "Manakah di bawah ini yang merupakan arti dari kata arkais 'Syahdan' dalam teks hikayat?", o: ["A. Kasihan sekali", "B. Selanjutnya / kemudian / lalu", "C. Istana raja", "D. Senjata sakti", "E. Pasukan perang"], a: 1, p: "Kata penghubung arkais 'Syahdan' memiliki padanan arti 'lalu', 'selanjutnya', atau 'kemudian' dalam bahasa melayu klasik." },
+            { q: "Di dalam hikayat sering ditemukan peristiwa yang tidak masuk akal sehat, seperti bayi lahir membawa panah sakti. Karakteristik ini disebut...", o: ["A. Istanasentris", "B. Anonim", "C. Kemustahilan / Kemukjizatan", "D. Statis", "E. Didaktis"], a: 2, p: "Kemustahilan merujuk pada plot hikayat yang tidak rasional (magis/luar biasa)." },
+            { q: "Arti kata arkais 'alkisah' pada awal paragraf hikayat adalah...", o: ["A. Cerita ini pun dimulai / konon ceritanya", "B. Akhir dari sebuah kisah menyedihkan", "C. Sebuah kerajaan kuno", "D. Nama raja yang bijaksana", "E. Beribu-ribu tahun yang lalu"], a: 0, p: "Alkisah merupakan penanda awal mulanya suatu alur hikayat diceritakan (padanan 'pada suatu waktu')." },
+            { q: "Hikayat memiliki sifat 'statis'. Maksud dari sifat statis pada karya sastra melayu klasik tersebut adalah...", o: ["A. Selalu berubah-ubah tema setiap ditulis ulang.", "B. Memiliki struktur formula cerita yang baku dan mirip satu sama lain.", "C. Ditulis oleh penulis yang dinamis.", "D. Ceritanya sangat cepat selesai.", "E. Tokoh utamanya tidak pernah bergerak."], a: 1, p: "Statis berarti pola cerita, penokohan, dan jalan konflik hikayat cenderung seragam, kaku, dan memiliki kemiripan rumus struktur." },
+            { q: "Kata arkais 'titah' memiliki sinonim makna dengan kata...", o: ["A. Perintah / Sabda (dari penguasa/raja)", "B. Hadiah emas permata", "C. Hukuman pancung", "D. Perjalanan jauh", "E. Istana megah"], a: 0, p: "Titah bermakna perkataan, perintah resmi, atau sabda dari seorang raja/penguasa." },
+            { q: "Tokoh utama dalam hikayat biasanya digambarkan memiliki kelebihan luar biasa, sakti mandraguna, dan selalu menang. Karakteristik penokohan ini dikenal sebagai...", o: ["A. Karakter realistis", "B. Karakter kesaktian / karomah", "C. Karakter melankolis", "D. Karakter pasif", "E. Karakter humoris"], a: 1, p: "Sifat sakti mandraguna pada tokoh utama merupakan ciri keunggulan tokoh fiktif dalam genre hikayat lama." },
+            { q: "Bila kita membaca kalimat 'Maka dipersuntinglah tuan putri oleh sang indra', kata 'dipersunting' bermakna...", o: ["A. Diusir dari istana", "B. Dipelihara dengan baik", "C. Dinikahi / dijadikan istri", "D. Diberi gelar pahlawan", "E. Dipenjarakan di menara"], a: 2, p: "Dipersunting berasal dari kata sunting yang berarti dipersuami/dinikahi." },
+            { q: "Hikayat menyebarkan nilai-nilai didaktis kepada pembacanya. Istilah 'didaktis' memiliki arti...", o: ["A. Bersifat menghibur dan melucu", "B. Mengandung unsur sejarah masa penjajahan", "C. Bersifat mendidik moral atau memberikan ajaran hidup", "D. Berisi ramalan masa depan dunia", "E. Bersifat mistis dan menakutkan"], a: 2, p: "Didaktis bermakna mendidik, mengandung pesan tuntunan etika atau keagamaan." },
+            { q: "Tujuan utama diadakannya suatu proses negosiasi adalah...", o: ["A. Mencari pihak yang paling bersalah dalam suatu masalah.", "B. Mencapai kesepakatan yang saling menguntungkan kedua belah pihak (win-win solution).", "C. Memaksakan kehendak sepihak agar dituruti mitra bisnis.", "D. Memperpanjang perdebatan tanpa kesimpulan.", "E. Mengalahkan argumen lawan bicara secara mutlak."], a: 1, p: "Negosiasi berfokus pada titik temu mufakat yang mengakomodasi kepentingan bersama secara adil." },
+            { q: "Bagian orientasi pada teks negosiasi berisi tentang...", o: ["A. Penyampaian maksud utama atau pengajuan barang.", "B. Tawar-menawar harga puncak.", "C. Salam pembuka, sapaan, atau pengenalan awal perbincangan.", "D. Penandatanganan berkas kontrak kerja sama.", "E. Pernyataan penolakan secara halus."], a: 2, p: "Orientasi merupakan bagian pembukaan teks negosiasi berupa salam pembuka, sapaan basa-basi sebelum masuk masalah." },
+            { q: "Jenis negosiasi yang menghasilkan keputusan di mana salah satu pihak merasa dirugikan dan pihak lain mendapat keuntungan penuh disebut...", o: ["A. Negosiasi Kolaboratif (Win-Win)", "B. Negosiasi Dominasi (Win-Lose)", "C. Negosiasi Menghindar (Lose-Lose)", "D. Negosiasi Kompromi (Lose-Lose)", "E. Negosiasi Asistensi"], a: 1, p: "Negosiasi Win-Lose (Dominasi) terjadi saat satu pihak memaksa pihak lawan menyetujui kesepakatan sepihak." },
+            { q: "Bahasa yang digunakan dalam negosiasi harus bersifat 'persuasif'. Arti kata persuasif adalah...", o: ["A. Membujuk atau memengaruhi secara halus agar pihak lain setuju.", "B. Memaksa dengan ancaman hukum.", "C. Menggunakan bahasa daerah yang kental.", "D. Berbicara dengan nada tinggi dan marah.", "E. Menggunakan isyarat tangan."], a: 0, p: "Persuasif bermakna bersifat membujuk atau merayu secara santun guna memengaruhi pemikiran lawan bicara." },
+            { q: "Dalam surat penawaran produk, pencantuman diskon atau potongan harga biasanya diletakkan pada bagian...", o: ["A. Alamat pengirim", "B. Isi surat (spesifikasi penawaran)", "C. Penutup surat", "D. Kop surat perusahaan", "E. Alamat penerima"], a: 1, p: "Detail barang, spesifikasi teknis, harga, diskon, dan metode pembayaran berada di paragraf isi surat niaga." },
+            { q: "Jika dalam negosiasi jual beli mobil bekas tidak tercapai kesepakatan harga karena jarak harga penawaran terlalu jauh, maka tindakan yang diambil adalah...", o: ["A. Memaksa pembeli membayar harga penjual.", "B. Menyepakati kondisi tanpa transaksi (No Deal) secara sopan.", "C. Melaporkan pembeli ke polisi.", "D. Merusak mobil tersebut.", "E. Melakukan intimidasi fisik."], a: 1, p: "Bila tawar-menawar mentok, negosiasi yang baik diakhiri mufakat untuk tidak bertransaksi (no deal) secara damai." },
+            { q: "Siapakah yang disebut sebagai 'partisipan' di dalam teks negosiasi?", o: ["A. Penonton pertunjukan drama.", "B. Pihak-pihak yang terlibat aktif dalam proses tawar-menawar.", "C. Penulis teks cerita sejarah.", "D. Pemerintah daerah setempat.", "E. Mediator yang tidak berbicara sama sekali."], a: 1, p: "Partisipan adalah aktor, subjek, atau pihak-pihak yang berinteraksi langsung melakukan negosiasi." },
+            { q: "Kalimat penutup surat penawaran niaga yang paling santun dan tepat adalah...", o: ["A. Cepat beli barang kami sebelum kehabisan!", "B. Demikian penawaran kami, kami tunggu pesanan Anda secepatnya.", "C. Atas perhatian dan kerja sama Bapak/Ibu, kami ucapkan terima kasih.", "D. Surat ini harus dibalas dalam waktu 2x24 jam.", "E. Jika tidak tertarik silakan abaikan surat ini."], a: 2, p: "Kalimat pilihan C merupakan penutup korespondensi surat niaga resmi yang profesional, apresiatif, dan sopan." },
+            { q: "Negosiasi antara serikat buruh dengan direksi perusahaan mengenai kenaikan gaji yang ditengahi oleh Dinas Tenaga Kerja merupakan contoh jenis negosiasi...", o: ["A. Negosiasi dengan Mediator (Pihak Ketiga)", "B. Negosiasi Monolog", "C. Negosiasi Nonformal", "D. Negosiasi Sepihak", "E. Negosiasi Tanpa Struktur"], a: 0, p: "Hadirnya Dinas Tenaga Kerja bertindak selaku penengah atau pihak ketiga (mediator) yang independen." },
+            { q: "Tujuan utama penulisan teks biografi tokoh inspiratif bagi pembaca adalah...", o: ["A. Membeberkan aib dan keburukan masa lalu tokoh secara detail.", "B. Menghibur pembaca dengan cerita fantasi fiktif.", "C. Memberikan keteladanan, motivasi, dan inspirasi hidup dari perjuangan tokoh.", "D. Mempromosikan produk jualan milik tokoh tersebut.", "E. Mengkritisi kebijakan politik tokoh."], a: 2, p: "Teks biografi mengulas pencapaian, kesulitan, dan kerja keras tokoh demi memotivasi pembaca." },
+            { q: "Setelah mengumpulkan bahan referensi tokoh, langkah selanjutnya dalam penyusunan biografi adalah membuat outline/kerangka karangan berdasarkan struktur...", o: ["A. Abstraksi - Evaluasi - Resolusi", "B. Orientasi - Kejadian/Peristiwa Penting - Reorientasi", "C. Tesis - Argumentasi - Penegasan Ulang", "D. Pembukaan - Isi - Lampiran Nilai", "E. Orientasi - Komplikasi - Resolusi"], a: 1, p: "Struktur standar penulisan biografi adalah Orientasi, Peristiwa Penting (konteks perjuangan), dan Reorientasi." },
+            { q: "Dalam teks biografi banyak ditemukan kata kerja tindakan (verba material). Contoh kata kerja tindakan adalah...", o: ["A. Membaca, menulis, mendirikan, membangun", "B. Merupakan, adalah, ialah", "C. Sangat pandai, luar biasa hebat, rajin", "D. Dia, ia, beliau", "E. Di surabaya, pada tahun, setelah itu"], a: 0, p: "Verba material/tindakan mengekspresikan perbuatan fisik konkret, seperti menulis, mendirikan." },
+            { q: "Berdasarkan masalah yang dibahas, biografi yang berfokus pada perjalanan karier seseorang dari titik bawah hingga sukses profesional disebut...", o: ["A. Biografi Politik", "B. Biografi Karier / Perjalanan Karier", "C. Biografi Intelektual", "D. Biografi Jurnalistik", "E. Biografi Keagamaan"], a: 1, p: "Biografi yang menitikberatkan perjuangan kerja, jabatan, dan profesi disebut biografi karier." },
+            { q: "Kata adjektiva (kata sifat) sering digunakan dalam biografi untuk mendeskripsikan karakter unggul tokoh. Contoh kata adjektiva adalah...", o: ["A. Bekerja keras", "B. Disiplin, cerdas, berani, tekun", "C. Di Yogyakarta", "D. Menemukan formula", "E. Adalah ahli fisika"], a: 1, p: "Disiplin, cerdas, berani, tekun merupakan klasifikasi kata sifat (adjektiva) yang mendeskripsikan watak tokoh." },
+            { q: "Mengapa wawancara langsung dengan tokoh atau keluarga dekatnya sangat berharga dalam proses penyusunan biografi?", o: ["A. Agar buku biografi cepat habis terjual.", "B. Untuk mendapatkan data primer yang otentik dan kisah personal yang akurat.", "C. Untuk meminta uang saku penelitian.", "D. Agar tokoh merasa terganggu privasinya.", "E. Agar tidak perlu mencari buku rujukan di perpustakaan."], a: 1, p: "Wawancara langsung menghasilkan data primer tangan pertama yang valid, personal, dan kaya detail emosional." },
+            { q: "Perhatikan kalimat: 'B.J. Habibie kuliah di Jerman kemudian beliau bekerja di industri penerbangan terkemuka.' Kata hubung (konjungsi) temporal dalam kalimat tersebut adalah...", o: ["A. Di", "B. Kemudian", "C. Kuliah", "D. Bekerja", "E. Terkemuka"], a: 1, p: "Konjungsi temporal menyatakan urutan waktu, dalam kalimat ditunjukkan oleh kata 'kemudian'." },
+            { q: "Sebuah teks biografi yang ditulis tanpa seizin atau tanpa sepengetahuan tokoh yang diceritakan (biasanya karena tokoh sudah wafat atau kontroversial) dikategorikan sebagai...", o: ["A. Authorized Biography", "B. Unauthorized Biography", "C. Biografi Politik", "D. Biografi Mandiri", "E. Autobiografi resmi"], a: 1, p: "Unauthorized biography ditulis tanpa izin tertulis atau persetujuan langsung dari tokoh/ahli waris." },
+            { q: "Bagian reorientasi dalam teks biografi bersifat opsional (boleh ada, boleh tidak). Bagian ini umumnya berisi...", o: ["A. Daftar pustaka rujukan penulisan.", "B. Pandangan evaluatif, kesimpulan, atau komentar subjektif penulis terhadap kisah hidup tokoh.", "C. Silsilah keluarga lengkap nenek moyang tokoh.", "D. Foto-foto dokumentasi masa kecil tokoh.", "E. Ucapan terima kasih sponsor."], a: 1, p: "Reorientasi memuat simpulan penutup penulis berupa pandangan evaluatif, teladan, atau kesan atas kisah hidup tokoh." },
+            { q: "Unsur pembangun puisi terdiri atas unsur fisik dan unsur batin. Manakah di bawah ini yang tergolong dalam unsur batin puisi?", o: ["A. Tipografi, diksi, rima", "B. Tema, rasa, nada, amanat", "C. Majas, citraan, rima", "D. Bait, baris, tanda baca", "E. Enjambemen, asonansi, aliterasi"], a: 1, p: "Unsur batin berkaitan erat dengan isi batin pemikiran penyair, meliputi: Tema (sense), Rasa (feeling), Nada (tone), dan Amanat (intention)." },
+            { q: "Bait puisi: 'Teriakanmu membakar semangat jiwaku yang dingin membeku.' Majas dominan pada kutipan puisi tersebut adalah...", o: ["A. Majas Litotes", "B. Majas Asosiasi", "C. Majas Hiperbola", "D. Majas Personifikasi", "E. Majas Ironi"], a: 2, p: "Majas hiperbola melukiskan sesuatu secara berlebi-lebihan ('teriakan membakar semangat yang membeku') demi efek dramatisasi puitis." },
+            { q: "Persamaan atau pengulangan bunyi akhir baris pada bait puisi untuk menambah keindahan musikalisasi disebut...", o: ["A. Diksi", "B. Rima / Ritme", "C. Enjambemen", "D. Imaji", "E. Tipografi"], a: 1, p: "Rima adalah penataan ritmik bunyi vokal/konsonan di ujung baris puisi untuk mempercantik nilai musikalitas." },
+            { q: "Imaji pendengaran (auditif) dalam puisi dirangsang melalui diksi yang membuat pembaca seolah-olah...", o: ["A. Melihat pemandangan alam secara langsung.", "B. Mendengar suara, bunyi, atau desau yang dideskripsikan.", "C. Merasakan dinginnya embun pagi hari.", "D. Mencium bau harum bunga melati.", "E. Menyentuh dinding yang kasar."], a: 1, p: "Imaji auditif memicu tanggapan indra pendengar pembaca seolah menangkap getaran suara nyata." },
+            { q: "Cermatilah bait puisi berikut! 'Kertas putih menerima coretan pena dengan sabar'. Majas yang digunakan pada larik puisi di atas adalah...", o: ["A. Majas Personifikasi", "B. Majas Metafora", "C. Majas Ironi", "D. Majas Pleonasme", "E. Majas Sinekdoke"], a: 0, p: "Personifikasi melekatkan watak atau kemampuan perilaku manusia pada benda mati ('kertas putih bersabar')." },
+            { q: "Amanat di dalam puisi disampaikan oleh penyair kepada pembaca secara...", o: ["A. Tersurat jelas dalam bentuk undang-undang.", "B. Tersirat di balik pilihan kata, kiasan, dan tema keseluruhan puisi.", "C. Tertulis di judul puisi saja.", "D. Melalui catatan kaki di bagian paling bawah halaman buku.", "E. Melalui daftar pustaka."], a: 1, p: "Pesan/amanat puisi dikemas implisit atau tersirat, pembaca perlu menghayati keseluruhan makna diksi puisi terlebih dahulu." },
+            { q: "Bait puisi berikut memiliki rima silang. Manakah pola yang tepat untuk rima silang?", o: ["A. a - a - a - a", "B. a - a - b - b", "C. a - b - a - b", "D. a - b - b - a", "E. a - b - c - d"], a: 2, p: "Rima silang berbunyi bergantian silang antara baris (pola rima a-b-a-b)." },
+            { q: "Karya sastra puisi terikat oleh konsentrasi bahasa. Maksud dari 'konsentrasi bahasa' pada puisi adalah...", o: ["A. Bahasanya harus panjang seperti cerita novel.", "B. Penggunaan kata-kata yang ringkas, padat makna, dan kaya akan majas kiasan.", "C. Puisi tidak boleh memiliki makna sama sekali.", "D. Penggunaan istilah asing yang rumit dipahami.", "E. Menggunakan bahasa sehari-hari tanpa aturan."], a: 1, p: "Bahasa puisi padat makna dan terfokus (terkonsentrasi) lewat seleksi diksi puitis pilihan." }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+

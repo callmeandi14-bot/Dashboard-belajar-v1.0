@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Pancasila - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Pancasila</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Arti Penting Kebinekaan</div>
+                        <div>✔ Pendapat Ahli Tentang Sifat Hukum</div>
+                        <div>✔ Peran Pelajar Menjaga Persatuan</div>
+                        <div>✔ Hubungan Pancasila & Warga Negara Baik</div>
+                        <div>✔ Hak & Kewajiban Warga Negara</div>
+                        <div>✔ Ancaman terhadap Persatuan Bangsa</div>
+                        <div>✔ Perilaku Demokratis di Sekolah</div>
+                        <div>✔ Cara Menjaga Persatuan Bangsa</div>
+                        <div>✔ Konsep Integrasi Nasional</div>
+                        <div>✔ Faktor Keberagaman Indonesia</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Pancasila</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Pancasila Kelas 10.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA PANCASILA -->
+    <script>
+        // BANK DATA PANCASILA (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E)
+        const bankSoal = [
+            // --- TOPIC 1: Arti Penting Kebinekaan ---
+            { q: "Mengapa kebinekaan atau keragaman budaya memiliki arti penting yang sangat strategis bagi eksistensi bangsa Indonesia?", o: ["A. Agar bangsa Indonesia mudah dikelompokkan berdasarkan ras", "B. Sebagai modal sosial sekaligus kekayaan nasional untuk mempererat persatuan dalam bingkai NKRI", "C. Agar setiap daerah dapat bersaing ketat menunjukkan budaya terbaiknya", "D. Memudahkan bangsa asing untuk memetakan dan menguasai kekayaan alam Indonesia", "E. Mengurangi peran pemerintah pusat dalam mengatur kebudayaan daerah"], a: 1, p: "Kebinekaan merupakan modal sosial yang memperkaya identitas nasional dan perekat persatuan bangsa dalam wadah Bhinneka Tunggal Ika." },
+            { q: "Semboyan 'Bhinneka Tunggal Ika' yang menjadi lambang persatuan bangsa Indonesia pertama kali ditulis dalam kitab Sutasoma karya...", o: ["A. Mpu Prapanca", "B. Mpu Tantular", "C. Mpu Sedah", "D. Mpu Gandring", "E. Mpu Panuluh"], a: 1, p: "Semboyan persatuan nasional tersebut diambil dari Kitab Sutasoma karangan Mpu Tantular pada masa Kerajaan Majapahit." },
+            { q: "Arti penting kebinekaan dalam pembangunan nasional di era globalisasi saat ini ditunjukkan oleh sikap...", o: ["A. Menolak kebudayaan asing karena tidak sesuai dengan nilai luhur Pancasila", "B. Saling menghormati perbedaan suku, agama, dan antargolongan guna menciptakan stabilitas keamanan nasional", "C. Mengunggulkan budaya daerah sendiri di kancah internasional tanpa memedulikan budaya lain", "D. Menyamakan seluruh bahasa daerah agar tidak terjadi perbedaan tafsir komunikasi", "E. Mengganti ideologi negara dengan budaya modern"], a: 1, p: "Sikap saling menghormati perbedaan mutlak diperlukan demi menjaga stabilitas keamanan nasional di tengah arus globalisasi." },
+            { q: "Konsekuensi logis apabila masyarakat Indonesia mengabaikan arti penting kebinekaan dalam kehidupan sehari-hari adalah...", o: ["A. Perekonomian negara berkembang pesat", "B. Terjadinya disintegrasi sosial, konflik horizontal, dan perpecahan bangsa", "C. Terwujudnya keadilan sosial secara merata", "D. Hilangnya pengaruh kebudayaan asing", "E. Menguatnya rasa solidaritas nasional"], a: 1, p: "Pengabaian kebinekaan secara ekstrem memicu disintegrasi, perpecahan, dan konflik SARA." },
+            { q: "Kebinekaan bangsa Indonesia bukan merupakan penghalang persatuan, melainkan alat untuk mencapai...", o: ["A. Kekuasaan politik mutlak kelompok mayoritas", "B. Keselarasan, keserasian, dan keseimbangan dalam hidup bermasyarakat", "C. Penyeragaman seluruh kebudayaan daerah", "D. Dominasi budaya modern atas budaya tradisional", "E. Ketergantungan ekonomi terhadap negara lain"], a: 1, p: "Keragaman di Indonesia merupakan kekayaan perekat bangsa untuk mencapai keselarasan, keserasian, dan keseimbangan hidup bernegara." },
+
+            // --- TOPIC 2: Pendapat Ahli Tentang Sifat Hukum ---
+            { q: "Ahli hukum Romawi kuno, Cicero, mengemukakan adagium terkenal: 'Ubi societas ibi ius'. Apakah arti penting dari pernyataan tersebut?", o: ["A. Hukum hanya berlaku bagi masyarakat yang modern dan beradab saja", "B. Di mana ada masyarakat, di situ pasti ada hukum yang mengatur kehidupan", "C. Hukum diciptakan hanya untuk membatasi kebebasan masyarakat kelas bawah", "D. Masyarakat tidak membutuhkan hukum jika moralitas sudah tegak sempurna", "E. Hukum selalu berubah-ubah mengikuti selera penguasa wilayah"], a: 1, p: "'Ubi societas ibi ius' berarti hukum selalu melekat dalam kehidupan bermasyarakat untuk menciptakan ketertiban umum." },
+            { q: "Mochtar Kusumaatmadja mengemukakan pandangan bahwa hukum merupakan sarana pembaharuan masyarakat. Maksud dari pendapat tersebut adalah...", o: ["A. Hukum harus selalu diubah setiap kali terjadi pergantian rezim pemerintahan", "B. Hukum berfungsi mengarahkan dan merekayasa perkembangan masyarakat menuju arah yang lebih baik (law as a tool of social engineering)", "C. Hukum tidak boleh tertinggal oleh kebiasaan-kebiasaan lama masyarakat tradisional", "D. Hukum harus bersifat kaku dan menentang segala perubahan teknologi informasi", "E. Hukum hanya ditujukan untuk mengadili pelaku kejahatan siber"], a: 1, p: "Pandangan ini melihat hukum sebagai instrumen aktif/alat rekayasa sosial demi kemajuan masyarakat." },
+            { q: "Sifat hukum secara universal adalah mengatur dan memaksa. Mengapa hukum harus memiliki sifat memaksa dalam penerapannya?", o: ["A. Agar para penguasa dapat berbuat sewenang-wenang kepada rakyatnya", "B. Demi tegaknya keadilan dan kepatuhan masyarakat terhadap norma hukum yang berlaku", "C. Agar masyarakat merasa takut dan tidak berani beraspirasi secara kritis", "D. Untuk meningkatkan penerimaan keuangan negara dari denda hukum", "E. Agar seluruh sistem peradilan nasional berjalan searah tanpa banding"], a: 1, p: "Sifat memaksa hukum didukung sanksi tegas agar norma ditaati dan ketertiban dapat terwujud nyata." },
+            { q: "Thomas Hobbes mengemukakan istilah 'Homo homini lupus' yang melatarbelakangi lahirnya hukum negara. Konsep ini menjelaskan bahwa...", o: ["A. Manusia adalah makhluk yang selalu menyayangi sesamanya", "B. Tanpa adanya hukum, manusia dapat menjadi serigala (ancaman) bagi manusia lainnya", "C. Hukum alam adalah satu-satunya hukum yang adil bagi umat manusia", "D. Hukum harus bersumber dari kekuatan militer yang tidak terbatas", "E. Penguasa negara tidak tunduk pada aturan hukum hukum tertulis"], a: 1, p: "Konsep Hobbes menerangkan bahwa manusia tanpa hukum negara akan saling memangsa demi kekuasaan." },
+            { q: "Aristoteles membagi keadilan hukum menjadi keadilan distributif dan keadilan komutatif. Keadilan komutatif memiliki makna yaitu...", o: ["A. Pemberian hak kepada seseorang berdasarkan jasa atau kontribusinya", "B. Perlakuan yang sama kepada setiap orang tanpa memandang jasa atau latar belakangnya", "C. Penegakan hukum yang hanya berlaku bagi aparatur sipil negara saja", "D. Pembagian kekayaan alam secara sepihak oleh lembaga tinggi negara", "E. Hukum adat yang diselaraskan dengan undang-undang internasional"], a: 1, p: "Keadilan komutatif menuntut perlakuan yang sama rata bagi setiap individu dalam perkara yang sama." },
+
+            // --- TOPIC 3: Cara Pelajar Menjaga Persatuan ---
+            { q: "Manakah tindakan konkret seorang pelajar yang mencerminkan upaya menjaga persatuan dan kesatuan di lingkungan sekolah?", o: ["A. Membantu teman satu suku saja saat mengerjakan ujian sekolah", "B. Menolak berteman dengan siswa yang memiliki keyakinan agama berbeda", "C. Menghindari sikap etnosentrisme dan aktif bergaul dengan seluruh teman tanpa membeda-bedakan", "D. Selalu memprotes keputusan guru jika tidak menguntungkan kelompoknya", "E. Membuat geng eksklusif yang hanya beranggotakan siswa kaya"], a: 2, p: "Menolak sikap etnosentrisme dan membaur tanpa batas SARA merupakan aksi nyata pelajar menjaga persatuan." },
+            { q: "Salah satu peran penting organisasi kesiswaan (seperti OSIS) dalam menanamkan persatuan bagi pelajar adalah...", o: ["A. Melatih siswa memenangkan kompetisi politik praktis sejak dini", "B. Menjadi wadah pemersatu untuk berkolaborasi tanpa memandang perbedaan latar belakang", "C. Mengkoordinir aksi unjuk rasa menolak kebijakan kepala sekolah", "D. Menyeleksi siswa yang berhak mendapatkan bantuan beasiswa secara subjektif", "E. Membuat aturan sekolah tandingan"], a: 1, p: "OSIS mendidik siswa bersosialisasi dan bekerja sama secara harmonis lintas kelas dan suku." },
+            { q: "Jika terjadi perselisihan atau pertengkaran antar-teman di kelas, tindakan bijak seorang pelajar adalah...", o: ["A. Mendukung teman yang paling dekat secara emosional tanpa peduli siapa yang salah", "B. Menjadi penengah (mediator) yang netral serta mengajak mereka menyelesaikan masalah dengan musyawarah", "C. Mengompori perkelahian agar suasana kelas menjadi ramai", "D. Membiarkan saja karena bukan urusan pribadi", "E. Melaporkan kedua teman ke aparat kepolisian langsung"], a: 1, p: "Pelajar pancasila bertindak melerai perselisihan secara damai melalui pendekatan musyawarah mufakat." },
+            { q: "Menghormati pelaksanaan ibadah teman sekolah yang berbeda keyakinan merupakan wujud pengamalan Pancasila, khususnya sila...", o: ["A. Pertama (Ketuhanan Yang Maha Esa)", "B. Kedua (Kemanusiaan yang Adil dan Beradab)", "C. Ketiga (Persatuan Indonesia)", "D. Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan...)", "E. Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)"], a: 0, p: "Menghormati kebebasan beribadah umat lain merupakan pengamalan inti nilai ketuhanan." },
+            { q: "Upaya pelajar dalam mengantisipasi penyebaran hoaks dan ujaran kebencian di media sosial yang dapat memecah persatuan bangsa adalah...", o: ["A. Membagikan langsung semua berita yang masuk ke grup chat sekolah", "B. Menyaring kebenaran informasi sebelum membagikannya (Saring sebelum Sharing)", "C. Membalas ujaran kebencian dengan makian yang lebih kasar", "D. Menghapus akun media sosial secara berkala", "E. Membuat berita tandingan yang fiktif"], a: 1, p: "Menyaring validitas informasi mencegah pelajar menjadi penyebar hoaks perusak persatuan bangsa." },
+
+            // --- TOPIC 4: Hubungan Pancasila Dengan Warga Negara Baik ---
+            { q: "Bagaimanakah keterkaitan antara nilai Pancasila dengan pembentukan karakter warga negara yang baik (good citizen)?", o: ["A. Pancasila hanya berfungsi sebagai bahan hafalan pelajaran akademis di sekolah", "B. Pancasila merupakan landasan moral, etika, dan panduan berperilaku bagi warga negara dalam kehidupan bermasyarakat", "C. Pancasila membebaskan warga negara untuk bertindak tanpa mematuhi hukum tertulis", "D. Pancasila mewajibkan warga negara untuk selalu setuju dengan kebijakan pejabat tanpa kritik", "E. Pancasila membatasi interaksi sosial warga negara dengan dunia luar"], a: 1, p: "Pancasila adalah panduan moral dan ideologis guna membentuk warga negara berkarakter mulia." },
+            { q: "Sila kedua Pancasila, 'Kemanusiaan yang adil dan beradab', membimbing warga negara yang baik untuk bersikap...", o: ["A. Mengutamakan kepentingan kelompok di atas kepentingan negara", "B. Menjunjung tinggi persamaan derajat, hak, dan kewajiban asasi manusia tanpa membedakan SARA", "C. Menyerahkan urusan kemanusiaan sepenuhnya kepada organisasi internasional", "D. Menuntut hak tanpa melaksanakan kewajiban asasi", "E. Berpartisipasi aktif dalam kegiatan militer pertahanan negara"], a: 1, p: "Persamaan derajat dan toleransi kemanusiaan universal dijabarkan tegas pada sila kedua." },
+            { q: "Seorang warga negara yang baik senantiasi menaati rambu-rambu lalu lintas meskipun tidak ada petugas kepolisian yang berjaga. Perilaku ini didorong oleh pengamalan nilai Pancasila berupa...", o: ["A. Rasa takut didenda hukum", "B. Kesadaran hukum dan tanggung jawab moral menjaga ketertiban bersama", "C. Keinginan dipuji oleh pengendara lain", "D. Pengaruh adat istiadat setempat yang kental", "E. Dorongan untuk segera sampai ke tujuan pribadi"], a: 1, p: "Kepatuhan hukum secara sukarela lahir dari kesadaran moral pancasila untuk menjaga keselamatan bersama." },
+            { q: "Sila keempat Pancasila membimbing warga negara yang baik dalam menyelesaikan masalah kenegaraan melalui mekanisme...", o: ["A. Pengambilan keputusan sepihak oleh presiden", "B. Musyawarah untuk mencapai mufakat dengan menjunjung tinggi gotong royong", "C. Pemungutan suara tanpa memberikan ruang diskusi bagi kelompok minoritas", "D. Menyerahkan keputusan pada keputusan hukum internasional", "E. Demonstrasi anarkis di depan gedung perwakilan rakyat"], a: 1, p: "Musyawarah mufakat demi kemaslahatan bersama adalah roh kedaulatan rakyat sila keempat." },
+            { q: "Ciri warga negara yang mengamalkan sila kelima Pancasila, 'Keadilan Sosial...', dalam kehidupan ekonomi sehari-hari adalah...", o: ["A. Menimbun bahan pokok demi keuntungan pribadi yang besar", "B. Menjalankan gaya hidup sederhana dan tidak melakukan pemborosan", "C. Memiliki properti mewah sebanyak mungkin tanpa membayar pajak", "D. Menolak bekerja sama dengan koperasi daerah", "E. Menuntut pembagian bantuan sosial secara cuma-cuma tanpa bekerja"], a: 1, p: "Sila kelima melarang pemborosan dan gaya hidup mewah karena merugikan asas keadilan sosial." },
+
+            // --- TOPIC 5: Kewajiban Warga Negara ---
+            { q: "Berdasarkan Pasal 27 Ayat (3) UUD NRI Tahun 1945, setiap warga negara berhak dan wajib ikut serta dalam upaya...", o: ["A. Pembangunan ekonomi nasional", "B. Pembelaan negara", "C. Penegakan hukum dan keadilan peradilan", "D. Pemberantasan kemiskinan", "E. Pelestarian kebudayaan daerah"], a: 1, p: "Pasal 27 ayat 3 mengatur hak dan kewajiban warga negara dalam hal upaya Bela Negara." },
+            { q: "Manakah di bawah ini yang dikategorikan sebagai kewajiban asasi warga negara Indonesia dalam kehidupan bernegara?", o: ["A. Mendapatkan pekerjaan dan penghidupan yang layak", "B. Menjunjung tinggi hukum dan pemerintahan dengan tidak ada kecualinya", "C. Mendapatkan pendidikan dasar gratis dari pemerintah", "D. Mengeluarkan pendapat secara bebas tanpa batasan undang-undang", "E. Memilih pemimpin dalam pemilihan umum secara bebas"], a: 1, p: "Menaati dan menjunjung tinggi hukum dan pemerintahan diatur sebagai kewajiban utama warga negara pada Pasal 27 Ayat (1)." },
+            { q: "Kewajiban ikut serta dalam usaha pertahanan dan keamanan negara oleh setiap warga negara diatur dalam Pasal...", o: ["A. Pasal 27 Ayat (1)", "B. Pasal 28D Ayat (1)", "C. Pasal 30 Ayat (1)", "D. Pasal 31 Ayat (1)", "E. Pasal 34 Ayat (1)"], a: 2, p: "Kewajiban ikut serta sishankamrata diatur eksplisit dalam Pasal 30 Ayat (1) UUD NRI 1945." },
+            { q: "Mengapa pembayaran pajak dikategorikan sebagai salah satu kewajiban warga negara yang paling mendasar?", o: ["A. Pajak digunakan untuk membiayai pengeluaran pribadi para pejabat negara", "B. Pajak merupakan sumber pendapatan utama negara untuk membiayai pembangunan nasional dan fasilitas publik", "C. Agar negara Indonesia terlihat makmur oleh dunia luar", "D. Pembayaran pajak wajib dilakukan agar terhindar dari status tahanan militer", "E. Pajak hanya diwajibkan bagi aparatur sipil negara saja"], a: 1, p: "Pajak adalah instrumen gotong royong warga negara untuk membiayai pembangunan fasilitas publik nasional." },
+            { q: "Setiap warga negara wajib menghormati hak asasi orang lain dalam tertib kehidupan bermasyarakat, berbangsa, dan bernegara. Hal ini tertuang dalam pasal...", o: ["A. Pasal 28J Ayat (1)", "B. Pasal 28A", "C. Pasal 29 Ayat (2)", "D. Pasal 30 Ayat (2)", "E. Pasal 27 Ayat (2)"], a: 0, p: "Pasal 28J ayat 1 mewajibkan setiap orang menghormati hak asasi manusia orang lain." },
+
+            // --- TOPIC 6: Ancaman Terhadap Persatuan Bangsa ---
+            { q: "Ancaman nonmiliter yang merusak moral dan karakter bangsa lewat penyebaran gaya hidup bebas, materialisme, dan pornografi disebut...", o: ["A. Ancaman Sabotase", "B. Ancaman Spionase", "C. Ancaman berdimensi Sosial Budaya (Westernisasi)", "D. Ancaman Agresi Militer", "E. Ancaman Separatisme daerah"], a: 2, p: "Gaya hidup bebas, sekularisme, dan degradasi moral merupakan ancaman berdimensi sosial budaya (penetrasi budaya luar)." },
+            { q: "Sikap mementingkan suku bangsa sendiri secara berlebihan serta memandang rendah kebudayaan suku lain disebut...", o: ["A. Chauvinisme", "B. Etnosentrisme", "C. Kosmopolitanisme", "D. Patriotisme", "E. Nasionalisme"], a: 1, p: "Etnosentrisme adalah pandangan yang mengagungkan suku sendiri dan menyepelekan keragaman suku lain." },
+            { q: "Sikap cinta tanah air secara berlebihan yang mengagungkan bangsa sendiri dan memandang rendah bangsa lain disebut...", o: ["A. Nasionalisme", "B. Patriotisme", "C. Chauvinisme", "D. Liberalisme", "E. Individualisme"], a: 2, p: "Chauvinisme merupakan bentuk nasionalisme sempit yang sangat destruktif terhadap perdamaian dunia." },
+            { q: "Salah satu ancaman internal yang nyata terhadap integrasi nasional bangsa Indonesia dalam bidang politik adalah...", o: ["A. Penipuan transaksi online internasional", "B. Munculnya gerakan separatisme yang ingin memisahkan diri dari NKRI", "C. Perubahan iklim global", "D. Ketergantungan impor komoditas pangan", "E. Masuknya wisatawan asing secara massal"], a: 1, p: "Separatisme bermotif politik atau ideologis langsung mengancam kedaulatan teritorial NKRI." },
+            { q: "Ancaman di bidang ideologi yang berpotensi merongrong Pancasila sebagai ideologi negara Indonesia adalah...", o: ["A. Paham Marxisme, Komunisme, dan Liberalisme ekstrem", "B. Kurangnya ketersediaan lapangan kerja", "C. Pencurian ikan oleh kapal asing", "D. Inflasi keuangan nasional", "E. Bencana alam berskala nasional"], a: 0, p: "Paham komunisme dan liberalisme ekstrem sangat bertolak belakang dengan asas kekeluargaan dan religiusitas Pancasila." },
+
+            // --- TOPIC 7: Perilaku Demokratis Di Sekolah ---
+            { q: "Manakah contoh perilaku demokratis yang dapat diterapkan pelajar di lingkungan sekolah?", o: ["A. Menolak melaksanakan keputusan rapat kelas jika pendapatnya tidak diterima", "B. Mengikuti pemilihan ketua OSIS secara jujur, adil, bebas, dan rahasia", "C. Meminta wali kelas menunjuk ketua kelas tanpa melalui pemungutan suara", "D. Mencontek pekerjaan teman yang paling pintar di kelas", "E. Membuat petisi memaksa sekolah meliburkan hari ujian"], a: 1, p: "Pemilihan OSIS secara LUBER JURDIL merupakan laboratorium demokrasi nyata bagi para pelajar." },
+            { q: "Dalam musyawarah kelas untuk menentukan tujuan piknik sekolah, sikap yang sesuai dengan nilai demokrasi Pancasila adalah...", o: ["A. Walkout dari ruang rapat jika tujuannya tidak terpilih", "B. Menerima dengan lapang dada dan bertanggung jawab atas hasil keputusan bersama", "C. Memaksa anggota musyawarah lain menyetujui pendapatnya", "D. Menuduh panitia rapat melakukan kecurangan", "E. Mengabaikan hasil rapat dan merencanakan piknik sendiri"], a: 1, p: "Menerima dan melaksanakan keputusan mufakat secara ikhlas merupakan indikator kematangan budaya demokrasi." },
+            { q: "Demokrasi Pancasila menjamin adanya persamaan hak bagi setiap anggota musyawarah. Di lingkungan sekolah, hal ini tecermin dari...", o: ["A. Siswa laki-laki memiliki suara lebih dominan dari siswa perempuan", "B. Setiap siswa memiliki hak suara yang sama untuk mengemukakan pendapat tanpa diskriminasi", "C. Pengurus kelas berhak memotong pembicaraan anggota kelas", "D. Hanya siswa berprestasi yang boleh berpendapat", "E. Guru memiliki hak veto mutlak membatalkan keputusan kelas"], a: 1, p: "Persamaan hak berpendapat tanpa sekat latar belakang merupakan implementasi kesetaraan demokrasi." },
+            { q: "Mengapa budaya perundungan (bullying) di sekolah dikategorikan sebagai pelanggaran terhadap nilai demokrasi dan HAM?", o: ["A. Karena merugikan kantin sekolah", "B. Karena merusak kebebasan, martabat, dan hak asasi siswa untuk belajar dengan aman", "C. Karena membuat siswa malas berolahraga", "D. Karena menentang kurikulum nasional", "E. Karena memperlambat proses kelulusan siswa"], a: 1, p: "Bullying merampas hak asasi individu untuk hidup merdeka, aman, bebas dari intimidasi." },
+            { q: "Penerapan prinsip keterbukaan (transparansi) yang demokratis oleh pengurus kelas ditunjukkan dengan cara...", o: ["A. Menyimpan uang kas kelas untuk keperluan pribadi", "B. Melaporkan laporan keuangan kas kelas secara berkala dan terbuka di mading kelas", "C. Mengadakan rapat kelas rahasia tanpa memberi tahu anggota lain", "D. Menentukan denda kas secara sepihak", "E. Menunjuk petugas piket tanpa jadwal tetap"], a: 1, p: "Transparansi keuangan melatih akuntabilitas dan kejujuran tata kelola organisasi yang demokratis." },
+
+            // --- TOPIC 8: Salah Satu Cara Menjaga Persatuan Bangsa ---
+            { q: "Salah satu langkah preventif paling mendasar untuk menjaga persatuan bangsa di tengah masyarakat yang majemuk adalah...", o: ["A. Melakukan asimilasi paksa seluruh kebudayaan minoritas", "B. Mengembangkan sikap toleransi, empati, dan saling menghormati perbedaan keyakinan (moderasi beragama)", "C. Membatasi mobilitas penduduk antarpulau", "D. Menghapus kurikulum muatan lokal di sekolah", "E. Melarang perkawinan antarsuku"], a: 1, p: "Toleransi dan moderasi beragama meredam fanatisme sempit yang memicu gesekan antargolongan." },
+            { q: "Bagaimanakah penerapan prinsip gotong royong dapat memperkuat persatuan dan kesatuan nasional?", o: ["A. Gotong royong memaksa masyarakat mengabaikan hak milik pribadi", "B. Melalui kerja bersama menyelesaikan masalah publik tanpa memedulikan sekat suku dan agama", "C. Gotong royong hanya menguntungkan pemerintah daerah saja", "D. Gotong royong memicu persaingan antar-desa", "E. Gotong royong menggantikan kewajiban membayar pajak"], a: 1, p: "Gotong royong menyatukan energi kolektif lintas identitas primordial untuk kepentingan bersama." },
+            { q: "Sikap patriotisme yang dikembangkan warga negara untuk menjaga keutuhan NKRI dari ronggohan luar adalah...", o: ["A. Membenci warga negara asing yang masuk ke Indonesia", "B. Siap sedia membela tanah air dengan segenap jiwa raganya sesuai profesi masing-masing", "C. Membeli produk luar negeri secara berlebihan", "D. Mengikuti tren politik luar negeri secara ekstrem", "E. Menolak berpartisipasi dalam pemilu nasional"], a: 1, p: "Patriotisme fungsional di era modern diwujudkan lewat karya nyata membangun negeri sesuai profesi." },
+            { q: "Prinsip 'Bhinneka Tunggal Ika' mengajarkan kita bahwa persatuan Indonesia diwujudkan melalui...", o: ["A. Penyeragaman segala perbedaan suku dan agama", "B. Penghargaan atas keragaman yang disatukan oleh komitmen kebangsaan bersama", "C. Pengabaian kebudayaan daerah demi budaya nasional", "D. Pembagian wilayah otonomi khusus tanpa batas", "E. Dominasi budaya jawa atas budaya luar Jawa"], a: 1, p: "Semboyan persatuan menghargai eksistensi keunikan lokal dalam harmoni satu kesatuan bangsa." },
+            { q: "Upaya menangkal radikalisme yang mengancam keutuhan ideologi Pancasila di lingkungan masyarakat adalah...", o: ["A. Membatasi pengajian keagamaan secara total", "B. Menanamkan wawasan kebangsaan, bela negara, dan literasi keagamaan yang inklusif sejak dini", "C. Melakukan patroli militer di seluruh pemukiman sipil", "D. Menangkap siapa saja yang mengkritik kinerja kabinet", "E. Mewajibkan pemakaian seragam militer bagi PNS"], a: 1, p: "Wawasan kebangsaan dan literasi inklusif membentengi pemikiran generasi muda dari doktrin radikal ekstrem." },
+
+            // --- TOPIC 9: Integrasi Nasional ---
+            { q: "Apakah definisi yang paling tepat dari istilah integrasi nasional?", o: ["A. Penyatuan berbagai kelompok sosial budaya ke dalam kesatuan wilayah dan pembentukan identitas nasional", "B. Proses pemisahan wilayah-wilayah otonom berdasarkan kesamaan agama", "C. Penggabungan negara Indonesia dengan negara tetangga di Asia Tenggara", "D. Penyeragaman seluruh bahasa daerah menjadi satu bahasa resmi saja", "E. Dominasi politik pusat atas seluruh anggaran daerah"], a: 0, p: "Integrasi nasional menyatukan keragaman kelompok ke dalam entitas satu nusa, satu bangsa, satu bahasa." },
+            { q: "Manakah di bawah ini yang dikategorikan sebagai faktor pendorong (pendukung) integrasi nasional bangsa Indonesia?", o: ["A. Adanya rasa senasib sepenanggungan akibat sejarah penjajahan masa lalu", "B. Wilayah Indonesia yang sangat luas dan dipisahkan lautan", "C. Masih maraknya paham etnosentrisme di berbagai daerah", "D. Ketimpangan pembangunan infrastruktur antarwilayah", "E. Masuknya pengaruh budaya asing secara bebas"], a: 0, p: "Rasa senasib perjuangan mengusir penjajah melahirkan ikatan batin pemersatu bangsa." },
+            { q: "Faktor penghambat utama terwujudnya integrasi nasional di negara kepulauan seperti Indonesia adalah...", o: ["A. Adanya konsensus nasional Pancasila", "B. Ketidakmerataan pembangunan dan ketimpangan ekonomi sosial antarwilayah", "C. Penggunaan bahasa Indonesia sebagai bahasa pemersatu", "D. Menguatnya rasa nasionalisme di kalangan milenial", "E. Hubungan diplomatik yang erat dengan negara tetangga"], a: 1, p: "Kesenjangan pembangunan memicu kecemburuan sosial daerah yang membahayakan kohesi nasional." },
+            { q: "Integrasi bangsa akan terwujud secara alami jika masyarakat mengembangkan sikap toleransi secara horizontal. Toleransi horizontal berarti...", o: ["A. Kepatuhan rakyat kepada aturan hukum yang dibuat presiden", "B. Sikap saling menghargai dan rukun antar-sesama warga negara yang berbeda latar belakang", "C. Kerja sama ekonomi antara pengusaha lokal dengan investor luar negeri", "D. Keseimbangan kekuasaan antara legislatif dan eksekutif", "E. Pembagian bantuan sosial yang adil merata"], a: 1, p: "Toleransi horizontal merupakan kerukunan mendatar antar-elemen masyarakat sipil lintas identitas." },
+            { q: "Salah satu ancaman militer dari luar negeri yang dapat merusak integrasi teritorial kedaulatan NKRI adalah...", o: ["A. Penyelundupan narkotika lewat bandara internasional", "B. Pelanggaran wilayah laut zona ekonomi eksklusif (ZEE) oleh kapal perang asing", "C. Perang dagang internasional", "D. Masuknya investasi asing skala besar", "E. Penayangan film dokumenter asing di bioskop"], a: 1, p: "Intrusi atau pelanggaran batas teritorial negara oleh kekuatan militer asing merupakan ancaman militer nyata." },
+
+            // --- TOPIC 10: Faktor Penyebab Keberagaman Masyarakat Indonesia ---
+            { q: "Secara geografis, letak wilayah Indonesia sangat strategis. Faktor strategis letak geografis ini memicu keberagaman karena...", o: ["A. Indonesia terletak di antara dua benua dan dua samudra yang menjadi jalur perdagangan internasional", "B. Wilayah Indonesia memiliki banyak gunung berapi aktif", "C. Letak Indonesia berada di zona cincin api Pasifik", "D. Wilayah Indonesia beriklim tropis basah", "E. Indonesia memiliki banyak laut pedalaman yang dalam"], a: 0, p: "Letak strategis di persilangan jalur pelayaran dunia membuat berbagai bangsa singgah menyebarkan budaya, ras, dan agama." },
+            { q: "Mengapa kondisi Indonesia sebagai negara kepulauan (archipelago) memicu lahirnya keberagaman suku dan budaya?", o: ["A. Memudahkan transportasi massal menggunakan kapal cepat", "B. Menyebabkan isolasi geografis antarkelompok masyarakat sehingga memicu pertumbuhan budaya lokal yang unik dan mandiri", "C. Mengurangi risiko bencana gempa bumi tektonik", "D. Mengakibatkan suhu udara di setiap pulau berbeda drastis", "E. Menghilangkan ketergantungan pangan antarpulau"], a: 1, p: "Isolasi fisik lautan membatasi komunikasi masa lalu, membuat tiap pulau melahirkan adat, dialek, dan tradisi khas sendiri." },
+            { q: "Perbedaan kondisi alam di setiap wilayah (misal pesisir pantai vs pegunungan) menyebabkan keberagaman masyarakat dalam hal...", o: ["A. Sistem ideologi politik yang dianut", "B. Mata pencaharian (pekerjaan), bentuk rumah adat, makanan pokok, dan corak kebiasaan hidup", "C. Jumlah anggota keluarga inti", "D. Jumlah hak pilih dalam pemilu daerah", "E. Jenis konstitusi tertulis daerah"], a: 1, p: "Kondisi alam mendikte cara adaptasi manusia (petani sayur di gunung, nelayan tangkap di pantai)." },
+            { q: "Keberagaman agama di Indonesia dipengaruhi oleh kedatangan bangsa-bangsa asing di masa lalu yang membawa misi penyebaran agama. Misi penyebaran agama Kristen/Katolik oleh bangsa Eropa dikenal dengan semboyan...", o: ["A. Gold", "B. Glory", "C. Gospel", "D. Veni Vidi Vici", "E. Devide et Impera"], a: 2, p: "Gospel merupakan misi suci penyebaran agama Nasrani oleh bangsa barat penjelajah samudra." },
+            { q: "Sikap masyarakat terhadap perubahan (akseptabilitas sosial) memengaruhi keberagaman budaya. Masyarakat pedalaman yang cenderung tertutup memiliki kebudayaan yang bersifat...", o: ["A. Sangat dinamis mengikuti tren teknologi modern", "B. Statis, tradisional, dan memegang teguh adat leluhur secara murni", "C. Mudah berasimilasi dengan kebudayaan barat", "D. Berpola pikir liberalistik sekuler", "E. Bergantung penuh pada program digital pemerintah"], a: 1, p: "Masyarakat tertutup menjaga kemurnian budaya warisan dengan membatasi penetrasi asing." }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+

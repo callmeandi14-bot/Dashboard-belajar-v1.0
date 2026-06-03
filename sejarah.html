@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Sejarah - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Sejarah Indonesia</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Teori Masuknya Hindu-Buddha</div>
+                        <div>✔ Kerajaan Hindu-Buddha Nusantara</div>
+                        <div>✔ Peninggalan Arsitektur Islam</div>
+                        <div>✔ Peran Wali Songo dalam Dakwah</div>
+                        <div>✔ Pengaruh Kerajaan atas Budaya Masyarakat</div>
+                        <div>✔ Fungsi Prasasti Kerajaan Kuno</div>
+                        <div>✔ Bukti Akulturasi Budaya</div>
+                        <div>✔ Sriwijaya Pusat Pendidikan Buddha</div>
+                        <div>✔ Sunan Kalijaga & Wayang Kulit</div>
+                        <div>✔ Pendiri Singasari, Demak & Mataram</div>
+                        <div>✔ Patih Gajah Mada (Majapahit)</div>
+                        <div>✔ Kerajaan Islam Gowa-Tallo Sulawesi</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Sejarah</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Sejarah Kelas 10.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA SEJARAH -->
+    <script>
+        // BANK DATA SEJARAH (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E)
+        const bankSoal = [
+            // --- TOPIC 1: Proses Masuknya Hindu-Buddha di Indonesia ---
+            { q: "Teori Ksatria berpendapat bahwa masuknya pengaruh Hindu-Buddha dibawa oleh para prajurit India. Tokoh pendukung utama teori ini adalah...", o: ["A. J.C. van Leur", "B. N.J. Krom", "C. C.C. Berg dan Majumdar", "D. F.D.K. Bosch", "E. van Faber"], a: 2, p: "C.C. Berg, Mookerji, dan Majumdar berpendapat perang/perebutan kekuasaan memaksa para ksatria India bermigrasi ke Nusantara." },
+            { q: "Teori yang menyatakan bahwa bangsa Indonesia sendiri yang aktif belajar ke India lalu pulang menyebarkan kebudayaan tersebut adalah...", o: ["A. Teori Sudra", "B. Teori Brahmana", "C. Teori Waisya", "D. Teori Arus Balik", "E. Teori Ksatria"], a: 3, p: "Teori Arus Balik (dikemukakan oleh F.D.K. Bosch) menekankan keaktifan pemuda Nusantara belajar agama di India." },
+            { q: "Mengapa Teori Brahmana yang dikemukakan J.C. van Leur dinilai sangat kuat melandasi masuknya kebudayaan Hindu di Nusantara?", o: ["A. Karena Brahmana menguasai bahasa Sanskerta dan aksara Pallawa yang tertulis pada prasasti kuno", "B. Karena golongan Brahmana adalah pedagang kaya raya", "C. Karena kaum Brahmana melarikan diri akibat kalah perang di India", "D. Karena Brahmana memonopoli komoditas lada di kerajaan", "E. Karena Brahmana diizinkan menikahi putri-putri raja Nusantara"], a: 0, p: "Aksara Pallawa dan bahasa Sanskerta pada prasasti Yupa hanya dikuasai oleh kasta tertinggi (Brahmana)." },
+            { q: "Menurut Teori Waisya oleh N.J. Krom, penyebaran kebudayaan Hindu-Buddha di Indonesia berkaitan erat dengan aktivitas...", o: ["A. Penaklukan militer oleh armada kerajaan India", "B. Hubungan dagang dan jalur pelayaran internasional", "C. Pembuangan tawanan perang kasta Sudra", "D. Pernikahan politik antar-raja besar", "E. Pengembaraan para pendeta Buddha"], a: 1, p: "Krom berasumsi pedagang India (Waisya) menetap di Indonesia mengikuti pola angin musim dagang." },
+            { q: "Kelemahan terbesar dari Teori Sudra yang menyatakan bahwa kaum budak/pekerja kasar menyebarkan agama Hindu adalah...", o: ["A. Kaum Sudra tidak memiliki kekayaan materi untuk berlayar", "B. Golongan Sudra tidak menguasai kitab Weda, bahasa Sanskerta, maupun aksara Pallawa", "C. Jumlah kaum Sudra yang bermigrasi sangat sedikit", "D. Kaum Sudra dilarang meninggalkan wilayah daratan India", "E. Suku-suku di Nusantara menolak kedatangan kaum Sudra"], a: 1, p: "Kasta Sudra tidak memiliki wewenang atau kemampuan membaca kitab Weda suci berbahasa Sanskerta." },
+
+            // --- TOPIC 2: Kerajaan Hindu-Buddha di Indonesia ---
+            { q: "Kerajaan tertua di Indonesia yang dipimpin oleh Raja Mulawarman adalah Kerajaan...", o: ["A. Tarumanegara", "B. Kutai Kartanegara", "C. Sriwijaya", "D. Kediri", "E. Majapahit"], a: 1, p: "Kutai di Kalimantan Timur merupakan kerajaan Hindu tertua (berdiri sekitar abad ke-4 Masehi)." },
+            { q: "Raja terkenal dari Kerajaan Tarumanegara yang memerintahkan penggalian Sungai Gomati untuk irigasi adalah...", o: ["A. Kudungga", "B. Purnawarman", "C. Aswawarman", "D. Balaputradewa", "E. Hayam Wuruk"], a: 1, p: "Raja Purnawarman adalah penguasa termasyhur Tarumanegara yang tertulis pada Prasasti Tugu." },
+            { q: "Kerajaan Buddha terbesar di Indonesia yang dikenal sebagai kerajaan maritim penguasa jalur Selat Malaka adalah...", o: ["A. Singasari", "B. Sriwijaya", "C. Mataram Kuno", "D. Kalingga", "E. Pajajaran"], a: 1, p: "Sriwijaya di Sumatra Selatan mendominasi perdagangan maritim Selat Malaka sejak abad ke-7." },
+            { q: "Candi Borobudur yang megah dibangun pada masa kejayaan Kerajaan Mataram Kuno dari Dinasti...", o: ["A. Sanjaya", "B. Syailendra", "C. Isyana", "D. Girindra", "E. Rajasa"], a: 1, p: "Dinasti Syailendra (penganut Buddha Mahayana) membangun Candi Borobudur abad ke-8 Masehi." },
+            { q: "Kerajaan Hindu terbesar di Nusantara yang bercita-cita menyatukan wilayah kepulauan melalui Sumpah Palapa adalah...", o: ["A. Sriwijaya", "B. Pajajaran", "C. Singasari", "D. Majapahit", "E. Kutai"], a: 3, p: "Majapahit berhasil mencapai puncak kejayaan penyatuan Nusantara di bawah kepemimpinan Hayam Wuruk dan Gajah Mada." },
+
+            // --- TOPIC 3: Contoh Peninggalan Kerajaan Islam di Indonesia ---
+            { q: "Manakah di bawah ini yang merupakan masjid peninggalan bersejarah dari Kerajaan Demak abad ke-15?", o: ["A. Masjid Istiqlal", "B. Masjid Agung Demak", "C. Masjid Menara Kudus", "D. Masjid Baiturrahman Banda Aceh", "E. Masjid Raya Banten"], a: 1, p: "Masjid Agung Demak dibangun oleh Raden Patah bersama Wali Songo, terkenal dengan saka tatal (tiang serpihan kayu)." },
+            { q: "Makam bercorak Islam tertua di Nusantara yang menjadi bukti masuknya pengaruh Islam di Sumatra utara abad ke-13 adalah...", o: ["A. Makam Sunan Kalijaga", "B. Makam Sultan Malik As-Saleh", "C. Makam Fatimah binti Maimun", "D. Makam Sultan Hasanuddin", "E. Makam Sunan Ampel"], a: 1, p: "Sultan Malik As-Saleh adalah raja pertama Samudera Pasai dengan nisan bercorak Islam Gujarat." },
+            { q: "Masid peninggalan sejarah Islam yang memiliki keunikan menara menyerupai candi Hindu/bata merah adalah...", o: ["A. Masjid Agung Cirebon", "B. Masjid Menara Kudus", "C. Masjid Demak", "D. Masjid Katangka", "E. Masjid Luar Batang"], a: 1, p: "Masjid Menara Kudus didirikan Sunan Kudus dengan menara berbentuk mirip candi sebagai bentuk akulturasi." },
+            { q: "Karya sastra peninggalan kerajaan Islam yang berisi ramalan atau kisah sejarah kepahlawanan bercampur mitos disebut...", o: ["A. Serat dan Hikayat", "B. Kitab Kakawin", "C. Kitab Weda", "D. Prasasti", "E. relief candi"], a: 0, p: "Hikayat (melayu) dan Serat/Babad (Jawa) adalah dokumen sastra historis bercorak Islam." },
+            { q: "Keraton Yogyakarta dan Surakarta merupakan peninggalan bersejarah pasca-pecahnya kerajaan Islam...", o: ["A. Demak", "B. Mataram Islam", "C. Pajang", "D. Banten", "E. Cirebon"], a: 1, p: "Melalui Perjanjian Giyanti (1755), Mataram Islam pecah menjadi Kasunanan Surakarta dan Kasultanan Yogyakarta." },
+
+            // --- TOPIC 4: Peran Wali Songo dalam Perkembangan Islam di Indonesia ---
+            { q: "Metode dakwah Wali Songo yang paling efektif mempercepat diterimanya Islam oleh penduduk lokal adalah...", o: ["A. Penaklukan militer wilayah pesisir pantai", "B. Akulturasi damai menggunakan pendekatan budaya lokal, kesenian, dan pendidikan", "C. Membakar tempat ibadah agama lama", "D. Melarang perdagangan dengan kerajaan non-Islam", "E. Mewajibkan pembayaran pajak keagamaan"], a: 1, p: "Wali Songo mengadopsi tradisi, musik, dan sastra daerah agar ajaran Islam mudah dicerna secara damai." },
+            { q: "Wali tertua dari Wali Songo yang menyebarkan Islam di wilayah Gresik dan mengajarkan cara bertani modern adalah...", o: ["A. Sunan Ampel", "B. Sunan Bonang", "C. Sunan Kalijaga", "D. Maulana Malik Ibrahim (Sunan Gresik)", "E. Sunan Giri"], a: 3, p: "Maulana Malik Ibrahim (Sunan Gresik) merupakan wali perintis dakwah di tanah Jawa." },
+            { q: "Pusat pendidikan Islam legendaris yang didirikan Sunan Ampel untuk melatih kader da'i penyebar Islam bernama...", o: ["A. Pesantren Tebuireng", "B. Pesantren Ampeldenta", "C. Pesantren Giri Kedaton", "D. Padepokan Kalijaga", "E. Pondok Lirboyo"], a: 1, p: "Pesantren Ampeldenta di Surabaya melahirkan da'i hebat seperti Sunan Giri dan Raden Patah." },
+            { q: "Karya kesenian berupa tembang Macapat 'Lir-Ilir' dan alat musik gamelan Sekaten digubah oleh...", o: ["A. Sunan Kudus", "B. Sunan Muria", "C. Sunan Kalijaga", "D. Sunan Bonang", "E. Sunan Gunung Jati"], a: 2, p: "Sunan Kalijaga memanfaatkan tembang Lir-Ilir dan wayang kulit sebagai instrumen media dakwah." },
+            { q: "Wali Songo yang memimpin penyebaran Islam di wilayah Jawa Barat sekaligus menjadi sultan pertama Cirebon adalah...", o: ["A. Sunan Gunung Jati (Syarif Hidayatullah)", "B. Sunan Drajat", "C. Sunan Kudus", "D. Sunan Giri", "E. Sunan Bonang"], a: 0, p: "Syarif Hidayatullah menyebarkan Islam di tatar Sunda dan mendirikan kesultanan Cirebon dan Banten." },
+
+            // --- TOPIC 5: Pengaruh Kerajaan Hindu-Buddha & Islam terhadap Masyarakat ---
+            { q: "Apakah pengaruh mendasar runtuhnya kerajaan Hindu-Buddha dan berdirinya kerajaan Islam terhadap sistem sosial masyarakat?", o: ["A. Terhapusnya sistem kasta sosial masyarakat secara perlahan", "B. Seluruh masyarakat diwajibkan menjadi pedagang", "C. Terjadinya pengusiran besar-besaran etnis India", "D. Sistem pemerintahan berubah menjadi demokrasi parlementer", "E. Wilayah pedalaman ditinggalkan oleh penduduk"], a: 0, p: "Islam mengajarkan persamaan derajat (kesetaraan manusia) yang meluruhkan sistem kasta ketat." },
+            { q: "Wujud akulturasi arsitektur Hindu-Buddha dengan Islam terlihat jelas pada bentuk...", o: ["A. Nisan makam berbentuk bulat", "B. Atap masjid tumpang (berundak) mirip meru candi Hindu", "C. Kubah bulat berbahan beton", "D. Penggunaan kaca patri berwarna-warni", "E. Lantai masjid yang berbahan marmer putih"], a: 1, p: "Atap tumpang berundak ganjil pada masjid kuno (seperti Masjid Demak) meniru model atap pura Hindu." },
+            { q: "Bahasa sanskerta banyak menyerap kosakata baru di era Islam. Bahasa komunikasi pemersatu perdagangan laut di era Islam berganti menjadi...", o: ["A. Bahasa Jawa kuno", "B. Bahasa Melayu (lingua franca)", "C. Bahasa Arab murni", "D. Bahasa Sanskerta", "E. Bahasa Portugis"], a: 1, p: "Bahasa Melayu bercampur Arab (huruf Jawi) meluas sebagai bahasa diplomasi dan perdagangan nusantara." },
+            { q: "Sistem pemerintahan kerajaan Hindu-Buddha dipimpin raja mutlak yang dianggap sebagai titisan dewa (Dewa Raja). Di era Islam, konsep ini berganti menjadi...", o: ["A. Presiden republik", "B. Sultan yang bertindak selaku khalifah / wakil Tuhan di bumi", "C. Perdana menteri", "D. Dewan tetua adat", "E. Gubernur jenderal kolonial"], a: 1, p: "Gelar Sultan/Khalifatullah menggantikan konsep Dewa Raja untuk menegaskan otoritas keagamaan." },
+            { q: "Upacara tradisional Grebeg Maulud di Keraton Yogyakarta merupakan perpaduan budaya antara...", o: ["A. Budaya Barat dengan budaya Islam Jawa", "B. Kebiasaan sesaji animisme Jawa dengan perayaan hari lahir Nabi Muhammad SAW", "C. Tradisi Buddha Mahayana dengan Kristen", "D. Kebudayaan Arab Timur Tengah dengan Cina", "E. Upacara kurban Hindu dengan Islam"], a: 1, p: "Grebeg Maulud mengadopsi gunungan hasil bumi tradisional Jawa yang diarak untuk merayakan Maulid Nabi." },
+
+            // --- TOPIC 6: Fungsi Prasasti pada Masa Kerajaan ---
+            { q: "Apakah fungsi utama pembuatan prasasti batu pada masa kerajaan Hindu-Buddha kuno Nusantara?", o: ["A. Sebagai mata uang resmi transaksi niaga", "B. Sebagai dokumen hukum resmi, maklumat raja, piagam anugerah tanah sima, atau peringatan kemenangan", "C. Sebagai hiasan dekorasi taman luar istana", "D. Alat berkomunikasi rahasia antar-kerajaan", "E. Tempat meletakkan persembahan dupa dewa"], a: 1, p: "Prasasti bertindak sebagai dokumen negara tertulis legal di atas batu/logam tahan lama." },
+            { q: "Prasasti Yupa dari Kerajaan Kutai berfungsi sebagai batu peringatan tentang...", o: ["A. Perang besar menundukkan suku pedalaman", "B. Upacara kurban sedekah 20.000 ekor sapi oleh Raja Mulawarman kepada kaum Brahmana", "C. Perjanjian damai dengan armada pedagang India", "D. Penetapan batas wilayah kerajaan Tarumanegara", "E. Sumpah setia para menteri istana"], a: 1, p: "Yupa memuat prasasti kedermawanan luar biasa Raja Mulawarman bersedekah hewan ternak." },
+            { q: "Prasasti Ciaruteun dari Kerajaan Tarumanegara memuat lukisan telapak kaki Raja Purnawarman yang dianalogikan sebagai...", o: ["A. Telapak kaki Dewa Wisnu", "B. Telapak kaki Buddha Gautama", "C. Telapak kaki ksatria pelindung bumi", "D. Pintu gerbang kerajaan gaib", "E. Lambang kebebasan rakyat"], a: 0, p: "Tapak kaki Purnawarman disamakan dengan tapak kaki Dewa Wisnu sebagai simbol kekuasaan pelindung rakyat." },
+            { q: "Prasasti Tugu yang ditemukan di wilayah Jakarta Utara berisikan informasi penting mengenai pembangunan...", o: ["A. Candi peribadatan besar", "B. Saluran air/irigasi Sungai Candrabhaga dan Gomati sepanjang 11 km", "C. Pelabuhan niaga internasional", "D. Istana megah raja Purnawarman", "E. Tembok pertahanan militer"], a: 1, p: "Prasasti Tugu mencatat proyek tata ruang pengairan purba mitigasi banjir dan pertanian." },
+            { q: "Bahasa dan aksara yang dominan digunakan pada prasasti tertua di Nusantara adalah...", o: ["A. Bahasa Jawa Kuno dan Aksara Kawi", "B. Bahasa Melayu dan Aksara Arab gundul", "C. Bahasa Sanskerta dan Aksara Pallawa", "D. Bahasa Sunda kuno", "E. Bahasa Tamil dan Aksara Hanacaraka"], a: 2, p: "Pallawa dan Sanskerta adalah aksara dan bahasa literasi prasasti abad ke-4 hingga ke-7 Masehi." },
+
+            // --- TOPIC 7: Bukti Adanya Pengaruh Hindu-Buddha di Indonesia ---
+            { q: "Bukti arkeologis paling nyata adanya pengaruh kebudayaan Hindu di Indonesia adalah keberadaan bangunan...", o: ["A. Candi Prambanan", "B. Candi Borobudur", "C. Masjid Kudus", "D. Keraton Kaibon", "E. Benteng Vredeburg"], a: 0, p: "Candi Prambanan (Loro Jonggrang) merupakan gugusan candi Trimurti Hindu terbesar di Indonesia." },
+            { q: "Masuknya Hindu-Buddha merubah sistem kepemimpinan suku dari kepala suku (primus inter pares) menjadi...", o: ["A. Republik demokrasi presidensial", "B. Monarki mutlak yang dipimpin oleh Raja", "C. Oligarki kapitalis", "D. Dinasti kesultanan daerah", "E. Komunalisme kolektif"], a: 1, p: "Kerajaan menggantikan sistem suku dengan hierarki raja berkekuasaan turun-temurun." },
+            { q: "Adopsi kisah epik kepahlawanan India yang diakulturasi ke pertunjukan wayang kulit Jawa adalah...", o: ["A. Ramayana dan Mahabharata", "B. Sutasoma dan Negarakertagama", "C. Hikayat Amir Hamzah", "D. Babad Tanah Jawi", "E. Kidung Sunda"], a: 0, p: "Ramayana dan Mahabharata merupakan epos Hindu India yang diadaptasi menjadi lakon wayang." },
+            { q: "Penemuan arca Buddha perunggu bergaya seni Amarawati di Sempaga (Sulawesi Selatan) membuktikan bahwa...", o: ["A. Agama Buddha menyebar lewat jalur darat sutra saja", "B. Indonesia telah terhubung jalur pelayaran dagang kuno internasional sejak awal abad masehi", "C. Suku Bugis adalah pembuat arca terbaik dunia", "D. Sulawesi merupakan pusat kerajaan Buddha terbesar", "E. India menjajah nusantara secara militer"], a: 1, p: "Arca Amarawati buatan India Selatan membuktikan nusantara adalah titik perdagangan maritim kuno internasional." },
+            { q: "Sistem penanggalan yang diserap dari pengaruh kebudayaan Hindu di Nusantara adalah penggunaan kalender...", o: ["A. Masehi", "B. Saka", "C. Hijriah", "D. Imlek", "E. Jawa Islam"], a: 1, p: "Tahun Saka berasal dari India yang diadopsi kerajaan Hindu-Buddha nusantara." },
+
+            // --- TOPIC 8: Kerajaan yang Terkenal sebagai Pusat Pendidikan Buddha ---
+            { q: "Kerajaan di Indonesia yang sangat terkenal di Asia Tenggara sebagai pusat pembelajaran dan pendidikan agama Buddha adalah...", o: ["A. Tarumanegara", "B. Singasari", "C. Sriwijaya", "D. Majapahit", "E. Kutai"], a: 2, p: "Sriwijaya diakui dunia sebagai universitas dan pusat studi Buddha terbesar di luar India." },
+            { q: "Pendeta sekaligus penjelajah Tiongkok yang mencatat kebesaran pusat studi Buddha di Sriwijaya pada abad ke-7 bernama...", o: ["A. Cheng Ho", "B. I-Tsing", "C. Fa-Hien", "D. Xuanzang", "E. Kublai Khan"], a: 1, p: "I-Tsing (Yijing) bermukim bertahun-tahun di Sriwijaya menerjemahkan naskah suci Buddha." },
+            { q: "Guru besar (pendeta Buddha) Sriwijaya yang sangat termasyhur mengajar teologi Buddha hingga tingkat internasional bernama...", o: ["A. Balaputradewa", "B. Dharmakitri", "C. Sakyakirti", "D. Marcopolo", "E. Purnawarman"], a: 2, p: "Sakyakirti dan Dharmakitri adalah maha guru Buddha legendaris di Sriwijaya." },
+            { q: "Hubungan diplomasi pendidikan antara Sriwijaya dengan kerajaan Nalanda di India dibuktikan dengan penemuan...", o: ["A. Prasasti Kedukan Bukit", "B. Prasasti Nalanda", "C. Prasasti Talang Tuwo", "D. Prasasti Kota Kapur", "E. Prasasti Karang Brahi"], a: 1, p: "Prasasti Nalanda mencatat pembangunan biara studi untuk mahasiswa asal Sriwijaya di India." },
+            { q: "Sebelum belajar agama Buddha langsung ke India (Nalanda), para biksu Tiongkok disarankan I-Tsing untuk...", o: ["A. Belajar bahasa Sanskerta dan tata ritual keagamaan di Sriwijaya selama 1-2 tahun", "B. Membeli rempah-rempah di pelabuhan Banten", "C. Meminta izin raja Mulawarman", "D. Mendirikan candi di Jawa Timur", "E. Berziarah ke candi Borobudur"], a: 0, p: "Sriwijaya menyediakan fasilitas persiapan akademis linguistik dan ritual standar sebelum ke India." },
+
+            // --- TOPIC 9: Tokoh Penyebar Islam Melalui Seni Pertunjukan ---
+            { q: "Wali yang memodifikasi pertunjukan wayang kulit Hindu dengan memasukkan unsur Islam, seperti kalimat syahadat (jimat kalimasada) adalah...", o: ["A. Sunan Ampel", "B. Sunan Giri", "C. Sunan Kalijaga", "D. Sunan Kudus", "E. Sunan Muria"], a: 2, p: "Sunan Kalijaga menyisipkan nilai tauhid Islam ke dalam seni pertunjukan wayang kulit." },
+            { q: "Mengapa seni pertunjukan wayang kulit dipilih Sunan Kalijaga sebagai media dakwah?", o: ["A. Karena pertunjukan tersebut tidak dipungut biaya denda pajak", "B. Karena masyarakat nusantara menyukai kesenian visual dan pertunjukan mistis", "C. Karena dilarang menggambar manusia secara tiga dimensi murni dalam syariat", "D. Karena wayang sangat digemari dan menyatu dengan budaya hidup masyarakat", "E. Karena diperintah langsung oleh Kesultanan Turki"], a: 3, p: "Masyarakat sangat menyukai wayang, menjadikannya media asimilasi nilai-nilai Islam yang efektif tanpa resistensi." },
+            { q: "Selain wayang kulit, Sunan Kalijaga juga berdakwah menciptakan kesenian alat musik yaitu...", o: ["A. Gendang rebana Arab", "B. Gamelan Jawa (Sekaten dan Nyai Becak)", "C. Angklung bambu Sunda", "D. Sasando dawai", "E. Seruling suling bambu"], a: 1, p: "Gamelan Sekaten ditabuh di halaman masjid untuk mengundang massa mendengarkan syahadat." },
+            { q: "Karakter pewayangan jenaka yang diciptakan/dimodifikasi Wali Songo sebagai penyampai nasehat moral keagamaan adalah...", o: ["A. Pandawa Lima", "B. Punakawan (Semar, Gareng, Petruk, Bagong)", "C. Kurawa", "D. Rahwana", "E. Hanoman"], a: 1, p: "Punakawan menjadi juru bicara nasehat bijak bermuatan tauhid dengan bahasa humor merakyat." },
+            { q: "Sunan Kalijaga menetapkan tiket masuk menonton pertunjukan wayang kulit kreasinya bukan dengan uang, melainkan dengan...", o: ["A. Membawa hasil bumi pertanian", "B. Membaca kalimat Syahadat (Syahadatain)", "C. Bekerja bakti membersihkan masjid", "D. Berjanji setia membela kesultanan", "E. Membawa serpihan kayu jati"], a: 1, p: "Menonton wayang Sunan Kalijaga gratis, cukup melafalkan dua kalimat syahadat sebagai ikrar masuk Islam." },
+
+            // --- TOPIC 10: Dampak Perkembangan Kerajaan Islam ---
+            { q: "Pendiri Kesultanan Demak yang sekaligus merupakan putra mahkota keturunan raja terakhir Majapahit adalah...", o: ["A. Pati Unus", "B. Raden Patah", "C. Sultan Trenggono", "D. Sultan Ageng Tirtayasa", "E. Ken Arok"], a: 1, p: "Raden Patah mendirikan Demak dibantu Wali Songo setelah Majapahit melemah." },
+            { q: "Raja Mataram Islam yang paling terkenal karena memimpin penyerangan bersenjata melawan VOC Belanda di Batavia (1628 dan 1629) adalah...", o: ["A. Panembahan Senopati", "B. Sultan Agung Hanyokrokusumo", "C. Sultan Hamengkubuwono I", "D. Amangkurat I", "E. Sultan Hasanuddin"], a: 1, p: "Sultan Agung merupakan penguasa Mataram terbesar yang gigih berupaya mengusir kolonial Belanda (VOC)." },
+            { q: "Kesultanan Banten mencapai puncak kejayaan ekonomi maritim dan lada di bawah kepemimpinan pahlawan nasional bernama...", o: ["A. Sultan Maulana Hasanuddin", "B. Sultan Ageng Tirtayasa", "C. Sultan Abdul Mufakhir", "D. Raden Patah", "E. Sultan Baabullah"], a: 1, p: "Sultan Ageng Tirtayasa memajukan pelabuhan niaga bebas Banten menantang hegemoni monopoli VOC." },
+            { q: "Pendiri Kerajaan Singasari pada tahun 1222 Masehi setelah meruntuhkan Kerajaan Kediri di perang Ganter adalah...", o: ["A. Raden Wijaya", "B. Ken Arok", "C. Kertanegara", "D. Anusapati", "E. Tohjaya"], a: 1, p: "Ken Arok mendirikan Singasari setelah mengalahkan Raja Kertajaya dari Kediri." },
+            { q: "Dua kerajaan Islam kembar di Sulawesi Selatan yang bersekutu erat menentang monopoli perdagangan VOC adalah...", o: ["A. Kerajaan Kutai dan Paser", "B. Kerajaan Gowa dan Tallo", "C. Kerajaan Ternate dan Tidore", "D. Kerajaan Bone dan Wajo", "E. Kerajaan Buton dan Makassar"], a: 1, p: "Gowa-Tallo (Makassar) bersatu membentuk poros maritim Islam terkuat di Indonesia timur." }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+

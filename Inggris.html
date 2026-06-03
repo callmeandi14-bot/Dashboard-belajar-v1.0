@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Bahasa Inggris - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Bahasa Inggris</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Analytical Exposition (Purpose & Structure)</div>
+                        <div>✔ Identifying Main Ideas & General Nouns</div>
+                        <div>✔ Giving Opinions & Expressions</div>
+                        <div>✔ Synonyms & Antonyms Vocabulary</div>
+                        <div>✔ Narrative Texts (Elements & Purpose)</div>
+                        <div>✔ Report Texts (Structure & Identification)</div>
+                        <div>✔ Grammar: Simple Present Tense</div>
+                        <div>✔ Grammar: Using Adjectives correctly</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Bahasa Inggris</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Loading quiz question...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Bahasa Inggris.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA BAHASA INGGRIS -->
+    <script>
+        // BANK DATA BAHASA INGGRIS (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E)
+        const bankSoal = [
+            // --- TOPIC 1: Expository / Analytical Exposition (Q1 - Q12) ---
+            { q: "What is the primary communicative purpose of an Analytical Exposition text?", o: ["A. To entertain or amuse the readers with a story", "B. To persuade the readers that something is the case/an important issue", "C. To describe a specific person, place, or thing in detail", "D. To present two opposing viewpoints about a controversial topic", "E. To explain the step-by-step process of making something"], a: 1, p: "Analytical Exposition bertujuan memengaruhi dan meyakinkan pembaca bahwa topik/isu yang diangkat merupakan hal penting untuk dibahas." },
+            { q: "Which of the following is NOT a correct purpose or characteristic of an expository text?", o: ["A. It uses facts, statistics, or examples to support arguments", "B. It aims to explain, inform, or analyze a specific topic", "C. It relies heavily on fictional characters, magical elements, and plot complications", "D. It generally uses the Simple Present Tense", "E. It expresses the writer's thesis or point of view clearly"], a: 2, p: "Teks ekspositori bersifat non-fiksi ilmiah/faktual, sehingga opsi C (karakter fiksi dan unsur magis) salah karena itu merupakan ciri Narrative Text." },
+            { q: "Read this sentence: \"In my opinion, regular exercise is essential for maintaining mental health.\" What type of expression is this?", o: ["A. Giving direction", "B. Giving an opinion", "C. Expressing disagreement", "D. Making an offer", "E. Giving a report"], a: 1, p: "Frasa \"In my opinion\" (Menurut pendapat saya) merupakan ekspresi standar untuk memberikan pendapat (Giving an opinion)." },
+            { q: "What is the synonym of the word 'crucial' often used in analytical expositions?", o: ["A. Trivial", "B. Unimportant", "C. Essential/Important", "D. Minor", "E. Optional"], a: 2, p: "'Crucial' memiliki makna sangat penting atau genting, bersinonim dengan 'Essential' atau 'Important'." },
+            { q: "What is the antonym of the word 'advantage'?", o: ["A. Benefit", "B. Drawback/Disadvantage", "C. Profit", "D. Strength", "E. Convenience"], a: 1, p: "Lawan kata (antonym) dari 'advantage' (keuntungan/kelebihan) adalah 'disadvantage' atau 'drawback' (kekurangan/kelemahan)." },
+            { q: "What are the three main structural parts of an Analytical Exposition text?", o: ["A. Orientation - Complication - Resolution", "B. General Classification - Description", "C. Thesis - Arguments - Reiteration", "D. Goal - Materials - Steps", "E. Newsworthy Event - Background Events - Sources"], a: 2, p: "Struktur Analytical Exposition terdiri dari: Thesis (pernyataan pendapat awal), Arguments (argumen pendukung), dan Reiteration (penegasan ulang pendapat)." },
+            { q: "The section of an analytical exposition that restates the writer's point of view to strengthen the thesis is called...", o: ["A. Argument", "B. Recommendation", "C. Reiteration", "D. Resolution", "E. Orientation"], a: 2, p: "Reiteration adalah bagian penutup yang menegaskan kembali tesis/pendapat penulis agar argumennya semakin kuat." },
+            { q: "Which transition word is best suited to introduce an additional argument in an analytical exposition?", o: ["A. However", "B. On the other hand", "C. Furthermore", "D. In conclusion", "E. Nevertheless"], a: 2, p: "Kata 'Furthermore' (Selain itu / Lebih lanjut) digunakan untuk menambahkan argumen atau poin pendukung baru." },
+            { q: "Read the thesis: \"Using public transportation reduces traffic congestion.\" Which argument best supports this thesis?", o: ["A. Public transport tickets can sometimes be hard to buy.", "B. One bus can carry dozens of people, reducing the number of private cars on the road.", "C. Some trains do not have comfortable seats.", "D. Walking is healthier than riding a bus.", "E. Many roads are narrow and need repair."], a: 1, p: "Argumen B secara langsung menjelaskan bagaimana transportasi publik mengurangi kemacetan dengan meminimalkan mobil pribadi di jalan." },
+            { q: "Analytical Exposition texts mostly use which of the following tenses?", o: ["A. Simple Past Tense", "B. Simple Present Tense", "C. Present Perfect Tense", "D. Past Continuous Tense", "E. Future Tense"], a: 1, p: "Teks eksposisi analitis mengemukakan fakta umum dan opini masa kini, sehingga dominan menggunakan Simple Present Tense." },
+            { q: "In an analytical exposition, \"First of all\", \"Secondly\", and \"Finally\" are examples of...", o: ["A. Relational processes", "B. Passive voice", "C. Internal conjunctions/connectives", "D. Abstract nouns", "E. Action verbs"], a: 2, p: "Kata hubung tersebut (Internal Conjunctions) berfungsi mengurutkan argumen-argumen penulis agar runtut." },
+            { q: "Which statement represents a subjective opinion rather than an objective fact?", o: ["A. The earth revolves around the sun.", "B. Smoking is banned in public areas in many cities.", "C. I believe that playing video games is the best way to spend free time.", "D. Photosynthesis requires sunlight to produce oxygen.", "E. Water boils at 100 degrees Celsius under standard conditions."], a: 2, p: "Pernyataan C mengandung kata \"I believe\" (Saya percaya) yang menunjukkan preferensi personal/opini subjektif." },
+
+            // --- TOPIC 2: Narrative Text (Q13 - Q25) ---
+            { q: "What is the primary communicative purpose of a Narrative text?", o: ["A. To report a scientific discovery as it is", "B. To persuade the readers to buy a product", "C. To explain how a natural disaster occurs", "D. To amuse or entertain the readers with a story", "E. To describe a historical monument"], a: 3, p: "Tujuan utama Narrative Text adalah menghibur (amuse/entertain) pembaca melalui rangkaian cerita fiksi atau legenda." },
+            { q: "What is the correct general structure of a Narrative text?", o: ["A. General Classification - Description", "B. Orientation - Complication - Resolution", "C. Thesis - Arguments - Reiteration", "D. Goal - Equipment - Steps", "E. Identification - Description"], a: 1, p: "Struktur umum Narrative Text adalah Orientation (pengenalan), Complication (konflik), dan Resolution (pemecahan masalah)." },
+            { q: "In a narrative text, the section where the main character faces a problem or crisis is called...", o: ["A. Orientation", "B. Complication", "C. Resolution", "D. Reorientation", "E. Coda"], a: 1, p: "Complication adalah bagian munculnya masalah atau konflik utama yang dihadapi oleh tokoh cerita." },
+            { q: "What does the 'Resolution' part of a narrative text contain?", o: ["A. The introduction of characters and setting", "B. The rising action of the story's conflict", "C. How the crisis or problem is solved, either happily or sadly", "D. The moral lesson told directly by the writer", "E. The list of materials used in the story"], a: 2, p: "Resolution memuat penyelesaian masalah/konflik cerita, baik berakhir bahagia (happy ending) maupun sedih (sad ending)." },
+            { q: "The optional moral lesson or advice at the very end of a narrative text is called...", o: ["A. Orientation", "B. Complication", "C. Resolution", "D. Coda/Reorientation", "E. Thesis"], a: 3, p: "Coda atau Reorientation adalah bagian penutup cerita yang berisi pelajaran moral (moral value) bagi pembaca." },
+            { q: "Which of the following is an example of a time connective commonly used in narrative texts?", o: ["A. Because", "B. Therefore", "C. Once upon a time", "D. In my opinion", "E. On the other hand"], a: 2, p: "\"Once upon a time\" (Pada zaman dahulu kala) adalah penanda waktu (time connective/expression) khas dalam dongeng/narrative." },
+            { q: "Narrative texts mostly use which of the following tenses?", o: ["A. Simple Present Tense", "B. Simple Past Tense", "C. Future Continuous Tense", "D. Present Perfect Tense", "E. Present Continuous Tense"], a: 1, p: "Karena menceritakan kejadian fiksi masa lalu, Narrative Text menggunakan Simple Past Tense." },
+            { q: "What is the main character in a narrative story called if they are the hero?", o: ["A. Antagonist", "B. Protagonist", "C. Supporting character", "D. Narrator", "E. Opponent"], a: 1, p: "Protagonist adalah tokoh utama yang biasanya digambarkan berwatak baik atau menjadi pahlawan dalam cerita." },
+            { q: "Who is the antagonist in a narrative story?", o: ["A. The character who tells the story", "B. The main character who faces the conflict", "C. The character who opposes the protagonist and creates conflict", "D. The minor character with no dialog", "E. The character who resolves the problem"], a: 2, p: "Antagonist adalah tokoh penentang atau penjahat yang memicu timbulnya konflik dengan tokoh utama (protagonis)." },
+            { q: "Read the sentence: \"The prince killed the dragon with a magical sword.\" Identify the past tense verb.", o: ["A. Prince", "B. Killed", "C. Dragon", "D. Magical", "E. Sword"], a: 1, p: "Kata 'killed' (membunuh) adalah kata kerja bentuk kedua (Verb 2) yang menunjukkan waktu lampau (Past Tense)." },
+            { q: "What grammatical element is used in \"a magical sword\" or \"a beautiful princess\" in narrative text?", o: ["A. Adverb of time", "B. Adjective phrase / Noun phrase", "C. Conjunction", "D. Preposition", "E. Passive voice"], a: 1, p: "\"A magical sword\" (pedang gaib) dan \"a beautiful princess\" (putri cantik) merupakan Noun Phrase yang menggunakan kata sifat (adjective) untuk mendeskripsikan kata benda." },
+            { q: "Which of the following text genres belongs to Narrative Text?", o: ["A. Scientific report on volcanoes", "B. A recipe for making chocolate cake", "C. Fairy tales, legends, and fables", "D. News report about a car accident", "E. A speech advocating for environmental protection"], a: 2, p: "Fairy tales (dongeng), legends (legenda), dan fables (cerita fabel hewan) merupakan sub-genre Narrative Text." },
+            { q: "In the story of 'Cinderella', the stepmother and stepsisters not allowing Cinderella to go to the ball is part of the...", o: ["A. Orientation", "B. Complication", "C. Resolution", "D. Coda", "E. Identification"], a: 1, p: "Tindakan ibu tiri menghalangi Cinderella pergi ke pesta dansa merupakan pemicu konflik (Complication)." },
+
+            // --- TOPIC 3: Report Text (Q26 - Q38) ---
+            { q: "What is the primary definition of a Report Text?", o: ["A. A text that retells a personal embarrassing experience", "B. A text that describes a specific, unique object in detail", "C. A text that presents information about something in general, as a result of systematic observation and analysis", "D. A text that tells an imaginative story to entertain readers", "E. A text that argues about a hot social issue"], a: 2, p: "Report Text menyajikan hasil laporan observasi ilmiah secara umum mengenai suatu subjek (hewan, tanaman, alat, fenomena) sebagaimana adanya." },
+            { q: "What is the difference between Report Text and Descriptive Text?", o: ["A. Report Text describes things in general, while Descriptive Text describes a specific/particular thing in detail", "B. Report Text is fictional, while Descriptive Text is always scientific", "C. Report Text uses Past Tense, while Descriptive Text uses Future Tense", "D. There is no difference; they are exactly the same", "E. Report Text has a Complication, while Descriptive Text does not"], a: 0, p: "Report Text membahas suatu kelas objek secara umum (misal: 'Cats'), sedangkan Descriptive Text membahas satu objek spesifik khusus (misal: 'My Cat, Kitty')." },
+            { q: "What is the correct general structure of a Report Text?", o: ["A. Thesis - Arguments - Reiteration", "B. General Classification - Description", "C. Goal - Materials - Steps", "D. Orientation - Complication - Resolution", "E. Identification - Description"], a: 1, p: "Struktur umum Report Text adalah General Classification (klasifikasi umum objek) dan Description (deskripsi ilmiah objek)." },
+            { q: "Which of the following is an example of a 'General Noun' commonly used in Report Texts?", o: ["A. My pet dog, Bruno", "B. Platypuses", "C. The Eiffel Tower", "D. Dr. Albert Einstein", "E. Borobudur Temple"], a: 1, p: "General Noun merujuk pada nama benda atau makhluk hidup secara umum/jamak (seperti 'Platypuses' atau 'Computers'), bukan individu tertentu." },
+            { q: "What tense is primarily used in a Report Text?", o: ["A. Simple Past Tense", "B. Simple Present Tense", "C. Future Tense", "D. Past Perfect Tense", "E. Present Continuous Tense"], a: 1, p: "Report Text menyajikan fakta ilmiah yang berlaku konstan hingga kini, sehingga menggunakan Simple Present Tense." },
+            { q: "Read this sentence: \"Earthquakes are vibrations caused by rocks breaking under stress.\" What part of Report Text structure is this likely from?", o: ["A. Description of behavior", "B. General Classification / Definition", "C. Reiteration", "D. Complication", "E. Resolution"], a: 1, p: "Kalimat tersebut mendefinisikan apa itu gempa bumi secara umum, yang berada di bagian General Classification." },
+            { q: "Which word in this sentence is an adjective? \"The polar bear has thick fur to survive in freezing temperatures.\"", o: ["A. Bear", "B. Thick", "C. Fur", "D. Survive", "E. Temperatures"], a: 1, p: "'Thick' (tebal) adalah kata sifat (adjective) yang menerangkan kondisi fisik dari kata benda 'fur' (bulu)." },
+            { q: "What does the 'Description' part of a Report Text typically focus on?", o: ["A. The feelings and personal emotions of the writer", "B. The systematic parts, physical qualities, behavior, and habitat of the subject", "C. A chronological timeline of historical events", "D. Dialogue between various characters in the text", "E. Arguments defending a political opinion"], a: 1, p: "Bagian Description pada Report Text merinci bagian-bagian fisik, kualitas, perilaku, fungsi, atau habitat objek secara ilmiah." },
+            { q: "Identify the sentence that uses a correct Simple Present Tense structure for a Report Text.", o: ["A. Cheetahs ran very fast last year.", "B. Cheetahs are running very fast right now.", "C. Cheetahs run very fast because of their muscular bodies.", "D. Cheetahs will run very fast next week.", "E. Cheetahs have run very fast since yesterday."], a: 2, p: "Opsi C menggunakan Present Tense bentuk dasar (run) untuk menyatakan kebenaran umum/fakta ilmiah." },
+            { q: "Which of the following is NOT a suitable topic for a Report Text?", o: ["A. Platypuses and their reproductive habits", "B. How computers process digital data", "C. My funny trip to Bali last Sunday", "D. Volcanic eruptions and tectonic plates", "E. The characteristics of oak trees"], a: 2, p: "\"My funny trip to Bali\" (Perjalanan lucu saya ke Bali) merupakan topik untuk Recount Text personal, bukan Report Text ilmiah." },
+            { q: "Why do Report Texts use 'Relational Verbs' (such as is, are, have, belong to)?", o: ["A. To tell a chronological story", "B. To describe features, characteristics, and ownership of the subject", "C. To express a strong emotional disagreement", "D. To give step-by-step cooking instructions", "E. To ask questions to the reader"], a: 1, p: "Relational Verbs (is/are, have/has) digunakan untuk mendeskripsikan keadaan, ciri fisik, atau karakteristik ilmiah objek." },
+            { q: "Read this sentence: \"Cacti store water in their thick stems.\" What does 'thick' mean?", o: ["A. Thin and fragile", "B. Having a large distance between opposite sides / wide", "C. Soft and liquid", "D. Cold and frozen", "E. Bright and colorful"], a: 1, p: "'Thick' dalam konteks batang kaktus berarti tebal/lebar, berfungsi menyimpan cadangan air." },
+            { q: "The term 'freezing temperatures' in a text about Antarctica contains the adjective...", o: ["A. Temperatures", "B. Antarctica", "C. Freezing", "D. Text", "E. About"], a: 2, p: "'Freezing' bertindak sebagai kata sifat (participle adjective) yang menerangkan suhu yang sangat dingin (membeku)." },
+
+            // --- TOPIC 4: Giving Opinion & Grammar (Q39 - Q50) ---
+            { q: "Which of the following phrases is used to express a strong agreement with an opinion?", o: ["A. I totally disagree with you.", "B. I don't think so.", "C. I couldn't agree more.", "D. That's a ridiculous idea.", "E. I'm not sure about that."], a: 2, p: "\"I couldn't agree more\" adalah ungkapan idiomatis yang berarti \"Saya sangat setuju sekali\"." },
+            { q: "Complete the dialogue:\nSarah: \"Personally, I think online learning is very flexible.\"\nJohn: \"_______. It allows me to manage my study time better.\"", o: ["A. I disagree", "B. I don't believe that", "C. Exactly, I agree with you", "D. I hate it", "E. That's completely wrong"], a: 2, p: "John mendukung argumen fleksibilitas waktu Sarah, sehingga respon yang tepat adalah menyetujui pendapatnya (\"Exactly, I agree with you\")." },
+            { q: "Complete the sentence with the correct Present Tense verb:\n\"Water ______ at 100 degrees Celsius.\"", o: ["A. boil", "B. boils", "C. boiled", "D. is boiling", "E. will boil"], a: 1, p: "Subjek tunggal (Water - uncountable noun) membutuhkan kata kerja berakhiran -s/es (\"boils\") dalam Simple Present Tense." },
+            { q: "Which of the following is an expression of polite disagreement?", o: ["A. Shut up, you are wrong.", "B. I see your point, but I personally have a different view.", "C. Your opinion is useless.", "D. I agree with your stupid idea.", "E. You must do what I say."], a: 1, p: "Opsi B adalah cara membantah atau tidak menyetujui pendapat orang lain secara sopan dan dewasa." },
+            { q: "Identify the general noun in this sentence: \"Tigers are endangered predators in the Asian continent.\"", o: ["A. Tigers", "B. Asian", "C. Continent", "D. Endangered", "E. Predators"], a: 0, p: "'Tigers' (harimau secara umum) adalah General Noun yang dibahas dalam teks ilmiah." },
+            { q: "What is the antonym of the word 'frequent'?", o: ["A. Regular", "B. Often", "C. Rare/Infrequent", "D. Common", "E. Constant"], a: 2, p: "Lawan kata (antonym) dari 'frequent' (sering terjadi) adalah 'rare' atau 'infrequent' (jarang terjadi)." },
+            { q: "What is the synonym of the word 'entertain' in narrative text?", o: ["A. Bore", "B. Amuse/Please", "C. Teach", "D. Inform", "E. Scara"], a: 1, p: "Kata 'entertain' (menghibur) bersinonim langsung dengan kata 'amuse' atau 'please'." },
+            { q: "In report texts, the use of adjectives is crucial to describe features. Which list contains ONLY adjectives?", o: ["A. Beautiful, large, ancient, muscular", "B. Read, write, build, produce", "C. Lion, computer, desk, water", "D. Carefully, slowly, yesterday, in the morning", "E. Is, are, was, were"], a: 0, p: "Opsi A berisi kata sifat seluruhnya: 'Beautiful' (cantik), 'large' (besar), 'ancient' (kuno), 'muscular' (berotot)." },
+            { q: "Identify the correct negative form of the Simple Present Tense sentence:\n\"He loves playing chess.\"", o: ["A. He not love playing chess.", "B. He don't love playing chess.", "C. He doesn't love playing chess.", "D. He didn't love playing chess.", "E. He isn't love playing chess."], a: 2, p: "Untuk subjek tunggal 'He', kalimat negatif Present Tense menggunakan penolong 'doesn't' diikuti kata kerja dasar (love)." },
+            { q: "Which of the following sentences is written in the correct Passive Voice?", o: ["A. The teacher explains the lesson.", "B. The lesson is explained by the teacher.", "C. The lesson explained the teacher.", "D. The teacher is explaining the lesson.", "E. The lesson will explain by the teacher."], a: 1, p: "Pola Passive Voice Simple Present adalah [S + am/is/are + Verb 3 + by Agent]: \"The lesson is explained by the teacher.\"" },
+            { q: "What is the purpose of using General Nouns in a Report Text?", o: ["A. To make the text look poetic and beautiful", "B. To refer to a whole class of things generally rather than one specific thing", "C. To focus on the writer's personal family members", "D. To hide the identity of the main character", "E. To make the reader confused about the subject"], a: 1, p: "General Nouns digunakan dalam Report Text agar pembahasan mencakup seluruh kelompok/spesies objek, bukan hanya satu objek tertentu." },
+            { q: "Which phrase is an expression of giving an opinion?", o: ["A. I couldn't agree more with you", "B. Personally, I believe that we should protect our forests", "C. Congratulations on your graduation!", "D. Excuse me, where is the library?", "E. Thank you very much for your help"], a: 1, p: "Frasa \"Personally, I believe that...\" (Secara pribadi, saya percaya bahwa...) adalah ekspresi memberikan pendapat personal." }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+
+
