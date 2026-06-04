@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis Sejarah - EDUPINTAR</title>
+    <title>Kuis Sejarah SAS - EDUPINTAR</title>
     <!-- Hubungkan Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,28 +37,32 @@
             
             <!-- SECTION 1: SETUP KELOLA SOAL -->
             <div id="setup-section">
-                <h2 class="setup-title">Simulasi Kuis: Sejarah Indonesia</h2>
-                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                <h2 class="setup-title">Simulasi Kuis: Sejarah (Kurikulum Merdeka)</h2>
+                <p class="setup-subtitle">Disesuaikan dengan kisi-kisi SAS terbaru mengenai Kerajaan Hindu-Buddha dan Islam di Indonesia.</p>
                 
                 <div class="input-soal-wrapper">
                     <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
                     <div class="input-soal-flex">
                         <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
-                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak beserta pilihan jawabannya oleh sistem tryout komputer.</p>
                     </div>
                     <div class="info-materi-list">
-                        <div>✔ Teori Masuknya Hindu-Buddha</div>
-                        <div>✔ Kerajaan Hindu-Buddha Nusantara</div>
-                        <div>✔ Peninggalan Arsitektur Islam</div>
-                        <div>✔ Peran Wali Songo dalam Dakwah</div>
-                        <div>✔ Pengaruh Kerajaan atas Budaya Masyarakat</div>
-                        <div>✔ Fungsi Prasasti Kerajaan Kuno</div>
-                        <div>✔ Bukti Akulturasi Budaya</div>
-                        <div>✔ Sriwijaya Pusat Pendidikan Buddha</div>
-                        <div>✔ Sunan Kalijaga & Wayang Kulit</div>
-                        <div>✔ Pendiri Singasari, Demak & Mataram</div>
-                        <div>✔ Patih Gajah Mada (Majapahit)</div>
-                        <div>✔ Kerajaan Islam Gowa-Tallo Sulawesi</div>
+                        <div>✔ Jalur Masuk Hindu-Buddha</div>
+                        <div>✔ Kerajaan Kutai (Mulawarman & Yupa)</div>
+                        <div>✔ Kerajaan Tarumanegara (Purnawarman)</div>
+                        <div>✔ Kerajaan Sriwijaya (Karakteristik & Pusat)</div>
+                        <div>✔ Kerajaan Mataram Kuno & Peninggalannya</div>
+                        <div>✔ Kejayaan & Tokoh Majapahit</div>
+                        <div>✔ Sumpah Palapa (Pengucap & Makna)</div>
+                        <div>✔ Kitab Negarakertagama & Sutasoma</div>
+                        <div>✔ Masuknya Islam (Proses & Tokoh)</div>
+                        <div>✔ Samudra Pasai (Kerajaan Islam Pertama)</div>
+                        <div>✔ Demak (Pendiri & Peninggalan)</div>
+                        <div>✔ Wali Songo (Peran & Media Dakwah)</div>
+                        <div>✔ Mataram Islam (Peran Sultan Agung)</div>
+                        <div>✔ Kerajaan Aceh & Banten</div>
+                        <div>✔ Peninggalan Sejarah & Akulturasi Budaya</div>
+                        <div>✔ Fungsi Prasasti & Nilai Keteladanan</div>
                     </div>
                 </div>
 
@@ -71,7 +75,7 @@
             <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
             <div id="quiz-section" style="display: none;">
                 <div class="progress-container">
-                    <span id="currentSubjectTag">Mata Pelajaran: Sejarah</span>
+                    <span id="currentSubjectTag">Mata Pelajaran: Sejarah SAS</span>
                     <span id="progressText">Soal 1 dari 15</span>
                 </div>
                 <div class="progress-bar-outer">
@@ -99,7 +103,7 @@
             <div id="result-section" class="result-container" style="display: none;">
                 <div class="trophy-icon">🏆</div>
                 <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
-                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Sejarah Kelas 10.</p>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Sejarah Kelas X.</p>
 
                 <div class="score-num" id="scoreValue">0</div>
 
@@ -133,111 +137,98 @@
         <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
     </footer>
 
-    <!-- LOGIKA UTAMA & BANK DATA SEJARAH -->
+    <!-- LOGIKA UTAMA & BANK DATA SEJARAH SAS KELAS X -->
     <script>
-        // BANK DATA SEJARAH (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E - SUDAH DIACAK JAWABANNYA)
+        // BANK DATA SEJARAH REVISI (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E SESUAI KISI-KISI BARU)
         const bankSoal = [
-            // --- TOPIC 1: Proses Masuknya Hindu-Buddha di Indonesia ---
-            { q: "Teori Ksatria berpendapat bahwa masuknya pengaruh Hindu-Buddha dibawa oleh para prajurit India. Tokoh pendukung utama teori ini adalah...", o: ["A. J.C. van Leur", "B. N.J. Krom", "C. C.C. Berg dan Majumdar", "D. F.D.K. Bosch", "E. van Faber"], a: 2, p: "C.C. Berg, Mookerji, dan Majumdar berpendapat perang/perebutan kekuasaan memaksa para ksatria India bermigrasi ke Nusantara." },
-            { q: "Teori yang menyatakan bahwa bangsa Indonesia sendiri yang aktif belajar ke India lalu pulang menyebarkan kebudayaan tersebut adalah...", o: ["A. Teori Sudra", "B. Teori Brahmana", "C. Teori Waisya", "D. Teori Arus Balik", "E. Teori Ksatria"], a: 3, p: "Teori Arus Balik (dikemukakan oleh F.D.K. Bosch) menekankan keaktifan pemuda Nusantara belajar agama di India." },
-            { q: "Mengapa Teori Brahmana yang dikemukakan J.C. van Leur dinilai sangat kuat melandasi masuknya kebudayaan Hindu di Nusantara?", o: ["A. Karena Brahmana menguasai bahasa Sanskerta dan aksara Pallawa yang tertulis pada prasasti kuno", "B. Karena golongan Brahmana adalah pedagang kaya raya", "C. Karena kaum Brahmana melarikan diri akibat kalah perang di India", "D. Karena Brahmana memonopoli komoditas lada di kerajaan", "E. Karena Brahmana diizinkan menikahi putri-putri raja Nusantara"], a: 0, p: "Aksara Pallawa dan bahasa Sanskerta pada prasasti Yupa hanya dikuasai oleh kasta tertinggi (Brahmana)." },
-            { q: "Menurut Teori Waisya oleh N.J. Krom, penyebaran kebudayaan Hindu-Buddha di Indonesia berkaitan erat dengan aktivitas...", o: ["A. Penaklukan militer oleh armada kerajaan India", "B. Hubungan dagang dan jalur pelayaran internasional", "C. Pembuangan tawanan perang kasta Sudra", "D. Pernikahan politik antar-raja besar", "E. Pengembaraan para pendeta Buddha"], a: 1, p: "Krom berasumsi pedagang India (Waisya) menetap di Indonesia mengikuti pola angin musim dagang." },
-            { q: "Kelemahan terbesar dari Teori Sudra yang menyatakan bahwa kaum budak/pekerja kasar menyebarkan agama Hindu adalah...", o: ["A. Kaum Sudra tidak memiliki kekayaan materi untuk berlayar", "B. Golongan Sudra tidak menguasai kitab Weda, bahasa Sanskerta, maupun aksara Pallawa", "C. Jumlah kaum Sudra yang bermigrasi sangat sedikit", "D. Kaum Sudra dilarang meninggalkan wilayah daratan India", "E. Suku-suku di Nusantara menolak kedatangan kaum Sudra"], a: 1, p: "Kasta Sudra tidak memiliki wewenang atau kemampuan membaca kitab Weda suci berbahasa Sanskerta." },
+            // --- 1. Masuknya Hindu-Buddha (Jalur Masuk) ---
+            { q: "Teori yang menyatakan bahwa penyebaran agama Hindu-Buddha ke Indonesia dibawa oleh para pedagang India yang berlayar dan memanfaatkan arah angin musim dinamakan...", o: ["A. Teori Brahmana", "B. Teori Ksatria", "C. Teori Waisya", "D. Teori Sudra", "E. Teori Arus Balik"], a: 2, p: "Teori Waisya mengemukakan bahwa para pedagang India (golongan Waisya) menyebarkan kebudayaan Hindu-Buddha melalui hubungan dagang di daerah pesisir Nusantara." },
+            { q: "Salah satu bukti yang memperkuat Teori Arus Balik (dikemukakan oleh F.D.K. Bosch) dalam proses penyebaran Hindu-Buddha adalah...", o: ["A. Penemuan banyak senjata perang khas prajurit India di Nusantara", "B. Adanya perkampungan khusus pedagang India yang disebut Kampung Keling", "C. Pendirian prasasti Nalanda yang mencatat pembangunan biara untuk pelajar Sriwijaya di India", "D. Corak bahasa Sanskerta yang hanya digunakan oleh rakyat jelata di pedalaman Jawa", "E. Prasasti berhuruf Pallawa yang menceritakan perpindahan kasta Sudra"], a: 2, p: "Prasasti Nalanda menceritakan raja Sriwijaya yang meminta dibuatkan biara di India untuk para pemuda Indonesia yang sedang menuntut ilmu agama Buddha di Nalanda." },
+            { q: "Melalui jalur laut, penyebaran kebudayaan Hindu-Buddha dari India ke kepulauan Indonesia mengikuti rute pelayaran niaga global melewati...", o: ["A. Samudra Pasifik", "B. Selat Malaka", "C. Selat Sunda", "D. Selat Makassar", "E. Laut Cina Selatan"], a: 1, p: "Selat Malaka merupakan pintu gerbang utama jalur sutra maritim kuno yang mempertemukan pedagang Nusantara dengan pedagang dari India dan Tiongkok." },
 
-            // --- TOPIC 2: Kerajaan Hindu-Buddha di Indonesia ---
-            { q: "Kerajaan tertua di Indonesia yang dipimpin oleh Raja Mulawarman adalah Kerajaan...", o: ["A. Tarumanegara", "B. Kutai Kartanegara", "C. Sriwijaya", "D. Kediri", "E. Majapahit"], a: 1, p: "Kutai di Kalimantan Timur merupakan kerajaan Hindu tertua (berdiri sekitar abad ke-4 Masehi)." },
-            { q: "Raja terkenal dari Kerajaan Tarumanegara yang memerintahkan penggalian Sungai Gomati untuk irigasi adalah...", o: ["A. Kudungga", "B. Purnawarman", "C. Aswawarman", "D. Balaputradewa", "E. Hayam Wuruk"], a: 1, p: "Raja Purnawarman adalah penguasa termasyhur Tarumanegara yang tertulis pada Prasasti Tugu." },
-            { q: "Kerajaan Buddha terbesar di Indonesia yang dikenal sebagai kerajaan maritim penguasa jalur Selat Malaka adalah...", o: ["A. Singasari", "B. Sriwijaya", "C. Mataram Kuno", "D. Kalingga", "E. Pajajaran"], a: 1, p: "Sriwijaya di Sumatra Selatan mendominasi perdagangan maritim Selat Malaka sejak abad ke-7." },
-            { q: "Candi Borobudur yang megah dibangun pada masa kejayaan Kerajaan Mataram Kuno dari Dinasti...", o: ["A. Sanjaya", "B. Syailendra", "C. Isyana", "D. Girindra", "E. Rajasa"], a: 1, p: "Dinasti Syailendra (penganut Buddha Mahayana) membangun Candi Borobudur abad ke-8 Masehi." },
-            { q: "Kerajaan Hindu terbesar di Nusantara yang bercita-cita menyatukan wilayah kepulauan melalui Sumpah Palapa adalah...", o: ["A. Sriwijaya", "B. Pajajaran", "C. Singasari", "D. Majapahit", "E. Kutai"], a: 3, p: "Majapahit berhasil mencapai puncak kejayaan penyatuan Nusantara di bawah kepemimpinan Hayam Wuruk dan Gajah Mada." },
+            // --- 2. Kerajaan Kutai (Hindu Tertua, Raja, Prasasti) ---
+            { q: "Kerajaan Kutai diakui sebagai kerajaan Hindu tertua di Indonesia. Hal ini didasarkan pada penemuan peninggalan bersejarah berupa prasasti...", o: ["A. Prasasti Ciaruteun", "B. Prasasti Yupa", "C. Prasasti Kedukan Bukit", "D. Prasasti Tugu", "E. Prasasti Ligor"], a: 1, p: "Prasasti Yupa (berjumlah 7 tiang batu) adalah bukti tertulis tertua yang membuktikan keberadaan Kerajaan Kutai Hindu di Kalimantan Timur." },
+            { q: "Raja Kerajaan Kutai yang terkenal sangat dermawan dengan memberikan sedekah 20.000 ekor sapi kepada para Brahmana adalah...", o: ["A. Kudungga", "B. Aswawarman", "C. Mulawarman", "D. Purnawarman", "E. Hayam Wuruk"], a: 2, p: "Mulawarman adalah raja terbesar Kutai yang terkenal sangat dermawan, berkuasa setelah ayahnya, Aswawarman." },
+            { q: "Siapakah pendiri keluarga Kerajaan Kutai (Wangsakarta) yang namanya masih berbau nama lokal asli Indonesia sebelum tersentuh pengaruh Hindu?", o: ["A. Aswawarman", "B. Mulawarman", "C. Kudungga", "D. Purnawarman", "E. Ken Arok"], a: 2, p: "Kudungga merupakan nama asli Nusantara (pendiri dinasti), sedangkan putranya, Aswawarman, mulai menggunakan nama berakhiran Sanskerta." },
 
-            // --- TOPIC 3: Contoh Peninggalan Kerajaan Islam di Indonesia ---
-            { q: "Manakah di bawah ini yang merupakan masjid peninggalan bersejarah dari Kerajaan Demak abad ke-15?", o: ["A. Masjid Istiqlal", "B. Masjid Agung Demak", "C. Masjid Menara Kudus", "D. Masjid Baiturrahman Banda Aceh", "E. Masjid Raya Banten"], a: 1, p: "Masjid Agung Demak dibangun oleh Raden Patah bersama Wali Songo, terkenal dengan saka tatal (tiang serpihan kayu)." },
-            { q: "Makam bercorak Islam tertua di Nusantara yang menjadi bukti masuknya pengaruh Islam di Sumatra utara abad ke-13 adalah...", o: ["A. Makam Sunan Kalijaga", "B. Makam Sultan Malik As-Saleh", "C. Makam Fatimah binti Maimun", "D. Makam Sultan Hasanuddin", "E. Makam Sunan Ampel"], a: 1, p: "Sultan Malik As-Saleh adalah raja pertama Samudera Pasai dengan nisan bercorak Islam Gujarat." },
-            { q: "Masjid peninggalan sejarah Islam yang memiliki keunikan menara menyerupai candi Hindu/bata merah adalah...", o: ["A. Masjid Agung Cirebon", "B. Masjid Menara Kudus", "C. Masjid Demak", "D. Masjid Katangka", "E. Masjid Luar Batang"], a: 1, p: "Masjid Menara Kudus didirikan Sunan Kudus dengan menara berbentuk mirip candi sebagai bentuk akulturasi." },
-            { q: "Karya sastra peninggalan kerajaan Islam yang berisi ramalan atau kisah sejarah kepahlawanan bercampur mitos disebut...", o: ["A. Serat dan Hikayat", "B. Kitab Kakawin", "C. Kitab Weda", "D. Prasasti", "E. relief candi"], a: 0, p: "Hikayat (melayu) dan Serat/Babad (Jawa) adalah dokumen sastra historis bercorak Islam." },
-            { q: "Keraton Yogyakarta dan Surakarta merupakan peninggalan bersejarah pasca-pecahnya kerajaan Islam...", o: ["A. Demak", "B. Mataram Islam", "C. Pajang", "D. Banten", "E. Cirebon"], a: 1, p: "Melalui Perjanjian Giyanti (1755), Mataram Islam pecah menjadi Kasunanan Surakarta dan Kasultanan Yogyakarta." },
+            // --- 3. Kerajaan Tarumanegara (Letak & Raja Terkenal) ---
+            { q: "Kerajaan Tarumanegara merupakan kerajaan Hindu tertua di Pulau Jawa. Secara geografis, pusat kekuasaan kerajaan ini terletak di daerah...", o: ["A. Jawa Tengah", "B. Jawa Timur", "C. Jawa Barat (sekitar Bogor dan Jakarta)", "D. Banten", "E. Sumatra Selatan"], a: 2, p: "Tarumanegara berpusat di wilayah Jawa Barat, dibuktikan dengan penemuan prasasti di Bogor, Jakarta, dan Bekasi." },
+            { q: "Raja Tarumanegara yang terkenal gagah berani, sangat mencintai rakyatnya, dan telapak kakinya dilukiskan pada Prasasti Ciaruteun adalah...", o: ["A. Mulawarman", "B. Purnawarman", "C. Aswawarman", "D. Kudungga", "E. Sanjaya"], a: 1, p: "Raja Purnawarman adalah penguasa termasyhur Tarumanegara. Telapak kakinya dilambangkan sebagai telapak kaki Dewa Wisnu di Prasasti Ciaruteun." },
+            { q: "Prasasti peninggalan Kerajaan Tarumanegara yang menceritakan penggalian Sungai Gomati untuk mencegah banjir dan irigasi pertanian adalah...", o: ["A. Prasasti Kebon Kopi", "B. Prasasti Jambu", "C. Prasasti Tugu", "D. Prasasti Cidanghiang", "E. Prasasti Pasir Awi"], a: 2, p: "Prasasti Tugu mencatat penggalian saluran air sepanjang 11 km atas perintah Raja Purnawarman untuk mengendalikan banjir dan irigasi pertanian." },
 
-            // --- TOPIC 4: Peran Wali Songo dalam Perkembangan Islam di Indonesia ---
-            { q: "Metode dakwah Wali Songo yang paling efektif mempercepat diterimanya Islam oleh penduduk lokal adalah...", o: ["A. Penaklukan militer wilayah pesisir pantai", "B. Akulturasi damai menggunakan pendekatan budaya lokal, kesenian, dan pendidikan", "C. Membakar tempat ibadah agama lama", "D. Melarang perdagangan dengan kerajaan non-Islam", "E. Mewajibkan pembayaran pajak keagamaan"], a: 1, p: "Wali Songo mengadopsi tradisi, musik, dan sastra daerah agar ajaran Islam mudah dicerna secara damai." },
-            { q: "Wali tertua dari Wali Songo yang menyebarkan Islam di wilayah Gresik dan mengajarkan cara bertani modern adalah...", o: ["A. Sunan Ampel", "B. Sunan Bonang", "C. Sunan Kalijaga", "D. Maulana Malik Ibrahim (Sunan Gresik)", "E. Sunan Giri"], a: 3, p: "Maulana Malik Ibrahim (Sunan Gresik) merupakan wali perintis dakwah di tanah Jawa." },
-            { q: "Pusat pendidikan Islam legendaris yang didirikan Sunan Ampel untuk melatih kader da'i penyebar Islam bernama...", o: ["A. Pesantren Tebuireng", "B. Pesantren Ampeldenta", "C. Pesantren Giri Kedaton", "D. Padepokan Kalijaga", "E. Pondok Lirboyo"], a: 1, p: "Pesantren Ampeldenta di Surabaya melahirkan da'i hebat seperti Sunan Giri dan Raden Patah." },
-            { q: "Karya kesenian berupa tembang Macapat 'Lir-Ilir' dan alat musik gamelan Sekaten digubah oleh...", o: ["A. Sunan Kudus", "B. Sunan Muria", "C. Sunan Kalijaga", "D. Sunan Bonang", "E. Sunan Gunung Jati"], a: 2, p: "Sunan Kalijaga memanfaatkan tembang Lir-Ilir dan wayang kulit sebagai instrumen media dakwah." },
-            { q: "Wali Songo yang memimpin penyebaran Islam di wilayah Jawa Barat sekaligus menjadi sultan pertama Cirebon adalah...", o: ["A. Sunan Gunung Jati (Syarif Hidayatullah)", "B. Sunan Drajat", "C. Sunan Kudus", "D. Sunan Giri", "E. Sunan Bonang"], a: 0, p: "Syarif Hidayatullah menyebarkan Islam di tatar Sunda dan mendirikan kesultanan Cirebon dan Banten." },
+            // --- 4. Kerajaan Sriwijaya (Karakteristik & Pusat) ---
+            { q: "Salah satu karakteristik utama yang menonjol dari Kerajaan Sriwijaya sebagai salah satu kerajaan terbesar di Indonesia adalah...", o: ["A. Berorientasi pada sektor pertanian pedalaman yang luas (Agraris)", "B. Kerajaan maritim yang menguasai bandar pelayaran dan perdagangan Selat Malaka", "C. Memiliki kasta kemasyarakatan yang sangat kaku", "D. Menolak segala bentuk perdagangan luar negeri", "E. Menggunakan sistem pemerintahan demokrasi parlementer"], a: 1, p: "Sriwijaya adalah kerajaan maritim (talasokrasi) yang mengandalkan jalur Selat Malaka dan Selat Sunda sebagai sumber kemakmuran pajaknya." },
+            { q: "Di manakah letak pusat pemerintahan Kerajaan Sriwijaya yang dibuktikan dengan penemuan prasasti-prasasti pertamanya?", o: ["A. Palembang (Sumatra Selatan)", "B. Jambi", "C. Riau", "D. Kediri (Jawa Timur)", "E. Bogor (Jawa Barat)"], a: 0, p: "Prasasti awal seperti Kedukan Bukit dan Talang Tuwo memperkuat bukti bahwa pusat awal Sriwijaya terletak di Palembang." },
+            { q: "Sriwijaya dikenal sebagai pusat pendidikan agama Buddha di Asia Tenggara. Pendeta Tiongkok yang mencatat keagungan studi Buddha di Sriwijaya bernama...", o: ["A. Fa-Hien", "B. I-Tsing", "C. Xuanzang", "D. Cheng Ho", "E. Marcopolo"], a: 1, p: "Pendeta I-Tsing singgah di Sriwijaya pada abad ke-7 untuk menerjemahkan naskah Buddha sebelum melanjutkan perjalanannya ke India." },
 
-            // --- TOPIC 5: Pengaruh Kerajaan Hindu-Buddha & Islam terhadap Masyarakat ---
-            { q: "Apakah pengaruh mendasar runtuhnya kerajaan Hindu-Buddha dan berdirinya kerajaan Islam terhadap sistem sosial masyarakat?", o: ["A. Terhapusnya sistem kasta sosial masyarakat secara perlahan", "B. Seluruh masyarakat diwajibkan menjadi pedagang", "C. Terjadinya pengusiran besar-besaran etnis India", "D. Sistem pemerintahan berubah menjadi demokrasi parlementer", "E. Wilayah pedalaman ditinggalkan oleh penduduk"], a: 0, p: "Islam mengajarkan persamaan derajat (kesetaraan manusia) yang meluruhkan sistem kasta ketat." },
-            { q: "Wujud akulturasi arsitektur Hindu-Buddha dengan Islam terlihat jelas pada bentuk...", o: ["A. Nisan makam berbentuk bulat", "B. Atap masjid tumpang (berundak) mirip meru candi Hindu", "C. Kubah bulat berbahan beton", "D. Penggunaan kaca patri berwarna-warni", "E. Lantai masjid yang berbahan marmer putih"], a: 1, p: "Atap tumpang berundak ganjil pada masjid kuno (seperti Masjid Demak) meniru model atap pura Hindu." },
-            { q: "Bahasa sanskerta banyak menyerap kosakata baru di era Islam. Bahasa komunikasi pemersatu perdagangan laut di era Islam berganti menjadi...", o: ["A. Bahasa Jawa kuno", "B. Bahasa Melayu (lingua franca)", "C. Bahasa Arab murni", "D. Bahasa Sanskerta", "E. Bahasa Portugis"], a: 1, p: "Bahasa Melayu bercampur Arab (huruf Jawi) meluas sebagai bahasa diplomasi dan perdagangan nusantara." },
-            { q: "Sistem pemerintahan kerajaan Hindu-Buddha dipimpin raja mutlak yang dianggap sebagai titisan dewa (Dewa Raja). Di era Islam, konsep ini berganti menjadi...", o: ["A. Presiden republik", "B. Sultan yang bertindak selaku khalifah / wakil Tuhan di bumi", "C. Perdana menteri", "D. Dewan tetua adat", "E. Gubernur jenderal kolonial"], a: 1, p: "Gelar Sultan/Khalifatullah menggantikan konsep Dewa Raja untuk menegaskan otoritas keagamaan." },
-            { q: "Upacara tradisional Grebeg Maulud di Keraton Yogyakarta merupakan perpaduan budaya antara...", o: ["A. Budaya Barat dengan budaya Islam Jawa", "B. Kebiasaan sesaji animisme Jawa dengan perayaan hari lahir Nabi Muhammad SAW", "C. Tradisi Buddha Mahayana dengan Kristen", "D. Kebudayaan Arab Timur Tengah dengan Cina", "E. Upacara kurban Hindu dengan Islam"], a: 1, p: "Grebeg Maulud mengadopsi gunungan hasil bumi tradisional Jawa yang diarak untuk merayakan Maulid Nabi." },
+            // --- 5. Mataram Kuno (Peninggalan) ---
+            { q: "Kerajaan Mataram Kuno diperintah oleh dua dinasti yang berbeda keyakinan agama. Dinasti Syailendra menganut Buddha, sedangkan Dinasti Sanjaya menganut...", o: ["A. Islam", "B. Kristen", "C. Hindu Syiwa", "D. Konghucu", "E. Animisme"], a: 2, p: "Dinasti Sanjaya menganut agama Hindu Syiwa, sedangkan Dinasti Syailendra menganut agama Buddha Mahayana." },
+            { q: "Candi Borobudur yang megah dan diakui sebagai salah satu monumen Buddha terbesar di dunia dibangun pada masa Mataram Kuno oleh...", o: ["A. Dinasti Sanjaya", "B. Dinasti Syailendra", "C. Dinasti Isyana", "D. Dinasti Rajasa", "E. Dinasti Girindra"], a: 1, p: "Borobudur merupakan maha karya arsitektur Buddha Mahayana yang dibangun oleh Dinasti Syailendra sekitar abad ke-8 Masehi." },
+            { q: "Manakah candi peninggalan Hindu terbesar dari Dinasti Sanjaya pada masa Mataram Kuno yang memiliki arsitektur ramping dan tinggi?", o: ["A. Candi Kalasan", "B. Candi Prambanan", "C. Candi Mendut", "D. Candi Sewu", "E. Candi Plaosan"], a: 1, p: "Candi Prambanan (Loro Jonggrang) merupakan peninggalan Hindu terbesar di Indonesia yang dibangun untuk menandingi kemegahan Candi Borobudur." },
 
-            // --- TOPIC 6: Fungsi Prasasti pada Masa Kerajaan ---
-            { q: "Apakah fungsi utama pembuatan prasasti batu pada masa kerajaan Hindu-Buddha kuno Nusantara?", o: ["A. Sebagai mata uang resmi transaksi niaga", "B. Sebagai dokumen hukum resmi, maklumat raja, piagam anugerah tanah sima, atau peringatan kemenangan", "C. Sebagai hiasan dekorasi taman luar istana", "D. Alat berkomunikasi rahasia antar-kerajaan", "E. Tempat meletakkan persembahan dupa dewa"], a: 1, p: "Prasasti bertindak sebagai dokumen negara tertulis legal di atas batu/logam tahan lama." },
-            { q: "Prasasti Yupa dari Kerajaan Kutai berfungsi sebagai batu peringatan tentang...", o: ["A. Perang besar menundukkan suku pedalaman", "B. Upacara kurban sedekah 20.000 ekor sapi oleh Raja Mulawarman kepada kaum Brahmana", "C. Perjanjian damai dengan armada pedagang India", "D. Penetapan batas wilayah kerajaan Tarumanegara", "E. Sumpah setia para menteri istana"], a: 1, p: "Yupa memuat prasasti kedermawanan luar biasa Raja Mulawarman bersedekah hewan ternak." },
-            { q: "Prasasti Ciaruteun dari Kerajaan Tarumanegara memuat lukisan telapak kaki Raja Purnawarman yang dianalogikan sebagai...", o: ["A. Telapak kaki Dewa Wisnu", "B. Telapak kaki Buddha Gautama", "C. Telapak kaki ksatria pelindung bumi", "D. Pintu gerbang kerajaan gaib", "E. Lambang kebebasan rakyat"], a: 0, p: "Tapak kaki Purnawarman disamakan dengan tapak kaki Dewa Wisnu sebagai simbol kekuasaan pelindung rakyat." },
-            { q: "Prasasti Tugu yang ditemukan di wilayah Jakarta Utara berisikan informasi penting mengenai pembangunan...", o: ["A. Candi peribadatan besar", "B. Saluran air/irigasi Sungai Candrabhaga dan Gomati sepanjang 11 km", "C. Pelabuhan niaga internasional", "D. Istana megah raja Purnawarman", "E. Tembok pertahanan militer"], a: 1, p: "Prasasti Tugu mencatat proyek tata ruang pengairan purba mitigasi banjir dan pertanian." },
-            { q: "Bahasa dan aksara yang dominan digunakan pada prasasti tertua di Nusantara adalah...", o: ["A. Bahasa Jawa Kuno dan Aksara Kawi", "B. Bahasa Melayu dan Aksara Arab gundul", "C. Bahasa Sanskerta dan Aksara Pallawa", "D. Bahasa Sunda kuno", "E. Bahasa Tamil dan Aksara Hanacaraka"], a: 2, p: "Pallawa dan Sanskerta adalah aksara dan bahasa literasi prasasti abad ke-4 hingga ke-7 Masehi." },
+            // --- 6. Majapahit (Tokoh, Kejayaan, Peninggalan) ---
+            { q: "Kerajaan Majapahit mencapai puncak kejayaan (zaman keemasan) pada abad ke-14 Masehi di bawah kepemimpinan raja...", o: ["A. Raden Wijaya", "B. Hayam Wuruk", "C. Tribhuwana Wijayatunggadewi", "D. Jayanegara", "E. Wikramawardhana"], a: 1, p: "Di bawah pemerintahan Raja Hayam Wuruk dan Patih Gajah Mada, pengaruh Majapahit meluas hampir ke seluruh wilayah Nusantara." },
+            { q: "Siapakah pendiri sekaligus raja pertama dari Kerajaan Majapahit yang berhasil memanfaatkan tentara Mongol untuk mengalahkan Jayakatwang?", o: ["A. Gajah Mada", "B. Raden Wijaya", "C. Ken Arok", "D. Kertanegara", "E. Hayam Wuruk"], a: 1, p: "Raden Wijaya mendirikan Majapahit pada tahun 1293 Masehi dengan gelar Kertarajasa Jayawardhana setelah mengalahkan Kediri." },
+            { q: "Salah satu situs peninggalan ibu kota Majapahit yang berupa struktur gapura bata merah tanpa semen di Jawa Timur terletak di daerah...", o: ["A. Prambanan", "B. Trowulan", "C. Singasari", "D. Kediri", "E. Tuban"], a: 1, p: "Situs Trowulan di Mojokerto menyimpan peninggalan arkeologis permukiman dan gapura bersejarah milik Majapahit." },
 
-            // --- TOPIC 7: Bukti Adanya Pengaruh Hindu-Buddha di Indonesia ---
-            { q: "Bukti arkeologis paling nyata adanya pengaruh kebudayaan Hindu di Indonesia adalah keberadaan bangunan...", o: ["A. Candi Prambanan", "B. Candi Borobudur", "C. Masjid Kudus", "D. Keraton Kaibon", "E. Benteng Vredeburg"], a: 0, p: "Candi Prambanan (Loro Jonggrang) merupakan gugusan candi Trimurti Hindu terbesar di Indonesia." },
-            { q: "Masuknya Hindu-Buddha merubah sistem kepemimpinan suku dari kepala suku (primus inter pares) menjadi...", o: ["A. Republik demokrasi presidensial", "B. Monarki mutlak yang dipimpin oleh Raja", "C. Oligarki kapitalis", "D. Dinasti kesultanan daerah", "E. Komunalisme kolektif"], a: 1, p: "Kerajaan menggantikan sistem suku dengan hierarki raja berkekuasaan turun-temurun." },
-            { q: "Adopsi kisah epik kepahlawanan India yang diakulturasi ke pertunjukan wayang kulit Jawa adalah...", o: ["A. Ramayana dan Mahabharata", "B. Sutasoma dan Negarakertagama", "C. Hikayat Amir Hamzah", "D. Babad Tanah Jawi", "E. Kidung Sunda"], a: 0, p: "Ramayana dan Mahabharata merupakan epos Hindu India yang diadaptasi menjadi lakon wayang." },
-            { q: "Penemuan arca Buddha perunggu bergaya seni Amarawati di Sempaga (Sulawesi Selatan) membuktikan bahwa...", o: ["A. Agama Buddha menyebar lewat jalur darat sutra saja", "B. Indonesia telah terhubung jalur pelayaran dagang kuno internasional sejak awal abad masehi", "C. Suku Bugis adalah pembuat arca terbaik dunia", "D. Sulawesi merupakan pusat kerajaan Buddha terbesar", "E. India menjajah nusantara secara militer"], a: 1, p: "Arca Amarawati buatan India Selatan membuktikan nusantara adalah titik perdagangan maritim kuno internasional." },
-            { q: "Sistem penanggalan yang diserap dari pengaruh kebudayaan Hindu di Nusantara adalah penggunaan kalender...", o: ["A. Masehi", "B. Saka", "C. Hijriah", "D. Imlek", "E. Jawa Islam"], a: 1, p: "Tahun Saka berasal dari India yang diadopsi kerajaan Hindu-Buddha nusantara." },
+            // --- 7. Sumpah Palapa (Tokoh & Makna) ---
+            { q: "Tokoh yang mengucapkan Sumpah Palapa saat dilantik menjadi Patih Amangkubhumi Majapahit adalah...", o: ["A. Raden Wijaya", "B. Gajah Mada", "C. Hayam Wuruk", "D. Arya Damar", "E. Mpu Prapanca"], a: 1, p: "Sumpah Palapa diikrarkan oleh Patih Gajah Mada di hadapan Ratu Tribhuwana Wijayatunggadewi pada tahun 1336 Masehi." },
+            { q: "Apakah makna filosofis dan tujuan utama dari diucapkannya Sumpah Palapa oleh Gajah Mada?", o: ["A. Tekad untuk menguasai jalur perdagangan rempah dunia", "B. Komitmen kuat untuk menyatukan wilayah kepulauan Nusantara di bawah naungan Majapahit", "C. Sumpah untuk menolak segala bentuk persembahan dewa", "D. Keinginan mengalahkan pengaruh dinasti Yuan di Tiongkok", "E. Janji untuk pensiun dari urusan pemerintahan istana"], a: 1, p: "Sumpah Palapa bermakna tekad bulat Gajah Mada untuk tidak memakan buah palapa (beristirahat/menikmati kesenangan) sebelum Nusantara bersatu." },
+            { q: "Dalam Sumpah Palapa, Gajah Mada menyebutkan beberapa wilayah luar yang ingin dipersatukan, salah satunya 'Gurun' yang diidentifikasi sebagai daerah...", o: ["A. Sumatra", "B. Bali", "C. Lombok / Indonesia Timur", "D. Kalimantan", "E. Semenanjung Melayu"], a: 2, p: "Nama-nama wilayah dalam Sumpah Palapa (seperti Gurun, Seran, Tanjungpura) merujuk pada wilayah-wilayah di luar Pulau Jawa." },
 
-            // --- TOPIC 8: Kerajaan yang Terkenal sebagai Pusat Pendidikan Buddha ---
-            { q: "Kerajaan di Indonesia yang sangat terkenal di Asia Tenggara sebagai pusat pembelajaran dan pendidikan agama Buddha adalah...", o: ["A. Tarumanegara", "B. Singasari", "C. Sriwijaya", "D. Majapahit", "E. Kutai"], a: 2, p: "Sriwijaya diakui dunia sebagai universitas dan pusat studi Buddha terbesar di luar India." },
-            { q: "Pendeta sekaligus penjelajah Tiongkok yang mencatat kebesaran pusat studi Buddha di Sriwijaya pada abad ke-7 bernama...", o: ["A. Cheng Ho", "B. I-Tsing", "C. Fa-Hien", "D. Xuanzang", "E. Kublai Khan"], a: 1, p: "I-Tsing (Yijing) bermukim bertahun-tahun di Sriwijaya menerjemahkan naskah suci Buddha." },
-            { q: "Guru besar (pendeta Buddha) Sriwijaya yang sangat termasyhur mengajar teologi Buddha hingga tingkat internasional bernama...", o: ["A. Balaputradewa", "B. Dharmakitri", "C. Sakyakirti", "D. Marcopolo", "E. Purnawarman"], a: 2, p: "Sakyakirti dan Dharmakitri adalah maha guru Buddha legendaris di Sriwijaya." },
-            { q: "Hubungan diplomasi pendidikan antara Sriwijaya dengan kerajaan Nalanda di India dibuktikan dengan penemuan...", o: ["A. Prasasti Kedukan Bukit", "B. Prasasti Nalanda", "C. Prasasti Talang Tuwo", "D. Prasasti Kota Kapur", "E. Prasasti Karang Brahi"], a: 1, p: "Prasasti Nalanda mencatat pembangunan biara studi untuk mahasiswa asal Sriwijaya di India." },
-            { q: "Sebelum belajar agama Buddha langsung ke India (Nalanda), para biksu Tiongkok disarankan I-Tsing untuk...", o: ["A. Belajar bahasa Sanskerta dan tata ritual keagamaan di Sriwijaya selama 1-2 tahun", "B. Membeli rempah-rempah di pelabuhan Banten", "C. Meminta izin raja Mulawarman", "D. Mendirikan candi di Jawa Timur", "E. Berziarah ke candi Borobudur"], a: 0, p: "Sriwijaya menyediakan fasilitas persiapan akademis linguistik dan ritual standar sebelum ke India." },
+            // --- 8. Kitab Sejarah (Penulis Negarakertagama & Sutasoma) ---
+            { q: "Kitab Negarakertagama yang memuat sejarah Majapahit, batas wilayahnya, serta perjalanan keliling Hayam Wuruk ditulis oleh...", o: ["A. Mpu Tantular", "B. Mpu Prapanca", "C. Mpu Sedah", "D. Mpu Panuluh", "E. Mpu Kanwa"], a: 1, p: "Mpu Prapanca menulis Kakawin Nagarakretabhumi (Negarakertagama) pada tahun 1365 Masehi." },
+            { q: "Kakawin Sutasoma yang memuat kalimat emas pemersatu bangsa 'Bhinneka Tunggal Ika tan hana dharma mangrwa' ditulis oleh...", o: ["A. Mpu Prapanca", "B. Mpu Tantular", "C. Mpu Gandring", "D. Mpu Panuluh", "E. Mpu Kanwa"], a: 1, p: "Mpu Tantular adalah pujangga Majapahit yang menulis Kitab Sutasoma, sumber semboyan negara Indonesia saat ini." },
+            { q: "Apa esensi utama ajaran dalam Kitab Sutasoma karya Mpu Tantular yang melahirkan konsep kebinekaan bangsa?", o: ["A. Larangan keras bagi rakyat untuk menganut selain satu agama", "B. Toleransi dan keselarasan hidup antara penganut agama Buddha dan Hindu Syiwa", "C. Panduan taktik perang merebut kerajaan lain", "D. Aturan hukum pidana bagi pencuri di pasar kerajaan", "E. Silsilah raja-raja kutai secara turun-temurun"], a: 1, p: "Mpu Tantular menegaskan bahwa meskipun ajaran Hindu Syiwa dan Buddha berbeda, pada hakikatnya tujuannya adalah satu." },
 
-            // --- TOPIC 9: Tokoh Penyebar Islam Melalui Seni Pertunjukan ---
-            { q: "Wali yang memodifikasi pertunjukan wayang kulit Hindu dengan memasukkan unsur Islam, seperti kalimat syahadat (jimat kalimasada) adalah...", o: ["A. Sunan Ampel", "B. Sunan Giri", "C. Sunan Kalijaga", "D. Sunan Kudus", "E. Sunan Muria"], a: 2, p: "Sunan Kalijaga menyisipkan nilai tauhid Islam ke dalam seni pertunjukan wayang kulit." },
-            { q: "Mengapa seni pertunjukan wayang kulit dipilih Sunan Kalijaga sebagai media dakwah?", o: ["A. Karena pertunjukan tersebut tidak dipungut biaya denda pajak", "B. Karena masyarakat nusantara menyukai kesenian visual dan pertunjukan mistis", "C. Karena dilarang menggambar manusia secara tiga dimensi murni dalam syariat", "D. Karena wayang sangat digemari dan menyatu dengan budaya hidup masyarakat", "E. Karena diperintah langsung oleh Kesultanan Turki"], a: 3, p: "Masyarakat sangat menyukai wayang, menjadikannya media asimilasi nilai-nilai Islam yang efektif tanpa resistensi." },
-            { q: "Selain wayang kulit, Sunan Kalijaga juga berdakwah menciptakan kesenian alat musik yaitu...", o: ["A. Gendang rebana Arab", "B. Gamelan Jawa (Sekaten dan Nyai Becak)", "C. Angklung bambu Sunda", "D. Sasando dawai", "E. Seruling suling bambu"], a: 1, p: "Gamelan Sekaten ditabuh di halaman masjid untuk mengundang massa mendengarkan syahadat." },
-            { q: "Karakter pewayangan jenaka yang diciptakan/dimodifikasi Wali Songo sebagai penyampai nasehat moral keagamaan adalah...", o: ["A. Pandawa Lima", "B. Punakawan (Semar, Gareng, Petruk, Bagong)", "C. Kurawa", "D. Rahwana", "E. Hanoman"], a: 1, p: "Punakawan menjadi juru bicara nasehat bijak bermuatan tauhid dengan bahasa humor merakyat." },
-            { q: "Sunan Kalijaga menetapkan tiket masuk menonton pertunjukan wayang kulit kreasinya bukan dengan uang, melainkan dengan...", o: ["A. Membawa hasil bumi pertanian", "B. Membaca kalimat Syahadat (Syahadatain)", "C. Bekerja bakti membersihkan masjid", "D. Berjanji setia membela kesultanan", "E. Membawa serpihan kayu jati"], a: 1, p: "Menonton wayang Sunan Kalijaga gratis, cukup melafalkan dua kalimat syahadat sebagai ikrar masuk Islam." },
+            // --- 9. Masuknya Islam (Proses & Tokoh) ---
+            { q: "Masuknya pengaruh Islam ke Indonesia berlangsung secara damai melalui beberapa jalur utama, yaitu...", o: ["A. Perdagangan, perkawinan, kesenian, pendidikan, dan tasawuf", "B. Ekspedisi militer dan penaklukan bersenjata", "C. Monopoli paksa rempah-rempah daerah", "D. Pengusiran massal penganut agama lama", "E. Pembatasan pelayaran niaga antarpulau"], a: 0, p: "Proses Islamisasi di Indonesia berhasil merangkul masyarakat tanpa peperangan melalui niaga, asimilasi budaya, dan pendidikan pesantren." },
+            { q: "Salah satu bukti arkeologis tertua adanya pemukiman muslim di Jawa Timur pada masa runtuhnya Majapahit adalah...", o: ["A. Prasasti Yupa", "B. Kompleks makam Troloyo di Trowulan dengan nisan berangka tahun Saka dan Arab", "C. Masjid Agung Demak", "D. Prasasti Tugu", "E. Makam Fatimah binti Maimun di Leran"], a: 1, p: "Makam Troloyo menunjukkan adanya toleransi dan keberadaan keluarga istana Majapahit yang sudah memeluk agama Islam." },
+            { q: "Tokoh muslim asal Samudra Pasai yang aktif berdakwah di pesisir utara Jawa dan dihormati sebagai sesepuh Wali Songo adalah...", o: ["A. Sunan Kalijaga", "B. Maulana Malik Ibrahim (Sunan Gresik)", "C. Sunan Ampel", "D. Sunan Gunung Jati", "E. Sunan Kudus"], a: 1, p: "Maulana Malik Ibrahim (Sunan Gresik) merupakan da'i asal Persia/Samudra Pasai yang memulai dakwahnya di pesisir Gresik." },
 
-            // --- TOPIC 10: Dampak Perkembangan Kerajaan Islam ---
-            { q: "Pendiri Kesultanan Demak yang sekaligus merupakan putra mahkota keturunan raja terakhir Majapahit adalah...", o: ["A. Pati Unus", "B. Raden Patah", "C. Sultan Trenggono", "D. Sultan Ageng Tirtayasa", "E. Ken Arok"], a: 1, p: "Raden Patah mendirikan Demak dibantu Wali Songo setelah Majapahit melemah." },
-            { q: "Raja Mataram Islam yang paling terkenal karena memimpin penyerangan bersenjata melawan VOC Belanda di Batavia (1628 dan 1629) adalah...", o: ["A. Panembahan Senopati", "B. Sultan Agung Hanyokrokusumo", "C. Sultan Hamengkubuwono I", "D. Amangkurat I", "E. Sultan Hasanuddin"], a: 1, p: "Sultan Agung merupakan penguasa Mataram terbesar yang gigih berupaya mengusir kolonial Belanda (VOC)." },
-            { q: "Kesultanan Banten mencapai puncak kejayaan ekonomi maritim dan lada di bawah kepemimpinan pahlawan nasional bernama...", o: ["A. Sultan Maulana Hasanuddin", "B. Sultan Ageng Tirtayasa", "C. Sultan Abdul Mufakhir", "D. Raden Patah", "E. Sultan Baabullah"], a: 1, p: "Sultan Ageng Tirtayasa memajukan pelabuhan niaga bebas Banten menantang hegemoni monopoli VOC." },
-            { q: "Pendiri Kerajaan Singasari pada tahun 1222 Masehi setelah meruntuhkan Kerajaan Kediri di perang Ganter adalah...", o: ["A. Raden Wijaya", "B. Ken Arok", "C. Kertanegara", "D. Anusapati", "E. Tohjaya"], a: 1, p: "Ken Arok mendirikan Singasari setelah mengalahkan Raja Kertajaya dari Kediri." },
-            { q: "Dua kerajaan Islam kembar di Sulawesi Selatan yang bersekutu erat menentang monopoli perdagangan VOC adalah...", o: ["A. Kerajaan Kutai dan Paser", "B. Kerajaan Gowa dan Tallo", "C. Kerajaan Ternate dan Tidore", "D. Kerajaan Bone dan Wajo", "E. Kerajaan Buton dan Makassar"], a: 1, p: "Gowa-Tallo (Makassar) bersatu membentuk poros maritim Islam terkuat di Indonesia timur." }
+            // --- 10. Samudra Pasai (Kerajaan Islam Pertama) ---
+            { q: "Kesultanan Samudra Pasai diakui sebagai kerajaan Islam pertama di Indonesia. Kerajaan ini terletak geografis di wilayah...", o: ["A. Jambi", "B. Palembang", "C. Lhokseumawe, Aceh Utara", "D. Selat Sunda", "E. Riau"], a: 2, p: "Samudra Pasai berdiri sekitar abad ke-13 di pesisir utara Sumatra (Aceh), strategis menghadap Selat Malaka." },
+            { q: "Siapakah raja pertama sekaligus pendiri Kesultanan Samudra Pasai yang bergelar Sultan Malik As-Saleh?", o: ["A. Nazimuddin al-Kamil", "B. Marah Silu", "C. Sultan Ali Mughayat Syah", "D. Raden Patah", "E. Sultan Hasanuddin"], a: 1, p: "Marah Silu memeluk Islam dan mendirikan Samudra Pasai dengan nama gelar resmi Sultan Malik As-Saleh." },
+            { q: "Musafir asal Maroko yang mencatat bahwa Samudra Pasai merupakan pusat studi Islam yang makmur dan dikunjungi banyak ulama dunia adalah...", o: ["A. Marco Polo", "B. Ibn Battuta", "C. Tome Pires", "D. Cheng Ho", "E. Cornelis de Houtman"], a: 1, p: "Ibn Battuta mengunjungi Samudra Pasai pada abad ke-14 dan memuji kesalehan rajanya serta kemakmuran kerajaannya." },
+
+            // --- 11. Demak (Pendiri & Peninggalan) ---
+            { q: "Kerajaan Demak merupakan kerajaan Islam pertama di Pulau Jawa. Pendiri sekaligus raja pertama kerajaan ini adalah...", o: ["A. Adipati Unus", "B. Sultan Trenggono", "C. Raden Patah", "D. Sunan Kalijaga", "E. Sultan Agung"], a: 2, p: "Raden Patah mendirikan Demak pada akhir abad ke-15 (sekitar 1478 M) dengan bantuan dakwah dari para Wali Songo." },
+            { q: "Peninggalan sejarah Demak yang sangat legendaris dan menjadi pusat pertemuan dakwah para Wali Songo adalah...", o: ["A. Keraton Yogyakarta", "B. Masjid Agung Demak", "C. Masjid Menara Kudus", "D. Benteng Speelwijk", "E. Keraton Kasepuhan"], a: 1, p: "Masjid Agung Demak terkenal dengan saka tatal (tiang dari serpihan kayu) yang dirancang oleh Wali Songo." },
+            { q: "Putra Raden Patah yang memimpin penyerangan armada laut Demak ke Malaka untuk mengusir Portugis (bergelar Pangeran Sabrang Lor) adalah...", o: ["A. Adipati Unus", "B. Sultan Trenggono", "C. Pangeran Sekar Seda ing Penampen", "D. Ki Ageng Pemanahan", "E. Pangeran Benawa"], a: 0, p: "Adipati Unus diberi julukan 'Pangeran Sabrang Lor' karena keberaniannya menyerbu Portugis menyeberang ke utara (Malaka)." },
+
+            // --- 12. Wali Songo (Peran & Dakwah) ---
+            { q: "Dalam proses Islamisasi di Jawa, peran Wali Songo yang paling menonjol dalam menarik hati rakyat lokal adalah...", o: ["A. Melakukan ekspansi militer merebut tanah para adipati Hindu", "B. Memadukan nilai tauhid ke dalam kesenian rakyat seperti wayang, gamelan, dan tembang daerah", "C. Melarang pementasan seni tradisional peninggalan Hindu", "D. Menuntut upeti keagamaan bagi rakyat kelas bawah", "E. Mewajibkan pemakaian seragam khas Arab"], a: 1, p: "Para wali menyisipkan ajaran Islam secara halus tanpa kekerasan melalui seni rakyat (asimilasi damai)." },
+            { q: "Wali Songo yang mendirikan pusat dakwah Giri Kedaton dan sangat disegani karena memiliki pengaruh politik hingga Maluku adalah...", o: ["A. Sunan Ampel", "B. Sunan Giri", "C. Sunan Kalijaga", "D. Sunan Kudus", "E. Sunan Drajat"], a: 1, p: "Pesantren Giri Kedaton yang dirintis Sunan Giri melatih para mubaligh untuk dikirim berdakwah ke luar Jawa." },
+            { q: "Tembang macapat 'Ilir-Ilir' dan modifikasi tokoh pewayangan Punakawan yang bermuatan dakwah Islam diciptakan oleh...", o: ["A. Sunan Ampel", "B. Sunan Kalijaga", "C. Sunan Bonang", "D. Sunan Kudus", "E. Sunan Gunung Jati"], a: 1, p: "Sunan Kalijaga mengadaptasi wayang Hindu dengan menyisipkan pesan moral, tauhid, dan filosofi keislaman." },
+
+            // --- 13. Mataram Islam (Sultan Agung & Peran) ---
+            { q: "Puncak kejayaan Kesultanan Mataram Islam dicapai di bawah pemerintahan Sultan Agung. Salah satu peran historis terbesarnya adalah...", o: ["A. Bekerja sama secara mesra dengan kongsi dagang VOC Belanda", "B. Menyerang benteng VOC di Batavia sebanyak dua kali (1628 dan 1629)", "C. Memindahkan pusat kerajaan ke pesisir Banten", "D. Mengganti ideologi kesultanan dengan hukum adat barat", "E. Menjual lada langsung ke Portugis tanpa pajak"], a: 1, p: "Sultan Agung memimpin mobilisasi pasukan besar-besaran menyerang VOC di Batavia untuk melawan kolonialisme." },
+            { q: "Penanggalan Kalender Jawa yang memadukan tahun Saka (Hindu) dengan tahun Hijriah (Islam) digagas dan diluncurkan oleh...", o: ["A. Raden Patah", "B. Sultan Agung Hanyokrokusumo", "C. Panembahan Senopati", "D. Sultan Trenggono", "E. Sultan Hamengkubuwono I"], a: 1, p: "Sultan Agung menciptakan Kalender Jawa sebagai pemersatu sistem penanggalan rakyatnya agar sejalan dengan hari raya Islam." },
+            { q: "Setelah wafat, Sultan Agung dimakamkan di kompleks pemakaman khusus raja-raja yang terletak di daerah pegunungan...", o: ["A. Trowulan", "B. Imogiri", "C. Kadilangu", "D. Kotagede", "E. Cirebon"], a: 1, p: "Makam Imogiri di Bantul, Yogyakarta, didirikan oleh Sultan Agung sebagai peristirahatan terakhir penguasa Mataram." },
+
+            // --- 14. Aceh dan Banten (Perkembangan) ---
+            { q: "Kesultanan Aceh Darussalam berkembang pesat menjadi pusat perdagangan lada internasional setelah jatuhnya bandar...", o: ["A. Palembang ke tangan Sriwijaya", "B. Malaka ke tangan Portugis tahun 1511", "C. Sunda Kelapa ke tangan Demak", "D. Banten ke VOC", "E. Ternate ke Spanyol"], a: 1, p: "Jatuhnya Malaka membuat pedagang muslim memindahkan rute niaga mereka ke bandar pelabuhan Aceh yang aman dari Portugis." },
+            { q: "Kesultanan Banten mencapai puncak kemakmuran dan menantang monopoli dagang VOC di bawah kepemimpinan sultan...", o: ["A. Sultan Maulana Hasanuddin", "B. Sultan Ageng Tirtayasa", "C. Sultan Haji", "D. Sultan Trenggono", "E. Sultan Baabullah"], a: 1, p: "Sultan Ageng Tirtayasa gigih mempertahankan pelabuhan bebas Banten dari kepungan monopoli VOC di Batavia." },
+            { q: "Perang saudara yang meruntuhkan kejayaan Banten dipicu oleh adu domba (devide et impera) VOC terhadap Sultan Ageng dengan putranya, yaitu...", o: ["A. Sultan Maulana Hasanuddin", "B. Sultan Haji", "C. Sultan Ali Mughayat Syah", "D. Pangeran Purbaya", "E. Sultan Trenggono"], a: 1, p: "Sultan Haji berkhianat meminta bantuan militer VOC guna merebut takhta kekuasaan dari ayahnya sendiri." },
+
+            // --- 15. Peninggalan Sejarah (Membedakan Hindu-Buddha & Islam) ---
+            { q: "Manakah perbedaan karakteristik peninggalan yang paling mencolok antara candi Hindu-Buddha dengan bangunan peninggalan Islam kuno?", o: ["A. Candi berupa tempat pemakaman abadi, sedangkan masjid peninggalan Islam berupa tempat ibadah aktif", "B. Bangunan Islam tidak menyajikan pahatan patung makhluk hidup (berhala) melainkan seni kaligrafi dan hiasan geometris", "C. Candi selalu terbuat dari kayu jati, sedangkan masjid selalu terbuat dari batu andesit", "D. Masjid kuno dilarang memiliki menara setinggi candi", "E. Candi memuat makam raja, sedangkan masjid memuat makam pedagang asing"], a: 1, p: "Kaidah Islam melarang penggambaran figur makhluk hidup secara nyata dalam tempat ibadah, sehingga digantikan dengan kaligrafi dan ragam hias flora/geometris." },
+            { q: "Nisan makam Fatimah binti Maimun di Leran, Gresik yang berangka tahun 1082 Masehi membuktikan...", o: ["A. Suku Jawa telah mendirikan kesultanan Islam sejak abad ke-11", "B. Adanya interaksi perdagangan dan pengaruh Islam di pesisir Jawa Timur jauh sebelum berdirinya Kesultanan Demak", "C. Hubungan perkawinan antara raja Majapahit dengan putri Eropa", "D. Wali Songo berasal dari Jawa Timur murni", "E. Runtuhnya Kerajaan Kediri akibat desakan pasukan muslim"], a: 1, p: "Makam Fatimah binti Maimun merupakan bukti arkeologis kontak niaga awal penduduk pesisir dengan komunitas muslim." },
+
+            // --- 16. Akulturasi Budaya (Bentuk Akulturasi) ---
+            { q: "Bentuk akulturasi bangunan menara masjid peninggalan Islam di Jawa Tengah yang mengadopsi model candi Hindu terbuat dari susunan batu bata merah terdapat pada...", o: ["A. Masjid Agung Demak", "B. Masjid Menara Kudus", "C. Masjid Raya Baiturrahman", "D. Masjid Agung Cirebon", "E. Masjid Raya Banten"], a: 1, p: "Menara Masjid Kudus merupakan visualisasi akulturasi kebudayaan Hindu-Buddha dengan arsitektur Islam." },
+            { q: "Atapan masjid kuno di Indonesia yang berbentuk tumpang (berundak) menyerupai konsep atap meru Hindu-Bali merupakan bentuk akulturasi bidang...", o: ["A. Sistem Pemerintahan", "B. Arsitektur Seni Bangunan", "C. Sistem Kepercayaan mistis", "D. Kesusastraan dan Bahasa", "E. Sistem Sosial Kasta"], a: 1, p: "Atap tumpang berundak (biasanya berjumlah ganjil) mengadaptasi atap pura Hindu untuk disesuaikan dengan kondisi alam tropis Nusantara." },
+
+            // --- 17. Prasasti (Fungsi Sebagai Sumber Sejarah) ---
+            { q: "Mengapa prasasti dikategorikan sebagai sumber sejarah primer yang sangat berharga bagi para peneliti sejarah kuno?", o: ["A. Karena prasasti ditulis langsung oleh sejarawan modern", "B. Karena merupakan dokumen tertulis resmi yang sezaman dengan peristiwa yang diceritakan", "C. Karena prasasti terbuat dari emas murni yang bernilai tinggi", "D. Karena prasasti selalu memuat ramalan tentang masa depan dunia", "E. Karena prasasti mudah dipindahkan tanpa merusak isinya"], a: 1, p: "Prasasti adalah sumber sejarah tertulis tangan pertama (primer) yang dibuat langsung pada zaman kerajaan tersebut berkuasa." },
+
+            // --- 18. Kehidupan Masyarakat (Analisis Pengaruh Kerajaan) ---
+            { q: "Masuknya agama Islam merubah tatanan hubungan antarkelompok masyarakat Nusantara. Salah satu dampak sosial utamanya adalah...", o: ["A. Terbentuknya kasta baru dalam kehidupan sosial masyarakat", "B. Melemahnya perbedaan sekat kasta sosial di masyarakat (kesetaraan hak)", "C. Kewajiban bagi rakyat untuk meniru kebudayaan Arab murni", "D. Hilangnya kebebasan berpendapat bagi para pedagang lokal", "E. Pembagian wilayah tempat tinggal berdasarkan suku bangsa"], a: 1, p: "Ajaran Islam mengusung konsep persaudaraan dan kesetaraan (ukhuwah), sehingga meredam sekat kasta sosial peninggalan masa lalu." },
+
+            // --- 19. Nilai Keteladanan (Nilai Positif Kerajaan Nusantara) ---
+            { q: "Nilai keteladanan yang paling menonjol dari perjuangan Sultan Agung dari Mataram Islam terhadap keberadaan bangsa Indonesia saat ini adalah...", o: ["A. Kepatuhan mutlak tanpa syarat kepada penjajah asing", "B. Semangat patriotisme yang gigih menentang segala bentuk penjajahan kolonial (anti-kolonialisme)", "C. Keberhasilan menumpuk kekayaan pribadi lewat jalur dagang", "D. Keberanian memindahkan ibu kota kesultanan demi kenyamanan", "E. Kemampuan membubarkan dinasti pertahanan wilayah"], a: 1, p: "Perjuangan Sultan Agung menyerang benteng VOC di Batavia menginspirasi rasa cinta tanah air dan kegigihan menentang penjajahan kolonial." },
+            { q: "Nilai positif kedamaian yang tecermin dari toleransi beragama pada masa kejayaan Kerajaan Majapahit adalah...", o: ["A. Kewajiban bagi seluruh menteri istana untuk menganut satu agama yang sama", "B. Saling menghormati dan rukunnya kehidupan penganut Hindu Syiwa dan Buddha Mahayana (Bhinneka Tunggal Ika)", "C. Pelarangan segala upacara keagamaan di luar area keraton", "D. Pemberian hukuman berat bagi rakyat yang membaca kitab Sutasoma", "E. Pembatasan pendirian candi di luar wilayah ibu kota"], a: 1, p: "Toleransi beragama pada masa Majapahit menjadi pondasi utama persatuan bangsa yang diabadikan dalam semboyan Bhinneka Tunggal Ika." }
         ];
-
-        // Pengacak Pilihan Opsi dan Kunci Jawaban di Sisi Client (Supaya Variatif)
-        function shuffleOptionsAndKey(questionObj) {
-            let options = [...questionObj.o];
-            let correctAnswerText = options[questionObj.a];
-            
-            // Acak opsi menggunakan Fisher-Yates
-            for (let i = options.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [options[i], options[j]] = [options[j], options[i]];
-            }
-
-            // Temukan indeks kunci jawaban baru setelah diacak
-            let newCorrectIndex = options.indexOf(correctAnswerText);
-
-            // Ganti awalan huruf opsi (A., B., C., D., E.) agar sesuai urutan baru
-            const letterPrefixes = ["A. ", "B. ", "C. ", "D. ", "E. "];
-            let formattedOptions = options.map((opt, idx) => {
-                // Hapus awalan lama jika ada (misal "A. ") dan pasang awalan baru
-                let pureText = opt.substring(3);
-                return letterPrefixes[idx] + pureText;
-            });
-
-            return {
-                q: questionObj.q,
-                o: formattedOptions,
-                a: newCorrectIndex,
-                p: questionObj.p,
-                kategori: questionObj.kategori
-            };
-        }
 
         // Status State Kuis
         let quizQuestions = [];
@@ -272,6 +263,36 @@
             }
         }
 
+        // Pengacak Pilihan Opsi dan Kunci Jawaban di Sisi Client (Supaya Variatif)
+        function shuffleOptionsAndKey(questionObj) {
+            let options = [...questionObj.o];
+            let correctAnswerText = options[questionObj.a];
+            
+            // Acak opsi menggunakan Fisher-Yates
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+
+            // Temukan indeks kunci jawaban baru setelah diacak
+            let newCorrectIndex = options.indexOf(correctAnswerText);
+
+            // Ganti awalan huruf opsi (A., B., C., D., E.) agar sesuai urutan baru
+            const letterPrefixes = ["A. ", "B. ", "C. ", "D. ", "E. "];
+            let formattedOptions = options.map((opt, idx) => {
+                let pureText = opt.substring(3);
+                return letterPrefixes[idx] + pureText;
+            });
+
+            return {
+                q: questionObj.q,
+                o: formattedOptions,
+                a: newCorrectIndex,
+                p: questionObj.p,
+                kategori: questionObj.kategori
+            };
+        }
+
         // === ENGINE KUIS ===
         function shuffleQuestions(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -288,10 +309,7 @@
             if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
             if(maxCount > bankSoal.length) maxCount = bankSoal.length;
 
-            // Acak urutan pertanyaan
             const shuffledRaw = shuffleQuestions([...bankSoal]);
-            
-            // Ambil sejumlah soal sesuai input, dan acak letak opsi jawabannya
             quizQuestions = shuffledRaw.slice(0, maxCount).map(q => shuffleOptionsAndKey(q));
             
             currentIdx = 0;
@@ -315,7 +333,7 @@
 
             // Data Pertanyaan
             document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
-            document.getElementById('questionText').textContent = activeQuestion.q;
+            document.getElementById('questionText').innerHTML = activeQuestion.q.replace(/\n/g, "<br>");
 
             const container = document.getElementById('optionsContainer');
             container.innerHTML = '';
@@ -359,7 +377,7 @@
                 badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
 
                 const textSpan = document.createElement('span');
-                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+                textSpan.innerHTML = optStr.substring(3); // Potong string "A. "
 
                 btn.appendChild(badge);
                 btn.appendChild(textSpan);
@@ -460,4 +478,3 @@
     </script>
 </body>
 </html>
-
