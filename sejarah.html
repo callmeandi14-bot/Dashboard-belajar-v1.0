@@ -135,7 +135,7 @@
 
     <!-- LOGIKA UTAMA & BANK DATA SEJARAH -->
     <script>
-        // BANK DATA SEJARAH (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E)
+        // BANK DATA SEJARAH (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E - SUDAH DIACAK JAWABANNYA)
         const bankSoal = [
             // --- TOPIC 1: Proses Masuknya Hindu-Buddha di Indonesia ---
             { q: "Teori Ksatria berpendapat bahwa masuknya pengaruh Hindu-Buddha dibawa oleh para prajurit India. Tokoh pendukung utama teori ini adalah...", o: ["A. J.C. van Leur", "B. N.J. Krom", "C. C.C. Berg dan Majumdar", "D. F.D.K. Bosch", "E. van Faber"], a: 2, p: "C.C. Berg, Mookerji, dan Majumdar berpendapat perang/perebutan kekuasaan memaksa para ksatria India bermigrasi ke Nusantara." },
@@ -154,7 +154,7 @@
             // --- TOPIC 3: Contoh Peninggalan Kerajaan Islam di Indonesia ---
             { q: "Manakah di bawah ini yang merupakan masjid peninggalan bersejarah dari Kerajaan Demak abad ke-15?", o: ["A. Masjid Istiqlal", "B. Masjid Agung Demak", "C. Masjid Menara Kudus", "D. Masjid Baiturrahman Banda Aceh", "E. Masjid Raya Banten"], a: 1, p: "Masjid Agung Demak dibangun oleh Raden Patah bersama Wali Songo, terkenal dengan saka tatal (tiang serpihan kayu)." },
             { q: "Makam bercorak Islam tertua di Nusantara yang menjadi bukti masuknya pengaruh Islam di Sumatra utara abad ke-13 adalah...", o: ["A. Makam Sunan Kalijaga", "B. Makam Sultan Malik As-Saleh", "C. Makam Fatimah binti Maimun", "D. Makam Sultan Hasanuddin", "E. Makam Sunan Ampel"], a: 1, p: "Sultan Malik As-Saleh adalah raja pertama Samudera Pasai dengan nisan bercorak Islam Gujarat." },
-            { q: "Masid peninggalan sejarah Islam yang memiliki keunikan menara menyerupai candi Hindu/bata merah adalah...", o: ["A. Masjid Agung Cirebon", "B. Masjid Menara Kudus", "C. Masjid Demak", "D. Masjid Katangka", "E. Masjid Luar Batang"], a: 1, p: "Masjid Menara Kudus didirikan Sunan Kudus dengan menara berbentuk mirip candi sebagai bentuk akulturasi." },
+            { q: "Masjid peninggalan sejarah Islam yang memiliki keunikan menara menyerupai candi Hindu/bata merah adalah...", o: ["A. Masjid Agung Cirebon", "B. Masjid Menara Kudus", "C. Masjid Demak", "D. Masjid Katangka", "E. Masjid Luar Batang"], a: 1, p: "Masjid Menara Kudus didirikan Sunan Kudus dengan menara berbentuk mirip candi sebagai bentuk akulturasi." },
             { q: "Karya sastra peninggalan kerajaan Islam yang berisi ramalan atau kisah sejarah kepahlawanan bercampur mitos disebut...", o: ["A. Serat dan Hikayat", "B. Kitab Kakawin", "C. Kitab Weda", "D. Prasasti", "E. relief candi"], a: 0, p: "Hikayat (melayu) dan Serat/Babad (Jawa) adalah dokumen sastra historis bercorak Islam." },
             { q: "Keraton Yogyakarta dan Surakarta merupakan peninggalan bersejarah pasca-pecahnya kerajaan Islam...", o: ["A. Demak", "B. Mataram Islam", "C. Pajang", "D. Banten", "E. Cirebon"], a: 1, p: "Melalui Perjanjian Giyanti (1755), Mataram Islam pecah menjadi Kasunanan Surakarta dan Kasultanan Yogyakarta." },
 
@@ -208,6 +208,37 @@
             { q: "Dua kerajaan Islam kembar di Sulawesi Selatan yang bersekutu erat menentang monopoli perdagangan VOC adalah...", o: ["A. Kerajaan Kutai dan Paser", "B. Kerajaan Gowa dan Tallo", "C. Kerajaan Ternate dan Tidore", "D. Kerajaan Bone dan Wajo", "E. Kerajaan Buton dan Makassar"], a: 1, p: "Gowa-Tallo (Makassar) bersatu membentuk poros maritim Islam terkuat di Indonesia timur." }
         ];
 
+        // Pengacak Pilihan Opsi dan Kunci Jawaban di Sisi Client (Supaya Variatif)
+        function shuffleOptionsAndKey(questionObj) {
+            let options = [...questionObj.o];
+            let correctAnswerText = options[questionObj.a];
+            
+            // Acak opsi menggunakan Fisher-Yates
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+
+            // Temukan indeks kunci jawaban baru setelah diacak
+            let newCorrectIndex = options.indexOf(correctAnswerText);
+
+            // Ganti awalan huruf opsi (A., B., C., D., E.) agar sesuai urutan baru
+            const letterPrefixes = ["A. ", "B. ", "C. ", "D. ", "E. "];
+            let formattedOptions = options.map((opt, idx) => {
+                // Hapus awalan lama jika ada (misal "A. ") dan pasang awalan baru
+                let pureText = opt.substring(3);
+                return letterPrefixes[idx] + pureText;
+            });
+
+            return {
+                q: questionObj.q,
+                o: formattedOptions,
+                a: newCorrectIndex,
+                p: questionObj.p,
+                kategori: questionObj.kategori
+            };
+        }
+
         // Status State Kuis
         let quizQuestions = [];
         let currentIdx = 0;
@@ -257,8 +288,11 @@
             if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
             if(maxCount > bankSoal.length) maxCount = bankSoal.length;
 
-            const shuffled = shuffleQuestions([...bankSoal]);
-            quizQuestions = shuffled.slice(0, maxCount);
+            // Acak urutan pertanyaan
+            const shuffledRaw = shuffleQuestions([...bankSoal]);
+            
+            // Ambil sejumlah soal sesuai input, dan acak letak opsi jawabannya
+            quizQuestions = shuffledRaw.slice(0, maxCount).map(q => shuffleOptionsAndKey(q));
             
             currentIdx = 0;
             answersState = new Array(maxCount).fill(null);
