@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Matematika - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Matematika Wajib</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak beserta pilihan jawabannya oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ SPLDV (Nilai Aljabar & Penyelesaian)</div>
+                        <div>✔ SPLTV (Eliminasi, Karakteristik & Kontekstual)</div>
+                        <div>✔ Fungsi Kuadrat (Bentuk Umum & Grafik)</div>
+                        <div>✔ Diskriminan & Akar-akar Persamaan</div>
+                        <div>✔ Pemfaktoran & Jumlah/Hasil Kali Akar</div>
+                        <div>✔ Fungsi Eksponen (Perhitungan Nilai)</div>
+                        <div>✔ Statistika Deskriptif (Mean, Median, Modus)</div>
+                        <div>✔ Kuartil Data Tunggal & Kelompok</div>
+                        <div>✔ Simpangan Rata-rata & Frekuensi Kumulatif</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Matematika</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Matematika Kelas X.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA MATEMATIKA -->
+    <script>
+        // BANK DATA MATEMATIKA (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E - SUDAH BERSIH DARI $$)
+        const bankSoal = [
+            // --- TOPIC 1: SPLDV ---
+            { q: "Manakah di antara persamaan-persamaan berikut yang merupakan Persamaan Linear Dua Variabel?", o: ["A. x² + y = 5", "B. 2x + 3y = 12", "C. x + y + z = 6", "D. xy + 2 = 0", "E. y = √x - 4"], a: 1, p: "Persamaan linear dua variabel memiliki bentuk umum ax + by = c, di mana pangkat tertinggi dari variabelnya adalah 1. Pilihan B (2x + 3y = 12) memenuhi syarat ini." },
+            { q: "Ditentukan sistem persamaan linear dua variabel:\n2x + y = 8\nx - y = 1\nTentukan nilai x dari penyelesaian sistem tersebut!", o: ["A. x = 2", "B. x = 3", "C. x = 4", "D. x = 5", "E. x = 1"], a: 1, p: "Dengan menjumlahkan kedua persamaan:\n(2x + y) + (x - y) = 8 + 1\n3x = 9\nx = 3." },
+            { q: "Diketahui SPLDV:\n3x + 2y = 12\nx + 2y = 8\nJika (x1, y1) adalah penyelesaiannya, tentukan nilai aljabar dari 2.x1 + 3.y1!", o: ["A. 10", "B. 11", "C. 12", "D. 13", "E. 14"], a: 3, p: "Kurangkan kedua persamaan:\n(3x + 2y) - (x + 2y) = 12 - 8\n2x = 4\nx = 2.\nSubstitusi x = 2 ke persamaan kedua:\n2 + 2y = 8\n2y = 6\ny = 3.\nNilai dari 2.x1 + 3.y1 = 2(2) + 3(3) = 4 + 9 = 13." },
+            { q: "Himpunan penyelesaian dari sistem persamaan:\ny = 2x - 3\n3x - y = 5\nadalah (x, y). Nilai y yang memenuhi adalah...", o: ["A. y = 1", "B. y = 2", "C. y = 3", "D. y = -1", "E. y = 0"], a: 0, p: "Substitusi y ke persamaan kedua:\n3x - (2x - 3) = 5\nx + 3 = 5\nx = 2.\nSubstitusi x = 2 ke persamaan y:\ny = 2(2) - 3 = 1." },
+            { q: "Suatu toko menjual buku tulis (x) dan pensil (y). Budi membeli 3 buku tulis dan 2 pensil seharga Rp 14.500,00. Susi membeli 1 buku tulis dan 3 pensil seharga Rp 9.500,00. Tentukan harga 1 buah buku tulis!", o: ["A. Rp 2.500,00", "B. Rp 3.000,00", "C. Rp 3.500,00", "D. Rp 4.000,00", "E. Rp 2.000,00"], a: 2, p: "Model SPLDV:\n(1) 3x + 2y = 14.500\n(2) x + 3y = 9.500, maka x = 9.500 - 3y\nSubstitusi ke (1):\n3(9.500 - 3y) + 2y = 14.500\n28.500 - 9y + 2y = 14.500\n7y = 14.000, maka y = 2.000.\nSehingga harga buku: x = 9.500 - 3(2.000) = 3.500 rupiah." },
+            { q: "Nilai x + y yang memenuhi sistem persamaan:\n1/x + 1/y = 2\n2/x - 1/y = 1\nadalah...", o: ["A. 1", "B. 2", "C. 3", "D. 1/2", "E. 3/2"], a: 1, p: "Misal a = 1/x dan b = 1/y.\na + b = 2\n2a - b = 1\nJumlahkan kedua persamaan: 3a = 3, maka a = 1, sehingga x = 1.\nSubstitusi a = 1 ke persamaan pertama: 1 + b = 2, maka b = 1, sehingga y = 1.\nNilai x + y = 1 + 1 = 2." },
+            { q: "Penyelesaian dari sistem persamaan 2x - 5y = 1 dan 4x - 3y = 9 adalah (x, y). Nilai x adalah...", o: ["A. 1", "B. 2", "C. 3", "D. 4", "E. 5"], a: 2, p: "Eliminasi x dengan mengalikan persamaan pertama dengan 2:\n4x - 10y = 2\n4x - 3y = 9\nKurangkan kedua persamaan: -7y = -7, maka y = 1.\nSubstitusi y = 1 ke persamaan pertama:\n2x - 5(1) = 1\n2x = 6, maka x = 3." },
+
+            // --- TOPIC 2: SPLTV ---
+            { q: "Dalam menyelesaikan SPLTV di bawah ini, langkah pertama eliminasi variabel z yang paling efisien dilakukan dengan cara:\n(1) 2x + y - z = 4\n(2) x - 2y + z = 3\n(3) 3x + y + 2z = 11", o: ["A. Mengalikan (1) dengan 2 lalu menguranginya dengan (3)", "B. Menjumlahkan langsung persamaan (1) dan persamaan (2)", "C. Mengurangi persamaan (2) dengan persamaan (3)", "D. Mengalikan (2) dengan 2 lalu menjumlahkannya dengan (1)", "E. Menjumlahkan langsung persamaan (1) dengan persamaan (3)"], a: 1, p: "Koefisien z pada persamaan (1) adalah -1 dan pada persamaan (2) adalah +1. Menjumlahkan langsung persamaan (1) dan (2) secara instan akan mengeliminasi variabel z tanpa perkalian." },
+            { q: "Tentukan nilai variabel z yang memenuhi sistem persamaan linear tiga variabel berikut:\nx + y + z = 6\nx + 2y - z = 2\n2x - y + z = 5", o: ["A. z = 1", "B. z = 2", "C. z = 3", "D. z = -1", "E. z = 4"], a: 2, p: "Dengan metode eliminasi didapat x = 2, y = 1, dan z = 3. Kita uji ke persamaan (1): 2 + 1 + 3 = 6 (Benar)." },
+            { q: "Ali, Budi, dan Candra berbelanja di toko buku. Ali membeli 2 buku, 1 pensil, dan 1 penggaris seharga Rp 12.000,00. Budi membeli 1 buku, 2 pensil, dan 1 penggaris seharga Rp 11.000,00. Candra membeli 1 buku, 1 pensil, dan 2 penggaris seharga Rp 10.000,00. Susunlah model matematika SPLTV dari masalah tersebut!", o: ["A. 2x + y + z = 12.000; x + 2y + z = 11.000; x + y + 2z = 10.000", "B. x + y + z = 12.000; 2x + y + z = 11.000; x + 2y + 2z = 10.000", "C. 2x + 2y + z = 12.000; x + y + z = 11.000; x + y + 2z = 10.000", "D. x + 2y + z = 12.000; x + y + 2z = 11.000; 2x + y + z = 10.000", "E. 2x + y + 2z = 12.000; 2x + 2y + z = 11.000; x + y + z = 10.000"], a: 0, p: "Misal buku = x, pensil = y, penggaris = z.\nMaka model belanjaan Ali: 2x + y + z = 12.000, Budi: x + 2y + z = 11.000, Candra: x + y + 2z = 10.000." },
+            { q: "Bagaimanakah karakteristik dari sistem persamaan linear tiga variabel (SPLTV) yang TIDAK MEMILIKI penyelesaian sama sekali?", o: ["A. Grafik ketiga bidang saling berpotongan di satu titik persekutuan", "B. Ketiga bidang sejajar atau berpotongan membentuk prisma tanpa titik persekutuan tunggal", "C. Ketiga bidang saling berhimpit menjadi satu bidang datar", "D. Nilai determinan utamanya bernilai positif besar", "E. Jumlah variabelnya kurang dari tiga"], a: 1, p: "SPLTV tidak memiliki solusi jika ketiga bidang tidak mempunyai titik potong bersama (misalnya sejajar, atau berpotongan membentuk prisma segitiga)." },
+            { q: "Jika diketahui SPLTV:\n2x + 3y - z = 5\nx - y + 2z = 5\n3x + 2y + z = 10\ntentukan nilai dari hasil kali x . y . z !", o: ["A. 6", "B. 8", "C. 12", "D. 4", "E. 2"], a: 0, p: "Dengan metode eliminasi/substitusi, kita peroleh penyelesaian tunggalnya: x = 1, y = 2, z = 3.\nHasil kali x . y . z = 1 . 2 . 3 = 6." },
+            { q: "Diketahui SPLTV berikut memiliki tak hingga banyak penyelesaian:\nx + y + z = 3\n2x + 2y + 2z = 6\n3x + 3y + 3z = 9\nHal ini dikarenakan karakteristik geometris bidang-bidang tersebut adalah...", o: ["A. Saling sejajar", "B. Saling berhimpit", "C. Saling tegak lurus", "D. Berpotongan di satu garis lurus saja", "E. Tidak memiliki titik sekutu"], a: 1, p: "Persamaan (2) adalah 2x lipat persamaan (1), dan persamaan (3) adalah 3x lipat persamaan (1). Maka ketiga bidang tersebut saling berhimpit, menghasilkan tak hingga banyak penyelesaian." },
+            { q: "Tentukan himpunan penyelesaian dari SPLTV:\nx - y + 2z = 5\n2x + y - z = 9\nx + 2y - z = 8\nNilai y yang memenuhi adalah...", o: ["A. y = 1", "B. y = 2", "C. y = 3", "D. y = 4", "E. y = 0"], a: 1, p: "Selesaikan dengan eliminasi:\nEliminasi x dari (1) & (3) menghasilkan: -3y + 3z = -3, atau -y + z = -1.\nEliminasi x dari 2 x (1) - (2) menghasilkan: -3y + 5z = 1.\nSelesaikan SPLDV baru ini didapat: y = 2, z = 1. Substitusi ke persamaan (1) didapat x = 5." },
+            { q: "Di sebuah kandang terdapat ayam (x), bebek (y), dan kambing (z). Jumlah hewan di kandang adalah 15 ekor. Jika jumlah bebek 3 kali lipat jumlah kambing dan kaki seluruh hewan adalah 36, tentukan jumlah kambing di kandang!", o: ["A. 2 ekor", "B. 3 ekor", "C. 4 ekor", "D. 5 ekor", "E. 6 ekor"], a: 1, p: "Model SPLTV:\n(1) x + y + z = 15\n(2) 2x + 2y + 4z = 36 (kaki kambing 4, bebek 2, ayam 2)\n(3) y = 3z\nJika z = 3 maka y = 9, sehingga x = 3. Total hewan = 3 + 9 + 3 = 15 (Sesuai).\nTotal kaki = 2(3) + 2(9) + 4(3) = 6 + 18 + 12 = 36 (Sesuai). Jadi, jumlah kambing (z) adalah 3 ekor." },
+
+            // --- TOPIC 3: Fungsi & Persamaan Kuadrat ---
+            { q: "Manakah di bawah ini yang merupakan bentuk umum dari fungsi kuadrat dalam variabel x?", o: ["A. y = ax + b", "B. y = ax³ + bx² + cx + d", "C. y = ax² + bx + c, dengan a tidak sama dengan 0", "D. y = a pangkat x + b", "E. y = (ax + b) / (cx + d)"], a: 2, p: "Bentuk umum fungsi kuadrat adalah y = ax² + bx + c, dengan pangkat variabel tertinggi adalah 2 dan koefisien a tidak sama dengan 0." },
+            { q: "Tentukan akar-akar (pembuat nol) dari fungsi kuadrat f(x) = x² - 5x + 6!", o: ["A. x = 1 atau x = 6", "B. x = 2 atau x = 3", "C. x = -2 atau x = -3", "D. x = -1 atau x = -6", "E. x = 0 atau x = 5"], a: 1, p: "Faktorkan persamaan x² - 5x + 6 = 0 menjadi (x-2)(x-3) = 0. Maka akar-akarnya adalah x = 2 atau x = 3." },
+            { q: "Bagaimanakah hubungan nilai diskriminan (D) terhadap grafik fungsi kuadrat jika diketahui D > 0 dan a < 0?", o: ["A. Grafik terbuka ke atas dan memotong sumbu X di satu titik", "B. Grafik terbuka ke bawah dan memotong sumbu X di dua titik berbeda", "C. Grafik terbuka ke atas dan tidak memotong sumbu X", "D. Grafik terbuka ke bawah dan menyinggung sumbu X di satu titik", "E. Grafik melengkung ke kanan memotong sumbu Y"], a: 1, p: "Jika a < 0, kurva parabola terbuka ke bawah. Jika D > 0, kurva memotong sumbu X di dua titik riil berbeda." },
+            { q: "Tentukan faktor-faktor dari fungsi kuadrat f(x) = 2x² + 7x + 3 berdasarkan akar-akarnya!", o: ["A. (2x + 1)(x + 3)", "B. (2x + 3)(x + 1)", "C. (2x - 1)(x - 3)", "D. (x + 2)(2x + 3)", "E. (2x + 1)(x - 3)"], a: 0, p: "Faktorkan 2x² + 7x + 3 = (2x + 1)(x + 3) karena 2x(3) + 1(x) = 6x + x = 7x." },
+            { q: "Hitunglah nilai diskriminan (D) dari fungsi kuadrat f(x) = x² - 4x - 5!", o: ["A. D = 16", "B. D = 36", "C. D = 4", "D. D = -4", "E. D = 0"], a: 1, p: "Rumus diskriminan: D = b² - 4ac.\nDari fungsi didapat a=1, b=-4, c=-5.\nD = (-4)² - 4(1)(-5) = 16 + 20 = 36." },
+            { q: "Selesaikan persamaan kuadrat x² - 9 = 0 melalui metode pemfaktoran aljabar!", o: ["A. (x-3)(x-3) = 0", "B. (x+3)(x-3) = 0", "C. (x+9)(x-1) = 0", "D. (x-9)(x+1) = 0", "E. x(x-9) = 0"], a: 1, p: "Bentuk selisih dua kuadrat a² - b² = (a+b)(a-b). Maka x² - 9 = x² - 3² = (x+3)(x-3) = 0." },
+            { q: "Jika akar-akar persamaan kuadrat x² - 6x + 8 = 0 adalah x1 dan x2, tentukan nilai jumlah akar-akar (x1 + x2)!", o: ["A. 4", "B. 6", "C. 8", "D. -6", "E. -8"], a: 1, p: "Sesuai rumus Vieta, jumlah akar-akar persamaan kuadrat ax²+bx+c=0 adalah x1 + x2 = -b/a.\nMaka x1 + x2 = -(-6)/1 = 6." },
+            { q: "Jika akar-akar persamaan kuadrat 2x² - 5x + 3 = 0 adalah x1 dan x2, tentukan hasil kali akar-akarnya (x1 . x2)!", o: ["A. 5/2", "B. 3/2", "C. -3/2", "D. 2/3", "E. -5/2"], a: 1, p: "Sesuai rumus Vieta, hasil kali akar-akar adalah x1 . x2 = c/a = 3/2." },
+            { q: "Susunlah persamaan kuadrat baru jika diketahui akar-akarnya adalah x1 = 3$ dan x2 = -5 !", o: ["A. x² - 2x - 15 = 0", "B. x² + 2x - 15 = 0", "C. x² + 8x + 15 = 0", "D. x² - 8x - 15 = 0", "E. x² + 2x + 15 = 0"], a: 1, p: "Rumus menyusun persamaan kuadrat baru: x² - (x1 + x2)x + (x1 . x2) = 0.\nJumlah akar: 3 + (-5) = -2.\nHasil kali akar: 3 . (-5) = -15.\nPersamaan kuadrat baru: x² - (-2)x + (-15) = 0, menjadi x² + 2x - 15 = 0." },
+            { q: "Tentukan koordinat titik balik (titik puncak) dari fungsi kuadrat f(x) = x² - 4x + 3!", o: ["A. (2, -1)", "B. (-2, 1)", "C. (2, 1)", "D. (-2, -1)", "E. (0, 3)"], a: 0, p: "Sumbu simetri xp = -b/(2a) = -(-4)/(2 . 1) = 2.\nNilai ekstrem yp = f(2) = 2² - 4(2) + 3 = 4 - 8 + 3 = -1.\nKoordinat puncak adalah (2, -1)." },
+            { q: "Jika grafik fungsi kuadrat y = x² - mx + 9 menyinggung sumbu X, tentukan nilai m yang memenuhi!", o: ["A. m = plus minus 3", "B. m = plus minus 6", "C. m = plus minus 9", "D. m = 0", "E. m = plus minus 4"], a: 1, p: "Syarat grafik menyinggung sumbu X adalah diskriminan D = 0.\nb² - 4ac = 0, maka (-m)² - 4(1)(9) = 0, sehingga m² - 36 = 0, didapat m = plus minus 6." },
+            { q: "Fungsi kuadrat yang memotong sumbu X di titik (1, 0) dan (3, 0) serta melalui titik (0, 3) memiliki persamaan...", o: ["A. y = x² - 4x + 3", "B. y = -x² + 4x - 3", "C. y = x² + 4x + 3", "D. y = 2x² - 8x + 6", "E. y = -x² - 4x + 3"], a: 0, p: "Rumus jika memotong sumbu X: y = a(x - x1)(x - x2), maka y = a(x-1)(x-3).\nMelalui (0, 3) didapat: 3 = a(0-1)(0-3), maka 3 = 3a, sehingga a = 1.\nPersamaannya: y = 1(x-1)(x-3) = x² - 4x + 3." },
+            { q: "Tentukan batas nilai k agar grafik fungsi kuadrat f(x) = x² - 2x + k selalu berada di atas sumbu X (definit positif)!", o: ["A. k < 1", "B. k > 1", "C. k > 0", "D. k < 0", "E. k > 4"], a: 1, p: "Syarat definit positif: a > 0 dan D < 0.\na = 1 > 0 (terpenuhi).\nD < 0, maka b² - 4ac < 0, sehingga (-2)² - 4(1)(k) < 0, didapat 4 - 4k < 0, maka 4 < 4k, sehingga k > 1." },
+            { q: "Persamaan kuadrat yang akar-akarnya dua kali dari akar-akar persamaan x² - 3x + 2 = 0 adalah...", o: ["A. x² - 6x + 8 = 0", "B. x² - 6x + 4 = 0", "C. x² - 12x + 8 = 0", "D. x² - 3x + 4 = 0", "E. x² - 6x - 8 = 0"], a: 0, p: "Akar-akar x²-3x+2=0 adalah x1=1, x2=2.\nAkar-akar persamaan baru adalah 2 kali lipatnya: y1 = 2(1)=2 dan y2 = 2(2)=4.\nPersamaan baru: (x-2)(x-4) = x² - 6x + 8 = 0." },
+            { q: "Nilai minimum dari fungsi kuadrat f(x) = 2x² - 8x + 5 adalah...", o: ["A. -1", "B. -3", "C. -5", "D. 3", "E. 5"], a: 1, p: "Sumbu simetri x = -b/(2a) = -(-8)/(2 . 2) = 2.\nNilai minimum = f(2) = 2(2)² - 8(2) + 5 = 8 - 16 + 5 = -3." },
+
+            // --- TOPIC 4: Fungsi Eksponen ---
+            { q: "Diketahui fungsi eksponen f(x) = 3 pangkat (x + 1) dikurangi 2. Tentukan nilai dari fungsi tersebut untuk x = 2!", o: ["A. 7", "B. 25", "C. 27", "D. 9", "E. 23"], a: 1, p: "Substitusi x = 2 ke dalam fungsi:\nf(2) = 3 pangkat (2 + 1) - 2 = 3³ - 2 = 27 - 2 = 25." },
+            { q: "Jika f(x) = 2 pangkat (3 - x), berapakah nilai dari f(5)?", o: ["A. 4", "B. -4", "C. 1/4", "D. -1/4", "E. 8"], a: 2, p: "Substitusi x = 5, maka f(5) = 2 pangkat (3 - 5) = 2 pangkat (-2) = 1 / (2²) = 1/4." },
+            { q: "Grafik fungsi eksponen f(x) = a pangkat x melalui titik (2, 16). Tentukan nilai basis eksponen a!", o: ["A. 2", "B. 3", "C. 4", "D. 5", "E. 8"], a: 2, p: "Substitusi titik (2, 16) didapat: 16 = a² maka a = akar(16) = 4 (basis eksponen selalu positif)." },
+            { q: "Tentukan titik potong grafik fungsi eksponen f(x) = 5 pangkat x dikurangi 1 terhadap sumbu Y!", o: ["A. (0, 1)", "B. (0, 0)", "C. (0, 5)", "D. (1, 0)", "E. (0, -1)"], a: 1, p: "Titik potong sumbu Y dicapai saat x = 0, maka f(0) = 5º - 1 = 1 - 1 = 0. Koordinatnya adalah (0, 0)." },
+            { q: "Jika f(x) = 4 pangkat x + 2 pangkat (x + 1), berapakah nilai dari f(1)?", o: ["A. 6", "B. 8", "C. 10", "D. 12", "E. 4"], a: 1, p: "Substitusi x = 1, maka f(1) = 4¹ + 2 pangkat (1 + 1) = 4 + 2² = 4 + 4 = 8." },
+
+            // --- TOPIC 5: Statistika ---
+            { q: "Tentukan nilai rata-rata (mean) dari data tunggal berikut:\n5, 7, 8, 6, 9, 7", o: ["A. 6.5", "B. 7.0", "C. 7.5", "D. 8.0", "E. 6.8"], a: 1, p: "Mean = Jumlah data / banyak data = (5 + 7 + 8 + 6 + 9 + 7) / 6 = 42 / 6 = 7." },
+            { q: "Diberikan data nilai tes sekelompok siswa dalam bentuk tabel berfrekuensi:\nNilai (x): 6, 7, 8, 9\nFrekuensi (f): 3, 4, 2, 1\nHitunglah nilai mean data tersebut!", o: ["A. 7.1", "B. 7.0", "C. 7.2", "D. 7.5", "E. 6.8"], a: 0, p: "Mean = total (f . x) / total f = ((6.3) + (7.4) + (8.2) + (9.1)) / (3+4+2+1) = (18 + 28 + 16 + 9) / 10 = 71 / 10 = 7,1." },
+            { q: "Tentukan nilai tengah (median) dari data tunggal berikut yang telah diurutkan:\n3, 4, 6, 7, 8, 10, 12", o: ["A. 6", "B. 7", "C. 8", "D. 7.5", "E. 6.5"], a: 1, p: "Jumlah data n = 7 (ganjil). Median berada di data ke-4 (tengah), yaitu angka 7." },
+            { q: "Carilah nilai median dari urutan data genap berikut:\n4, 5, 7, 8, 9, 11", o: ["A. 7", "B. 7.5", "C. 8", "D. 8.5", "E. 9"], a: 1, p: "Jumlah data n = 6 (genap). Median adalah rata-rata dari dua data di tengah: (7 + 8) / 2 = 7,5." },
+            { q: "Tentukan nilai modus (nilai yang paling sering muncul) dari data berikut:\n4, 6, 5, 6, 7, 8, 6, 5, 9", o: ["A. 5", "B. 6", "C. 7", "D. 8", "E. 9"], a: 1, p: "Angka 6 muncul sebanyak 3 kali (frekuensi tertinggi), sehingga modus dari data tersebut adalah 6." },
+            { q: "Hitunglah simpangan rata-rata (mean deviation) dari data tunggal:\n4, 6, 8, 10", o: ["A. 1.0", "B. 1.5", "C. 2.0", "D. 2.5", "E. 3.0"], a: 2, p: "Mean = (4+6+8+10) / 4 = 7.\nSimpangan Rata-rata (SR) = (|4-7| + |6-7| + |8-7| + |10-7|) / 4 = (3 + 1 + 1 + 3) / 4 = 8 / 4 = 2." },
+            { q: "Tentukan nilai kuartil bawah (Q1) dari data tunggal berikut:\n3, 4, 5, 6, 7, 8, 9", o: ["A. 4", "B. 4.5", "C. 5", "D. 3.5", "E. 6"], a: 0, p: "Median (Q2) adalah 6. Kelompok data bawah adalah 3, 4, 5. Maka nilai tengah dari kelompok data bawah (Q1) adalah 4." },
+            { q: "Berdasarkan statistika deskriptif, apakah makna konseptual dari Kuartil Atas (Q3)?", o: ["A. Nilai tengah batas bawah data", "B. Nilai pembatas yang membagi 75% data terbawah dengan 25% data teratas", "C. Rata-rata kuadrat deviasi data", "D. Nilai frekuensi tertinggi dari poligon", "E. Nilai selisih antara nilai maksimum dan minimum"], a: 1, p: "Kuartil atas (Q3) membagi data terurut menjadi 75% data di bawahnya dan 25% data di atasnya." },
+            { q: "Diberikan tabel distribusi frekuensi kumulatif kurang dari:\nKurang dari 50: 4 siswa\nKurang dari 60: 12 siswa\nKurang dari 70: 25 siswa\nBerapakah frekuensi murni dari kelas interval 50 - 59?", o: ["A. 4", "B. 8", "C. 12", "D. 13", "E. 25"], a: 1, p: "Frekuensi murni kelas 50-59 diperoleh dari pengurangan frekuensi kumulatif kelas tersebut dengan kelas sebelumnya: 12 - 4 = 8." },
+            { q: "Modus dari data kelompok pada tabel berikut berada pada kelas interval yang mana?\nKelas 41 - 45 (Frekuensi: 5)\nKelas 46 - 50 (Frekuensi: 12)\nKelas 51 - 55 (Frekuensi: 18)\nKelas 56 - 60 (Frekuensi: 9)", o: ["A. 41 - 45", "B. 46 - 50", "C. 51 - 55", "D. 56 - 60", "E. Tidak dapat ditentukan"], a: 2, p: "Kelas modus adalah kelas dengan frekuensi terbesar, yaitu kelas 51 - 55 dengan frekuensi 18." },
+            { q: "Tentukan nilai desil ke-5 (D5) dari kumpulan data tunggal. Nilai desil ke-5 ini secara konseptual nilainya setara dengan...", o: ["A. Mean", "B. Median (Q2)", "C. Modus", "D. Kuartil Atas (Q3)", "E. Simpangan baku"], a: 1, p: "Desil ke-5 membagi data tepat di tengah (50%), yang nilainya sama dengan Median atau Kuartil Tengah (Q2)." },
+            { q: "Berapakah jangkauan interkuartil (H) dari data jika diketahui Q1 = 45 dan Q3 = 75?", o: ["A. 15", "B. 20", "C. 25", "D. 30", "E. 120"], a: 3, p: "Rumus Jangkauan Interkuartil: H = Q3 - Q1 = 75 - 45 = 30." },
+            { q: "Diberikan data nilai: 2, 3, 3, 4, 5, 6, 7, 8. Nilai kuartil atas (Q3) adalah...", o: ["A. 6", "B. 6.5", "C. 7", "D. 7.5", "E. 5.5"], a: 1, p: "Data dibagi dua kelompok: Kelompok atas adalah 5, 6, 7, 8. Kuartil atas (Q3) terletak di tengah data 6 dan 7 yaitu (6 + 7) / 2 = 6,5." },
+            { q: "Fungsi utama dari penggunaan poligon frekuensi dalam statistika adalah...", o: ["A. Menghitung nilai deviasi standar", "B. Menyajikan visualisasi grafik tren distribusi data berkelompok secara kontinu", "C. Mengganti tabel frekuensi kumulatif", "D. Menghapus data pencilan (outlier)", "E. Mempermudah pemfaktoran data"], a: 1, p: "Poligon frekuensi menyajikan grafik kontinu untuk melihat tren naik turunnya frekuensi kelompok data." },
+            { q: "Rumus untuk menentukan letak kuartil ke-i (Qi) pada data berkelompok adalah...", o: ["A. (i/2) . N", "B. (i/4) . N", "C. (i/10) . N", "D. (i/100) . N", "E. (i/5) . N"], a: 1, p: "Kuartil membagi data menjadi 4 bagian yang sama, sehingga rumus letaknya adalah (i/4) . N di mana N adalah jumlah data keseluruhan." }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // Pengacak Pilihan Opsi dan Kunci Jawaban di Sisi Client (Supaya Variatif)
+        function shuffleOptionsAndKey(questionObj) {
+            let options = [...questionObj.o];
+            let correctAnswerText = options[questionObj.a];
+            
+            // Acak opsi menggunakan Fisher-Yates
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+
+            // Temukan indeks kunci jawaban baru setelah diacak
+            let newCorrectIndex = options.indexOf(correctAnswerText);
+
+            // Ganti awalan huruf opsi (A., B., C., D., E.) agar sesuai urutan baru
+            const letterPrefixes = ["A. ", "B. ", "C. ", "D. ", "E. "];
+            let formattedOptions = options.map((opt, idx) => {
+                let pureText = opt.substring(3);
+                return letterPrefixes[idx] + pureText;
+            });
+
+            return {
+                q: questionObj.q,
+                o: formattedOptions,
+                a: newCorrectIndex,
+                p: questionObj.p,
+                kategori: questionObj.kategori
+            };
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffledRaw = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffledRaw.slice(0, maxCount).map(q => shuffleOptionsAndKey(q));
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').innerHTML = activeQuestion.q.replace(/\n/g, "<br>");
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.innerHTML = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
