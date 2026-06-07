@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="id" data-theme="light">
 <head>
@@ -33,7 +33,7 @@
 
     <!-- Konten Pilihan Mapel -->
     <main>
-        <div class="hero-section">
+        <div class="hero-section scroll-reveal">
             <span class="hero-badge">Pusat Belajar Mandiri</span>
             <h2 class="hero-title">Asah Kemampuan Akademismu</h2>
             <p class="hero-subtitle">Silakan pilih salah satu paket mata pelajaran tryout di bawah ini untuk memulai latihan kuis.</p>
@@ -41,7 +41,7 @@
 
         <div class="grid-subjects">
             <!-- Card 1: Bahasa Indonesia -->
-            <a href="indo.html" class="card-subject">
+            <a href="indo.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">🇮🇩</div>
                     <h3 class="subject-title">Bahasa Indonesia</h3>
@@ -54,7 +54,7 @@
             </a>
 
             <!-- Card 2: DDPLG -->
-            <a href="ddplg.html" class="card-subject">
+            <a href="ddplg.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">💻</div>
                     <h3 class="subject-title">Dasar-Dasar RPL (DDPLG)</h3>
@@ -67,7 +67,7 @@
             </a>
 
             <!-- Card 3: Pancasila -->
-            <a href="pancasila.html" class="card-subject">
+            <a href="pancasila.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">🦅</div>
                     <h3 class="subject-title">Pancasila</h3>
@@ -80,7 +80,7 @@
             </a>
 
             <!-- Card 4: Sejarah -->
-            <a href="sejarah.html" class="card-subject">
+            <a href="sejarah.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">📜</div>
                     <h3 class="subject-title">Sejarah Indonesia</h3>
@@ -93,7 +93,7 @@
             </a>
 
             <!-- Card 5: Bahasa Inggris -->
-            <a href="inggris.html" class="card-subject">
+            <a href="inggris.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">🇬🇧</div>
                     <h3 class="subject-title">Bahasa Inggris</h3>
@@ -106,7 +106,7 @@
             </a>
 
             <!-- Card 6: Seni Rupa (BARU!) -->
-            <a href="senirupa.html" class="card-subject">
+            <a href="senirupa.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">🎨</div>
                     <h3 class="subject-title">Seni Rupa</h3>
@@ -126,7 +126,7 @@
         <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
     </footer>
 
-    <!-- JS Untuk Mengelola State Tema Gelap / Terang -->
+    <!-- JS Untuk Mengelola State Tema Gelap / Terang & Animasi Scroll Reveal -->
     <script>
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeToggleIcon = document.getElementById('themeToggleIcon');
@@ -153,7 +153,35 @@
                 themeToggleText.textContent = 'Mode Malam';
             }
         }
+
+        // --- ENGINE SCROLL REVEAL (INTERSECTION OBSERVER) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            
+            const revealCallback = (entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Tambahkan delay kecil bertahap (stagger) khusus pada load bersamaan
+                        setTimeout(() => {
+                            entry.target.classList.add('reveal-active');
+                        }, index * 100);
+                        
+                        // Hentikan pemantauan elemen yang sudah muncul agar performa lancar
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                root: null, // Menggunakan viewport browser
+                threshold: 0.12, // Elemen muncul setelah 12% masuk layar
+                rootMargin: "0px 0px -40px 0px" // Trigger sedikit sebelum elemen menyentuh batas bawah
+            });
+
+            reveals.forEach(el => revealObserver.observe(el));
+        });
     </script>
 </body>
 </html>
 
+```
