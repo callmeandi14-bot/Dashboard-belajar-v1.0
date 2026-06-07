@@ -33,7 +33,7 @@
 
     <!-- Kontainer Inti Aplikasi Kuis -->
     <main>
-        <div class="quiz-card">
+        <div class="quiz-card scroll-reveal">
             
             <!-- SECTION 1: SETUP KELOLA SOAL -->
             <div id="setup-section">
@@ -44,16 +44,16 @@
                     <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
                     <div class="input-soal-flex">
                         <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
-                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer berdasarkan kisi-kisi resmi seni rupa.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan diacak dinamis oleh sistem. Opsi pilihan ganda sangat mengecoh dan seimbang.</p>
                     </div>
                     <div class="info-materi-list">
-                        <div>✔ Design Thinking dalam Seni</div>
-                        <div>✔ Konsep & Manfaat Seni Terpadu</div>
-                        <div>✔ Publikasi Karya & Pameran</div>
-                        <div>✔ Unsur-Unsur Rupa Dasar</div>
-                        <div>✔ Prinsip Tata Letak Seni Rupa</div>
-                        <div>✔ Teknik Gambar (Arsir, Dusel, dll)</div>
-                        <div>✔ Pembuatan Prototype Karya</div>
+                        <div>✔ Design Thinking Seni Rupa</div>
+                        <div>✔ Teori & Praktik Seni Terpadu</div>
+                        <div>✔ Publikasi & Pameran Seni</div>
+                        <div>✔ Unsur Rupa & Estetika</div>
+                        <div>✔ Prinsip Harmonisasi Desain</div>
+                        <div>✔ Perbedaan Teknik Arsir & Dusel</div>
+                        <div>✔ Pembuatan Prototype Produk</div>
                         <div>✔ Fungsi Sketsa & Perencanaan Tema</div>
                     </div>
                 </div>
@@ -131,686 +131,686 @@
 
     <!-- LOGIKA UTAMA & BANK DATA SENI RUPA -->
     <script>
-        // BANK DATA SENI RUPA (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E SESUAI KISI-KISI)
+        // BANK DATA SENI RUPA (LENGKAP 50 SOAL DENGAN PANJANG OPSI YANG SEIMBANG DAN SANGAT MENGECOH)
         const bankSoal = [
-            // 1. Tujuan utama penerapan desain thinking (1-3)
+            // 1. Tujuan utama penerapan design thinking
             {
-                q: "Apa tujuan utama dari penerapan metode 'Design Thinking' dalam proses penciptaan karya seni rupa maupun produk desain?",
+                q: "Apa tujuan utama dari penerapan metode 'Design Thinking' dalam proses penciptaan karya seni rupa maupun produk desain fungsional?",
                 o: [
-                    "A. Menghasilkan karya seni yang semata-mata mahal untuk dilelang.",
-                    "B. Menemukan solusi kreatif yang berpusat pada manusia (human-centered) untuk memecahkan masalah nyata.",
-                    "C. Meniru karya seni klasik tanpa melakukan modifikasi.",
-                    "D. Membatasi kreativitas seniman agar sesuai dengan aturan baku pasar seni.",
-                    "E. Mempercepat proses produksi massal tanpa memikirkan kualitas estetis."
+                    "A. Mempercepat proses produksi massal tanpa memedulikan nilai estetis demi meningkatkan profit.",
+                    "B. Menemukan solusi kreatif yang berpusat pada manusia untuk memecahkan permasalahan nyata yang ada.",
+                    "C. Meniru konsep karya seni klasik masa lalu agar mendapatkan pengakuan dari para kolektor seni.",
+                    "D. Membatasi eksplorasi kreativitas seniman agar selalu sejalan dengan aturan baku industri pasar.",
+                    "E. Menghasilkan karya seni bernilai tinggi yang dikhususkan untuk kalangan kolektor elite saja."
                 ],
                 a: 1,
                 kategori: "Design Thinking",
-                p: "Tujuan utama design thinking adalah merancang solusi kreatif yang human-centered (berpusat pada manusia) untuk menyelesaikan masalah kehidupan sehari-hari secara relevan."
+                p: "Design thinking berfokus untuk menghasilkan inovasi solusi kreatif yang berpusat pada empati terhadap manusia (human-centered)."
             },
             {
-                q: "Dalam aspek inovasi seni rupa terapan, penerapan design thinking bertujuan untuk menyelaraskan tiga faktor utama, yaitu...",
+                q: "Dalam penciptaan desain produk, keselarasan apa saja yang ingin dicapai melalui metode Design Thinking?",
                 o: [
-                    "A. Harga bahan, kecepatan pembuatan, dan ketenaran seniman.",
-                    "B. Kebutuhan manusia (desirability), kelayakan teknologi (feasibility), dan kelangsungan bisnis (viability).",
-                    "C. Ukuran karya, pigura penyangga, dan lokasi pameran.",
-                    "D. Keinginan kolektor pribadi, tren politik, dan ketersediaan galeri seni.",
-                    "E. Ketebalan warna, jenis kanvas, dan kuas yang digunakan."
-                ],
-                a: 1,
-                kategori: "Design Thinking",
-                p: "Design thinking berupaya menyeimbangkan tiga pilar inovasi: Desirability (kebutuhan pengguna), Feasibility (aspek teknis/teknologi), dan Viability (nilai ekonomi/bisnis)."
-            },
-            {
-                q: "Penerapan design thinking pada pembuatan kriya atau kerajinan fungsional membantu perajin agar...",
-                o: [
-                    "A. Membuat produk yang hanya indah dipandang mata namun tidak bisa digunakan.",
-                    "B. Menghindari penggunaan teknologi modern sama sekali.",
-                    "C. Menghasilkan produk yang benar-benar menjawab kebutuhan dan keterbatasan fisik calon penggunanya.",
-                    "D. Menjual produk dengan harga yang sangat murah tanpa memedulikan modal.",
-                    "E. Membuat tiruan produk luar negeri secara persis."
+                    "A. Menyeimbangkan antara opini kritikus seni, ketersediaan dana pemerintah, dan luas galeri seni.",
+                    "B. Menghubungkan harga jual material, kecepatan produksi mesin, dan ketenaran nama sang seniman.",
+                    "C. Menyelaraskan kebutuhan pengguna, kelayakan teknologi, dan kelangsungan nilai ekonomi bisnis.",
+                    "D. Memadukan keindahan warna cat lukis, kekuatan bingkai kayu, dan ketebalan permukaan kanvas.",
+                    "E. Menyatukan visi politik lembaga sponsor, keinginan kurator pameran, dan selera pasar global."
                 ],
                 a: 2,
                 kategori: "Design Thinking",
-                p: "Metode ini memastikan produk fungsional tidak hanya estetis, tetapi juga ergonomis, aman, dan memecahkan hambatan fisik yang dialami calon penggunanya."
+                p: "Tiga aspek inovasi design thinking adalah Desirability (kebutuhan manusia), Feasibility (teknologi), dan Viability (ekonomi/bisnis)."
+            },
+            {
+                q: "Penerapan konsep design thinking pada pembuatan kriya fungsional dirancang dengan tujuan agar...",
+                o: [
+                    "A. Menghasilkan kerajinan dekoratif murni yang mengabaikan kegunaan aslinya saat dipajang.",
+                    "B. Menghindari pemanfaatan teknologi mesin modern guna mempertahankan keaslian metode kuno.",
+                    "C. Menghasilkan karya unik yang menyelesaikan masalah ergonomis serta keterbatasan fisik pengguna.",
+                    "D. Menurunkan nilai jual produk kriya agar bisa bersaing bebas dengan komoditas murah buatan pabrik.",
+                    "E. Memaksa pengguna menyesuaikan perilaku mereka agar bisa memakai produk buatan seniman tersebut."
+                ],
+                a: 2,
+                kategori: "Design Thinking",
+                p: "Melalui empati, produk kriya fungsional dirancang agar ergonomis, fungsional, dan ramah pengguna sesuai batasan fisiknya."
             },
 
-            // 2. Tahapan dalam proses desain thinking (4-7)
+            // 2. Tahapan dalam proses design thinking
             {
-                q: "Manakah urutan tahapan yang benar dan logis dalam siklus proses Design Thinking?",
+                q: "Manakah urutan tahapan yang benar dan sistematis dalam siklus proses implementasi Design Thinking?",
                 o: [
-                    "A. Empathize - Ideate - Define - Prototype - Test",
-                    "B. Define - Empathize - Prototype - Ideate - Test",
-                    "C. Empathize - Define - Ideate - Prototype - Test",
-                    "D. Prototype - Test - Empathize - Define - Ideate",
-                    "E. Ideate - Empathize - Define - Test - Prototype"
+                    "A. Empathize (Empati) - Ideate (Ideasi) - Define (Definisi) - Prototype (Purwarupa) - Test (Uji Coba)",
+                    "B. Define (Definisi) - Empathize (Empati) - Prototype (Purwarupa) - Ideate (Ideasi) - Test (Uji Coba)",
+                    "C. Empathize (Empati) - Define (Definisi) - Ideate (Ideasi) - Prototype (Purwarupa) - Test (Uji Coba)",
+                    "D. Prototype (Purwarupa) - Test (Uji Coba) - Empathize (Empati) - Define (Definisi) - Ideate (Ideasi)",
+                    "E. Ideate (Ideasi) - Empathize (Empati) - Define (Definisi) - Test (Uji Coba) - Prototype (Purwarupa)"
                 ],
                 a: 2,
                 kategori: "Design Thinking",
-                p: "Urutan standar Design Thinking adalah: 1) Empathize (empati), 2) Define (merumuskan masalah), 3) Ideate (brainstorming ide), 4) Prototype (pembuatan purwarupa), dan 5) Test (uji coba)."
+                p: "Urutan standar dalam metode design thinking secara berurutan adalah Empathize, Define, Ideate, Prototype, dan Test."
             },
             {
-                q: "Tahapan dalam design thinking di mana desainer mengamati secara langsung, mewawancarai, dan merasakan posisi calon pengguna untuk memahami kebutuhan mereka disebut...",
+                q: "Tahap dalam design thinking di mana desainer mengamati secara langsung dan berinteraksi untuk memahami perilaku calon pengguna disebut...",
                 o: [
-                    "A. Define",
-                    "B. Empathize",
-                    "C. Ideate",
-                    "D. Prototype",
-                    "E. Test"
+                    "A. Define (Definisi) yaitu merangkum semua data mentah yang telah dikumpulkan di lapangan.",
+                    "B. Empathize (Empati) yaitu membangun kedekatan emosional untuk menggali masalah dari sisi pengguna.",
+                    "C. Ideate (Ideasi) yaitu mengumpulkan gagasan orisinal melalui sesi diskusi brainstorming.",
+                    "D. Prototype (Purwarupa) yaitu merealisasikan ide dasar ke dalam model fisik awal berskala kecil.",
+                    "E. Test (Uji Coba) yaitu mengevaluasi efektivitas purwarupa langsung bersama target pengguna."
                 ],
                 a: 1,
                 kategori: "Design Thinking",
-                p: "Empathize adalah tahapan awal untuk menaruh empati serta menyelami kebutuhan, perasaan, dan keluhan dari sudut pandang pengguna secara mendalam."
+                p: "Empathize mengandalkan kedekatan emosional dan pengamatan mendalam untuk menyelami keluhan nyata dari pengguna."
             },
             {
-                q: "Pada tahap 'Define' di proses design thinking, tindakan utama yang harus dilakukan oleh desainer atau seniman adalah...",
+                q: "Pada tahap 'Define' dalam proses design thinking, langkah utama yang wajib dilakukan oleh seorang perancang adalah...",
                 o: [
-                    "A. Membuat sketsa acak sebanyak-banyaknya tanpa arah.",
-                    "B. Menguji produk akhir langsung ke pasar global.",
-                    "C. Menganalisis hasil observasi tahap empati untuk merumuskan masalah inti (problem statement) yang jelas.",
-                    "D. Membeli bahan baku utama di toko seni rupa terdekat.",
-                    "E. Membuka pameran seni rupa publik skala lokal."
+                    "A. Membuat rancangan desain alternatif dalam bentuk sketsa acak sebanyak-banyaknya di kertas.",
+                    "B. Menguji ketahanan produk jadi secara langsung ke pasar untuk melihat respon awal konsumen.",
+                    "C. Menganalisis hasil observasi tahap empati guna merumuskan masalah inti yang akan dipecahkan.",
+                    "D. Membeli seluruh material bahan baku utama yang diperlukan untuk proses pembuatan karya seni.",
+                    "E. Membuka galeri pameran untuk mendapatkan kritik eksternal mengenai kelayakan karya desain."
                 ],
                 a: 2,
                 kategori: "Design Thinking",
-                p: "Tahap Define fokus menyaring semua temuan dari tahap Empathize untuk merumuskan satu kalimat masalah inti (problem statement) yang akan dipecahkan."
+                p: "Tahap Define menganalisis hasil observasi awal untuk memfokuskan masalah ke dalam pernyataan masalah (problem statement)."
             },
             {
-                q: "Ketika sekelompok perancang mengadakan sesi curah pendapat (brainstorming) untuk melahirkan gagasan-gagasan kreatif yang radikal, inovatif, dan bebas tanpa batasan terlebih dahulu, mereka berada dalam tahap...",
+                q: "Ketika sekelompok tim perancang mengadakan diskusi curah pendapat (brainstorming) untuk melahirkan ide-ide pemecahan masalah tanpa batasan, mereka berada pada tahap...",
                 o: [
-                    "A. Empathize",
-                    "B. Define",
-                    "C. Ideate",
-                    "D. Prototype",
-                    "E. Test"
+                    "A. Empathize (Empati) karena sedang mendengarkan seluruh keluhan serta kebutuhan dari para anggota.",
+                    "B. Define (Definisi) karena berupaya membatasi ruang lingkup pembahasan masalah yang sedang dihadapi.",
+                    "C. Ideate (Ideasi) karena sedang memicu pemikiran kreatif guna memunculkan banyak alternatif solusi.",
+                    "D. Prototype (Purwarupa) karena sedang merencanakan pembuatan visualisasi fisik dari gagasan terpilih.",
+                    "E. Test (Uji Coba) karena sedang membandingkan kekuatan argumentasi dari masing-masing kepala."
                 ],
                 a: 2,
                 kategori: "Design Thinking",
-                p: "Ideate (penciptaan ide) adalah proses mengumpulkan sebanyak mungkin alternatif ide kreatif guna memecahkan masalah tanpa batasan atau penilaian kaku terlebih dahulu."
+                p: "Ideate adalah fase pengumpulan ide-ide kreatif sebanyak mungkin untuk menemukan cara terbaik memecahkan masalah."
             },
 
-            // 3. Pengertian berpikir kritis dalam Seni Rupa (8-10)
+            // 3. Pengertian berpikir kritis dalam seni rupa
             {
-                q: "Apakah yang dimaksud dengan 'berpikir kritis' (critical thinking) dalam konteks penciptaan dan apresiasi Seni Rupa?",
+                q: "Apakah yang dimaksud dengan konsep 'berpikir kritis' (critical thinking) dalam ranah penciptaan dan apresiasi Seni Rupa?",
                 o: [
-                    "A. Kemampuan untuk mencela dan meremehkan karya seni orang lain tanpa alasan ilmiah.",
-                    "B. Proses menganalisis, mengevaluasi, dan merefleksikan konsep, teknik, estetika, serta makna di balik suatu karya seni.",
-                    "C. Menghafal seluruh nama seniman dunia beserta tahun kelahiran mereka secara mekanis.",
-                    "D. Menolak masuknya aliran seni rupa modern dan hanya menerima seni rupa tradisional.",
-                    "E. Membuat lukisan secara cepat tanpa melalui pertimbangan konsep awal."
+                    "A. Kemampuan subjektif untuk mencari celah kesalahan teknis karya orang lain tanpa dasar keilmuan.",
+                    "B. Proses menganalisis, mengevaluasi, dan merefleksikan aspek estetika, teknik, konsep, serta pesan karya.",
+                    "C. Tindakan menghafal riwayat hidup seluruh tokoh seniman dunia secara rinci beserta tahun aktif mereka.",
+                    "D. Sikap mempertahankan pandangan seni tradisional dan menolak masuknya pengaruh gaya modern.",
+                    "E. Keahlian membuat goresan gambar di atas kanvas secara cepat tanpa melalui perencanaan konsep."
                 ],
                 a: 1,
                 kategori: "Berpikir Kritis",
-                p: "Berpikir kritis dalam seni rupa melibatkan kegiatan intelektual untuk menganalisis, menafsirkan keindahan, mengevaluasi komposisi, dan menangkap pesan mendalam dari karya."
+                p: "Berpikir kritis dalam seni rupa adalah proses evaluasi mendalam, analisis visual, dan pemahaman konseptual terhadap karya seni."
             },
             {
-                q: "Bagaimana berpikir kritis membantu seorang seniman saat ia mengalami hambatan kreatif (creative block)?",
+                q: "Bagaimanakah cara berpikir kritis membantu seorang seniman saat menghadapi hambatan kreatif (creative block)?",
                 o: [
-                    "A. Membantu seniman menganalisis akar masalah, meninjau kembali konsepnya secara objektif, dan mencari referensi visual baru dari berbagai sudut pandang.",
-                    "B. Memaksa seniman berhenti berkarya selamanya dan berganti profesi.",
-                    "C. Membuat seniman menyalin karya orang lain secara ilegal.",
-                    "D. Mengarahkan seniman untuk bersikap pasrah tanpa melakukan tindakan evaluasi apa pun.",
-                    "E. Membantu menaikkan nilai jual lukisan secara tidak wajar."
+                    "A. Memandu seniman mengurai masalah, mengevaluasi konsep secara objektif, dan mencari alternatif visual baru.",
+                    "B. Membantu menaikkan nilai jual karya lukis di pasar seni agar tidak mengalami kerugian finansial.",
+                    "C. Menuntut seniman menghentikan eksperimen medianya dan beralih meniru karya dekoratif yang populer.",
+                    "D. Memaksa seniman mengabaikan kritik eksternal dan tetap konsisten pada kesalahan metode kerja lama.",
+                    "E. Mengarahkan seniman mengambil jalan pintas dengan menyalin ide karya seni milik seniman lain."
                 ],
                 a: 0,
                 kategori: "Berpikir Kritis",
-                p: "Berpikir kritis memandu seniman membedah karyanya, mengevaluasi kegagalan komposisi secara teknis, dan mengonseptualisasikan ulang gagasan baru secara terukur."
+                p: "Berpikir kritis membantu mengidentifikasi akar kebuntuan ide dan menganalisis struktur komposisi karya secara objektif."
             },
             {
-                q: "Dalam proses apresiasi seni rupa, perilaku kritis yang paling tepat ditunjukkan dengan cara...",
+                q: "Dalam proses apresiasi seni rupa, tindakan kritis yang paling edukatif ditunjukkan oleh apresiator dengan cara...",
                 o: [
-                    "A. Menilai bagus atau tidaknya suatu karya seni murni berdasarkan harga jual bingkainya saja.",
-                    "B. Menilai subyektif bahwa karya abstrak tidak bernilai karena tidak menyerupai bentuk nyata.",
-                    "C. Mengapresiasi karya lewat pemahaman tentang latar belakang budaya seniman, konsep pesan, dan keunikan teknik yang digunakan.",
-                    "D. Mengikuti pendapat kritikus terkenal tanpa memiliki argumen pribadi.",
-                    "E. Merusak instalasi seni di galeri untuk menguji kekuatannya."
+                    "A. Menilai tinggi atau rendahnya estetika lukisan murni hanya berdasarkan kualitas bingkai kayu pembungkusnya.",
+                    "B. Menyatakan karya abstrak tidak berharga hanya karena bentuknya tidak meniru objek nyata di alam.",
+                    "C. Memahami latar belakang sosio-historis seniman, kedalaman konsep gagasan, dan orisinalitas tekniknya.",
+                    "D. Mengikuti sepenuhnya ulasan opini kritikus seni terkenal tanpa berani mengemukakan argumen pribadi.",
+                    "E. Menyentuh permukaan karya instalasi secara langsung di ruang pameran untuk menguji kualitas fisiknya."
                 ],
                 a: 2,
                 kategori: "Berpikir Kritis",
-                p: "Apresiasi kritis menuntut penghargaan yang didasarkan pada pemahaman kontekstual sejarah, nilai estetis, konseptual, dan eksplorasi material dari karya tersebut."
+                p: "Apresiasi kritis menuntut analisis kontekstual yang komprehensif, mencakup aspek sejarah, teknik, medium, dan pesan batin seniman."
             },
 
-            // 4. Pengertian Seni terpadu (11-13)
+            // 4. Pengertian Seni Terpadu
             {
-                q: "Apakah esensi utama dari istilah 'Seni Terpadu' (Integrated Arts) dalam dunia pembelajaran dan penciptaan seni?",
+                q: "Apakah definisi yang paling representatif dari istilah 'Seni Terpadu' (Integrated Arts) dalam konteks pembelajaran seni?",
                 o: [
-                    "A. Seni rupa yang diproduksi menggunakan mesin terintegrasi pabrik raksasa.",
-                    "B. Pendekatan seni yang mengombinasikan dan menghubungkan berbagai cabang seni (rupa, musik, tari, drama) atau mengaitkan seni dengan disiplin ilmu non-seni.",
-                    "C. Aliran seni rupa yang melarang penggunaan warna selain hitam dan putih.",
-                    "D. Karya seni yang hanya boleh dipasang di dinding luar ruangan terbuka.",
-                    "E. Komunitas seniman yang memiliki izin resmi dari badan hukum pemerintah."
+                    "A. Karya seni rupa murni yang diproduksi secara mekanis menggunakan integrasi mesin-mesin pabrik modern.",
+                    "B. Pendekatan seni yang menghubungkan berbagai cabang seni atau mengaitkan seni dengan disiplin ilmu non-seni.",
+                    "C. Aliran seni rupa kontemporer yang melarang penggunaan media warna selain hitam, abu-abu, dan putih.",
+                    "D. Metode penempatan karya seni rupa dua dimensi yang wajib dipajang pada dinding luar ruangan terbuka.",
+                    "E. Organisasi himpunan para perupa yang memiliki legalitas hukum resmi dari kementerian kebudayaan."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Seni Terpadu (Integrated Arts) adalah praktik penggabungan disiplin seni rupa dengan disiplin seni lain (seperti suara atau gerak) ataupun dengan ilmu pengetahuan lain (seperti sains, matematika, sejarah)."
+                p: "Seni Terpadu memadukan beragam ekspresi seni (multidispliner) atau mengaitkan seni dengan sains, sosial, matematika, dll."
             },
             {
-                q: "Manakah di bawah ini yang merupakan contoh konkret dari aplikasi 'Seni Terpadu' dalam bentuk karya kreatif?",
+                q: "Manakah di bawah ini yang tergolong sebagai perwujudan konkret dari implementasi gagasan 'Seni Terpadu'?",
                 o: [
-                    "A. Sebuah lukisan cat minyak murni di atas kanvas yang menggambarkan pemandangan alam pegunungan.",
-                    "B. Patung batu pahat tradisional yang meniru bentuk arca peninggalan Majapahit.",
-                    "C. Pertunjukan seni instalasi interaktif yang memadukan patung kinetik, proyeksi video digital, efek suara alam, dan narasi teaterikal.",
-                    "D. Sketsa hitam putih menggunakan pensil 2B di kertas gambar ukuran A4.",
-                    "E. Kaligrafi aksara kuno yang ditulis menggunakan tinta Cina hitam."
+                    "A. Lukisan pemandangan alam pegunungan yang digambar menggunakan cat minyak di atas kanvas katun standar.",
+                    "B. Patung batu alam bercorak tradisional yang dipahat menyerupai peninggalan purbakala zaman candi.",
+                    "C. Instalasi kinetik yang memadukan gerak patung, proyeksi visual digital, dan efek tata suara interaktif.",
+                    "D. Sketsa monokromatik wajah manusia menggunakan goresan pensil grafit 2B pada lembaran kertas gambar.",
+                    "E. Seni kaligrafi aksara kuno yang ditulis menggunakan tinta hitam Cina di atas lembaran kertas daun lontar."
                 ],
                 a: 2,
                 kategori: "Seni Terpadu",
-                p: "Instalasi interaktif dengan perpaduan patung (rupa), video (multimedia), efek suara (musik), dan teaterikal merupakan integrasi multidisiplin seni terpadu."
+                p: "Karya instalasi interaktif kinetik melibatkan unsur rupa (patung), gerak (tari), multimedia (video), dan suara (musik)."
             },
             {
-                q: "Konsep Seni Terpadu memandang bahwa karya seni tidak berdiri di ruang hampa yang terisolasi. Artinya, seni terpadu selalu berusaha...",
+                q: "Konsep Seni Terpadu berpandangan bahwa seni tidak berdiri sendiri di ruang hampa. Hal ini berarti seni terpadu berusaha...",
                 o: [
-                    "A. Menjual karya dengan paket promosi khusus.",
-                    "B. Menjembatani ekspresi estetika dengan pemahaman konteks sosial, budaya, sejarah, sains, lingkungan, dan kehidupan sehari-hari.",
-                    "C. Membatasi seniman agar tidak bekerja sama dengan ilmuwan di luar bidang seni.",
-                    "D. Mewajibkan setiap lukisan memiliki musik pengiring yang diputar dari CD player.",
-                    "E. Menyatukan seluruh galeri seni menjadi satu kepengurusan terpusat."
+                    "A. Mewajibkan seniman menjual karyanya dalam satu paket pemasaran eksklusif bersama seniman musik.",
+                    "B. Mengaitkan ekspresi keindahan dengan pemahaman realitas sosial, sejarah, sains, serta isu lingkungan.",
+                    "C. Melarang perupa melakukan eksperimen mandiri tanpa melibatkan ilmuwan dari luar bidang seni rupa.",
+                    "D. Mengharuskan setiap lukisan dwimatra dilengkapi dengan pemutar audio lagu tradisional di sampingnya.",
+                    "E. Menyatukan manajemen pengelolaan seluruh gedung museum dan galeri pameran di bawah satu atap komando."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Seni Terpadu memandang seni sebagai alat bantu koneksi pemahaman holistik terhadap isu riil, sains, sejarah, maupun emosi manusia secara komparatif."
+                p: "Seni Terpadu melihat seni sebagai medium refleksi holistik terhadap dunia nyata, sains, kemanusiaan, dan lingkungan sekitar."
             },
 
-            // 5. Tujuan utama Seni terpadu (14-16)
+            // 5. Tujuan utama Seni Terpadu
             {
-                q: "Apa tujuan utama dari implementasi program atau konsep 'Seni Terpadu' bagi pengembangan kemampuan kreativitas siswa?",
+                q: "Apa tujuan utama dari diterapkannya konsep 'Seni Terpadu' dalam proses pendidikan kreatif bagi peserta didik?",
                 o: [
-                    "A. Agar siswa mampu menghafal nama semua aliran seni dalam waktu singkat.",
-                    "B. Merangsang cara berpikir holistik, meningkatkan ekspresi diri secara multisensori, serta menghubungkan konsep seni dengan kehidupan nyata.",
-                    "C. Melatih siswa agar bisa bersaing menjual lukisan dengan harga tertinggi di pasar modal.",
-                    "D. Mewajibkan siswa menjadi seniman profesional di masa depan.",
-                    "E. Membantu sekolah menghemat biaya pengadaan alat musik dan bahan lukis."
+                    "A. Membantu lembaga sekolah menekan pengeluaran anggaran untuk pembelian alat musik dan cat lukis lukisan.",
+                    "B. Menumbuhkan pola pikir holistik, ekspresi diri multisensori, serta mengaitkan konsep seni dengan realita.",
+                    "C. Menjadikan seluruh siswa kompetitif agar bisa menjual karya seni mereka dengan harga tinggi di pasar digital.",
+                    "D. Mewajibkan para siswa agar memilih karier profesional sebagai praktisi seni atau kurator pameran kelak.",
+                    "E. Menggantikan materi ujian tertulis mata pelajaran umum dengan praktik menggambar bebas setiap semester."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Tujuan utama seni terpadu adalah menumbuhkan cara berpikir lintas disiplin (holistik), kepekaan indrawi ganda (multisensori), dan pemecahan masalah kontekstual."
+                p: "Seni Terpadu bertujuan melatih cara berpikir komprehensif (holistik) serta kepekaan emosional dan indrawi peserta didik."
             },
             {
-                q: "Dari segi apresiasi budaya, apa tujuan dirancangnya sebuah karya seni terpadu yang mengangkat tema kearifan lokal?",
+                q: "Dalam aspek pelestarian nilai lokal, tujuan dirancangnya sebuah karya seni terpadu yang bertema budaya daerah adalah...",
                 o: [
-                    "A. Menghapus tradisi asli demi menyambut seni modern kebarat-baratan.",
-                    "B. Melestarikan dan merevitalisasi nilai tradisi leluhur lewat kemasan ekspresi baru yang relevan dengan generasi modern.",
-                    "C. Menjadikan kebudayaan lokal sebagai komoditas industri monopoli komersial.",
-                    "D. Membuktikan bahwa kesenian daerah lebih buruk dibanding kesenian kontemporer mancanegara.",
-                    "E. Menjual kerajinan tangan lokal ke kolektor luar negeri tanpa royalti."
+                    "A. Menyingkirkan tradisi kuno daerah demi menyambut modernisasi seni barat yang lebih populer secara global.",
+                    "B. Menghidupkan kembali nilai esensi luhur tradisi melalui kemasan media ekspresi baru yang relevan bagi generasi muda.",
+                    "C. Menjadikan kebudayaan adat lokal sebagai komoditas bisnis industri pariwisata monopoli pihak asing.",
+                    "D. Membuktikan kepada publik bahwa kesenian tradisional jauh lebih tertinggal dibanding seni kontemporer barat.",
+                    "E. Membantu pengrajin daerah mengekspor barang kerajinan mereka tanpa perlu melewati jalur regulasi bea cukai."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Seni Terpadu bertema lokal bertujuan menghidupkan kembali esensi tradisi lokal melalui media ekspresi modern agar mudah diterima oleh masyarakat masa kini."
+                p: "Seni Terpadu menjadi jembatan revitalisasi tradisi agar nilai-nilainya tetap lestari dan menarik bagi generasi modern."
             },
             {
-                q: "Tujuan penerapan aspek estetis fungsional dalam rancangan proyek seni terpadu sains-seni (misalnya infografis ekosistem hutan) adalah...",
+                q: "Apa tujuan dari integrasi visual seni dengan sains dalam pembuatan poster infografis penyelamatan satwa langka?",
                 o: [
-                    "A. Menghilangkan akurasi data ilmiah agar gambar terlihat lebih indah.",
-                    "B. Membantu menyampaikan pesan informasi ilmiah yang rumit agar lebih mudah dipahami secara visual, menarik, dan interaktif.",
-                    "C. Mempersulit pembaca dalam memahami pesan tertulis.",
-                    "D. Menghemat penggunaan kertas laporan penelitian.",
-                    "E. Menghasilkan poster dekoratif tanpa teks penjelasan sama sekali."
+                    "A. Mengaburkan keakuratan fakta data ilmiah satwa agar desainer bebas mengeksplorasi keindahan ilustrasi gambar.",
+                    "B. Menyajikan informasi sains yang rumit secara estetis agar pesan kampanye lingkungan lebih mudah dipahami publik.",
+                    "C. Mengurangi porsi tulisan teks penjelasan agar poster terlihat bersih tanpa ada data-data angka yang membingungkan.",
+                    "D. Menghemat biaya cetak brosur laporan ilmiah dengan meringkas seluruh teks ke dalam satu gambar dekoratif.",
+                    "E. Membuat karya seni murni bernilai tinggi yang ditujukan khusus bagi kalangan peneliti biologi konservasi."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Integrasi visual seni dengan ilmu sains bertujuan agar data yang kering dan rumit dapat dinikmati secara estetis serta mudah dipahami secara intuitif oleh masyarakat luas."
-            },
-
-            // 6. Kelebihan dan kekurangan Seni terpadu (17-20)
-            {
-                q: "Manakah di bawah ini yang merupakan KELEBIHAN utama dari pembuatan karya berbasis pendekatan Seni Terpadu?",
-                o: [
-                    "A. Proses pengerjaan karya yang sangat instan dan tidak memerlukan keterampilan teknis apa pun.",
-                    "B. Menghasilkan karya yang kaya makna, dinamis, unik, serta mampu menyentuh berbagai indra penikmat seni secara bersamaan.",
-                    "C. Biaya produksi karya yang selalu gratis tanpa memerlukan modal materiil.",
-                    "D. Tidak memerlukan perencanaan konsep atau kolaborasi antarseniman.",
-                    "E. Pasti langsung disukai oleh semua kolektor seni konvensional tanpa kecuali."
-                ],
-                a: 1,
-                kategori: "Seni Terpadu",
-                p: "Kelebihan seni terpadu terletak pada kayanya lapis makna (multidimensional), kedalaman estetika, keunikan medium, dan kemampuan menyajikan pengalaman multisensori."
-            },
-            {
-                q: "Di samping memiliki kelebihan, Seni Terpadu juga memiliki tantangan atau KEKURANGAN dalam proses produksinya, yaitu...",
-                o: [
-                    "A. Tidak memiliki nilai keindahan sama sekali jika dipajang di ruang tamu.",
-                    "B. Membutuhkan perencanaan konsep yang rumit, koordinasi lintas disiplin yang menantang, serta penguasaan banyak medium sekaligus.",
-                    "C. Dilarang dipamerkan di museum nasional oleh undang-undang kebudayaan.",
-                    "D. Selalu menghasilkan limbah beracun berbahaya bagi lingkungan.",
-                    "E. Hanya bisa dibuat oleh anak-anak usia sekolah dasar saja."
-                ],
-                a: 1,
-                kategori: "Seni Terpadu",
-                p: "Kekurangan/tantangan seni terpadu adalah kompleksitas perancangannya, risiko biasnya fokus karya jika tidak dikonsep dengan baik, serta perlunya kolaborasi intensif."
-            },
-            {
-                q: "Mengapa faktor 'kolaborasi' dalam seni terpadu kadang dapat menjadi suatu kelemahan atau hambatan dalam pengerjaannya?",
-                o: [
-                    "A. Karena kolaborasi membuat seniman mengantuk saat bekerja.",
-                    "B. Adanya potensi benturan ego, kesulitan menyatukan visi artistik yang berbeda dari masing-masing kepala seniman, dan koordinasi waktu.",
-                    "C. Kolaborasi menurunkan harga jual orisinalitas karya di galeri internasional.",
-                    "D. Membuat karya seni menjadi cepat pudar warna catnya.",
-                    "E. Membatasi jumlah penonton yang boleh hadir melihat pameran."
-                ],
-                a: 1,
-                kategori: "Seni Terpadu",
-                p: "Tantangan non-teknis terbesar dalam proyek seni terintegrasi kelompok adalah sinkronisasi ide, pembagian peran kerja, dan manajemen ego artistik."
-            },
-            {
-                q: "Bagaimanakah cara meminimalisir kekurangan atau hambatan rumitnya manajemen teknis pada proyek Seni Terpadu?",
-                o: [
-                    "A. Menghilangkan koordinasi dan membiarkan setiap anggota bekerja sendiri-sendiri tanpa aturan.",
-                    "B. Membuat jadwal kerja teratur, pembagian tugas (jobdesk) yang jelas berdasarkan keahlian, dan komunikasi yang terbuka sejak awal proyek.",
-                    "C. Membatalkan proyek ketika muncul perbedaan pendapat pertama kali.",
-                    "D. Menyerahkan seluruh keputusan pengerjaan pada satu orang tanpa mendengarkan masukan anggota kelompok.",
-                    "E. Menghapus elemen rupa dan menyisakan elemen gerak tari saja."
-                ],
-                a: 1,
-                kategori: "Seni Terpadu",
-                p: "Manajemen proyek yang baik dengan timeline, pembagian keahlian spesifik, dan komunikasi yang sehat adalah kunci kelancaran instalasi karya seni terpadu."
+                p: "Tujuan integrasi ini adalah membuat data sains yang kaku menjadi visual komunikatif, persuasif, dan estetik bagi khalayak umum."
             },
 
-            // 7. Manfaat Seni terpadu (21-23)
+            // 6. Kelebihan dan kekurangan Seni Terpadu
             {
-                q: "Bagi masyarakat penikmat (apresiator), manfaat utama menyaksikan pameran berbasis Seni Terpadu adalah...",
+                q: "Manakah di bawah ini yang paling tepat menggambarkan KELEBIHAN utama dari pembuatan karya berbasis Seni Terpadu?",
                 o: [
-                    "A. Mendapatkan sensasi pusing akibat terlalu banyak media yang digunakan.",
-                    "B. Memperoleh pengalaman estetis yang lebih interaktif, menggugah imajinasi, dan memberikan sudut pandang pemecahan masalah baru.",
-                    "C. Bisa menyentuh dan membawa pulang karya seni secara gratis.",
-                    "D. Membandingkan seniman mana yang paling kaya dan sukses.",
-                    "E. Membantu mengabaikan isu-isu sosial yang terjadi di sekeliling mereka."
+                    "A. Proses pengerjaan karya yang bersifat instan tanpa menuntut penguasaan keahlian teknis khusus.",
+                    "B. Menghasilkan karya multidimensi yang kaya makna, dinamis, serta mampu merangsang berbagai indra penikmat.",
+                    "C. Biaya pengadaan bahan pameran yang selalu murah karena menggunakan sisa limbah organik sekitar.",
+                    "D. Tidak membutuhkan rancangan konsep tertulis maupun kolaborasi tim antar seniman yang terlibat.",
+                    "E. Dijamin langsung mendapatkan persetujuan dan disukai seluruh penikmat seni beraliran konvensional."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Seni terpadu memberi apresiator pengalaman mendalam karena melibatkan stimulasi interaksi fisik, suara, rupa, sehingga merangsang imajinasi kognitif secara aktif."
+                p: "Kelebihannya adalah kekayaan pengalaman estetis (multisensori) dan keluasan pemaknaan dari integrasi media rupa, gerak, dan suara."
             },
             {
-                q: "Bagaimana Seni Terpadu memberikan manfaat dalam dunia pendidikan anak usia dini atau sekolah menengah?",
+                q: "Di samping keunggulannya, pendekatan Seni Terpadu juga memiliki KEKURANGAN atau tantangan tersendiri dalam proses pembuatannya, yaitu...",
                 o: [
-                    "A. Mempercepat proses kelulusan tanpa harus menempuh ujian teori.",
-                    "B. Mengintegrasikan motorik halus, kognitif, imajinasi, dan emosi anak sehingga belajar terasa menyenangkan dan materi non-seni lebih membekas.",
-                    "C. Menghilangkan mata pelajaran matematika dan menggantinya dengan melukis bebas setiap hari.",
-                    "D. Memaksa siswa menghabiskan uang untuk membeli alat lukis mahal.",
-                    "E. Menjadikan siswa acuh tak acuh terhadap kebersihan lingkungan sekolah."
+                    "A. Menghasilkan karya yang tidak memiliki nilai jual keindahan sama sekali saat dipamerkan di ruang publik.",
+                    "B. Memerlukan perencanaan konsep yang kompleks, koordinasi lintas bidang yang rumit, dan penguasaan beragam medium.",
+                    "C. Adanya regulasi undang-undang kebudayaan nasional yang membatasi hak pameran karya seni gabungan.",
+                    "D. Selalu menghasilkan sisa buangan residu zat kimia beracun yang dapat mencemari lingkungan studio seni.",
+                    "E. Metode pengerjaannya yang hanya cocok diaplikasikan oleh kalangan pelajar tingkat dasar saja."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Dalam pendidikan, seni terpadu mengaktifkan memori jangka panjang siswa karena mereka belajar secara kinestetik, visual, dan auditori sekaligus."
+                p: "Tantangannya terletak pada rumitnya menyelaraskan konsep desain, teknik pengerjaan, dan penguasaan alat lintas disiplin."
             },
             {
-                q: "Bagi lingkungan perkotaan, manfaat dari instalasi seni terpadu ruang publik (public integrated art) adalah...",
+                q: "Mengapa faktor 'kolaborasi kelompok' dalam pengerjaan proyek seni terpadu sering kali menjadi salah satu hambatan terbesar?",
                 o: [
-                    "A. Menutup jalan protokol sehingga lalu lintas macet.",
-                    "B. Membantu mempercantik kota, menghidupkan ruang sosial mati menjadi ruang publik interaktif, serta menyampaikan pesan sadar lingkungan.",
-                    "C. Memaksa warga kota membayar pajak keindahan yang tinggi.",
-                    "D. Menghalangi cahaya matahari masuk ke gedung perkantoran sekitar.",
-                    "E. Mengurangi luas lahan parkir kendaraan bermotor di pusat perbelanjaan."
+                    "A. Karena aktivitas kerja kelompok dapat memicu kelelahan fisik yang berlebihan bagi masing-masing seniman.",
+                    "B. Adanya potensi gesekan ego individu, kesulitan menyatukan visi artistik, dan hambatan koordinasi pembagian waktu.",
+                    "C. Kolaborasi secara otomatis menurunkan nilai orisinalitas kepemilikan tunggal hak cipta karya di mata kurator.",
+                    "D. Menyebabkan warna pigmen cat lukis yang digunakan menjadi lebih cepat pudar akibat perbedaan suhu tubuh panitia.",
+                    "E. Membatasi kreativitas karena setiap anggota dilarang mengemukakan ide di luar persetujuan ketua kelompok."
                 ],
                 a: 1,
                 kategori: "Seni Terpadu",
-                p: "Seni ruang publik terpadu menyulap area gersang perkotaan menjadi tempat rekreasi, interaksi sosial, serta media kampanye isu lingkungan hidup."
+                p: "Hambatan terbesar non-teknis kolaborasi adalah menyinkronkan ego artistik, menyatukan ide-ide berbeda, dan manajemen waktu bersama."
+            },
+            {
+                q: "Langkah strategis apa yang paling efektif untuk meminimalisir kendala rumitnya manajemen teknis pada proyek Seni Terpadu?",
+                o: [
+                    "A. Menghapus jalur komunikasi formal dan membiarkan setiap anggota kelompok berkreasi bebas tanpa aturan.",
+                    "B. Menyusun timeline kerja sistematis, pembagian peran berdasarkan keahlian, dan memelihara komunikasi yang terbuka.",
+                    "C. Menghentikan sementara jalannya proyek seni saat pertama kali muncul perbedaan opini antara anggota tim.",
+                    "D. Menyerahkan mutlak semua otoritas pengambilan keputusan artistik hanya kepada satu orang tanpa dengar masukan.",
+                    "E. Memangkas seluruh unsur seni rupa visual dan menyisakan unsur pementasan gerak tari tradisional saja."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Manajemen proyek yang baik dengan pembagian tugas (jobdesk) yang terarah merupakan solusi utama dari kompleksitas proyek."
             },
 
-            // 8. Pengertian Publikasi karya (24-26)
+            // 7. Manfaat Seni Terpadu
             {
-                q: "Apakah definisi yang paling tepat dari istilah 'Publikasi Karya Seni'?",
+                q: "Bagi masyarakat umum selaku apresiator, manfaat utama menyaksikan pameran berbasis Seni Terpadu adalah...",
                 o: [
-                    "A. Menyimpan karya seni rapat-rapat di dalam lemari atau gudang rumah agar aman dari debu.",
-                    "B. Kegiatan memperkenalkan, menyebarluaskan, menyajikan, atau mengomunikasikan karya seni rupa kepada khalayak luas agar diapresiasi dan dievaluasi.",
-                    "C. Menjual hak cipta lukisan kepada pihak asing secara rahasia.",
-                    "D. Menandatangani lukisan di pojok kanan bawah menggunakan tinta emas.",
-                    "E. Menghapus identitas nama pencipta asli karya demi keamanan pribadi."
+                    "A. Mengalami kebingungan akibat terlalu banyaknya media kombinasi yang digunakan dalam satu ruang.",
+                    "B. Memperoleh stimulasi estetis interaktif yang menggugah imajinasi serta menawarkan alternatif pemecahan masalah.",
+                    "C. Mendapatkan izin khusus untuk menyentuh, mencoba, dan membawa pulang contoh purwarupa secara cuma-cuma.",
+                    "D. Memiliki kesempatan membandingkan tingkat kemakmuran finansial antar seniman yang terlibat pameran.",
+                    "E. Membantu melupakan isu-isu sosial yang sedang terjadi di lingkungan sekitar tempat tinggal mereka."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni Terpadu memberi masyarakat cara pandang baru melalui karya interaktif yang merangsang kepekaan berpikir kritis."
+            },
+            {
+                q: "Bagaimanakah Seni Terpadu memberikan manfaat yang optimal dalam dunia pembelajaran di tingkat sekolah?",
+                o: [
+                    "A. Mempercepat masa studi siswa tanpa harus melewati prosedur penilaian akademis mata pelajaran teori.",
+                    "B. Mengharmonisasikan aspek motorik, kognitif, dan emosi siswa sehingga pemahaman materi pelajaran lebih membekas.",
+                    "C. Mengeliminasi kurikulum pelajaran sains matematika dan menggantikannya dengan kegiatan menggambar bebas.",
+                    "D. Membiasakan siswa menghabiskan dana pribadi yang besar untuk investasi pengadaan alat-alat seni luar negeri.",
+                    "E. Menumbuhkan sikap kompetitif yang berlebihan antar siswa dalam memperebutkan gelar juara kelas seni."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Metode ini menyatukan stimulasi otak kanan dan kiri sehingga konsep pembelajaran non-seni pun diserap secara kreatif."
+            },
+            {
+                q: "Bagi kawasan tata kota, manfaat dari keberadaan instalasi seni terpadu di ruang publik (public integrated art) adalah...",
+                o: [
+                    "A. Membantu menutup jalur sirkulasi lalu lintas utama kota guna memberikan ruang khusus berkumpul para seniman.",
+                    "B. Meningkatkan estetika kota, mengaktifkan ruang sosial mati menjadi interaktif, dan menyuarakan isu lingkungan.",
+                    "C. Menuntut warga kota membayar kontribusi pajak keindahan tambahan yang ditarik oleh dinas kebudayaan daerah.",
+                    "D. Memblokir pancaran cahaya matahari agar tidak langsung mengenai dinding kaca gedung-gedung perkantoran sekitar.",
+                    "E. Mengurangi ketersediaan lahan parkir umum guna memberikan tempat berdirinya monumen patung kontemporer."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni publik memperindah tata ruang sekaligus memicu interaksi sosial positif dan menyampaikan pesan kesadaran lingkungan."
+            },
+
+            // 8. Pengertian publikasi karya
+            {
+                q: "Apakah esensi dari pengertian kegiatan 'Publikasi Karya Seni Rupa'?",
+                o: [
+                    "A. Mengamankan seluruh karya seni di dalam gudang tertutup agar terhindar dari paparan debu dan kelembapan.",
+                    "B. Proses menyebarluaskan, menyajikan, dan mengomunikasikan karya kepada khalayak agar diapresiasi serta dievaluasi.",
+                    "C. Menjual kepemilikan hak cipta atas karya seni rupa murni kepada galeri asing secara tertutup dan rahasia.",
+                    "D. Menandatangani sudut kanvas lukisan menggunakan tinta emas sebagai jaminan keaslian karya tersebut.",
+                    "E. Menyembunyikan identitas asli pembuat karya dengan tujuan menghindari plagiarisme dari seniman kompetitor."
                 ],
                 a: 1,
                 kategori: "Publikasi Karya",
-                p: "Publikasi karya adalah upaya sengaja dari seniman untuk menyajikan, mendisplay, menerbitkan, atau memamerkan karyanya ke publik luas agar mendapat umpan balik dan apresiasi."
+                p: "Publikasi adalah langkah mengomunikasikan hasil karya seni kepada publik luas agar terjadi proses apresiasi dan dialog interaktif."
             },
             {
-                q: "Manakah di bawah ini yang tergolong dalam bentuk publikasi karya seni rupa secara luring (offline)?",
+                q: "Manakah di bawah ini yang dikategorikan sebagai bentuk kegiatan publikasi karya seni rupa secara luring (offline)?",
                 o: [
-                    "A. Mengunggah foto instalasi seni ke platform Instagram pribadi.",
-                    "B. Membuat video pameran virtual 3D menggunakan tautan Google Drive.",
-                    "C. Menggelar pameran seni rupa fisik di galeri sekolah, museum daerah, atau ruang alternatif publik.",
-                    "D. Mengirimkan portofolio karya lewat surat elektronik (E-mail).",
-                    "E. Menulis utas (thread) analisis karya di media sosial X."
+                    "A. Mengunggah dokumentasi foto karya lukisan terbaru ke dalam platform galeri digital media sosial pribadi.",
+                    "B. Membuat tur pameran virtual dalam bentuk pemodelan 3 dimensi interaktif yang diakses melalui browser internet.",
+                    "C. Melaksanakan pameran fisik di galeri sekolah, ruang pameran museum daerah, atau area publik alternatif.",
+                    "D. Mengirimkan berkas file portofolio karya seni rupa format PDF kepada kurator eksternal lewat surat elektronik.",
+                    "E. Membagikan proses pembuatan karya seni rupa terapan dalam format video pendek melalui kanal berbagi video."
                 ],
                 a: 2,
                 kategori: "Publikasi Karya",
-                p: "Pameran fisik di gedung galeri, sekolah, atau ruang komunitas publik adalah saluran publikasi karya secara luring (offline)."
+                p: "Pameran fisik, pameran keliling, dan penataan display di galeri konvensional adalah publikasi luring (offline)."
             },
             {
-                q: "Publikasi karya berupa penulisan 'Katalog Pameran' di dalam perencanaan pameran seni rupa berfungsi untuk...",
+                q: "Dalam penyelenggaraan pameran seni rupa, pembuatan berkas 'Katalog Pameran' ditujukan untuk...",
                 o: [
-                    "A. Mencatat jumlah anggaran pengeluaran pameran.",
-                    "B. Menyediakan data teknis karya, foto karya, biografi seniman, serta kuratorial tertulis yang menjelaskan tema pameran secara mendalam.",
-                    "C. Menjadi karcis tanda masuk resmi bagi para pengunjung pameran.",
-                    "D. Menampilkan foto-foto seluruh sponsor komersial tanpa menampilkan info karya.",
-                    "E. Mencatat alamat rumah para panitia penyelenggara pameran."
+                    "A. Mencatat seluruh data transaksi keuangan dan biaya operasional panitia selama kegiatan berlangsung.",
+                    "B. Menyajikan informasi teknis karya, foto karya, biografi seniman, serta esai kuratorial sebagai panduan apresiator.",
+                    "C. Berfungsi sebagai lembaran tiket fisik bukti pembayaran masuk bagi para pengunjung pameran.",
+                    "D. Menampilkan promosi dari para pihak sponsor eksternal tanpa memuat foto-foto karya seni rupa yang dipamerkan.",
+                    "E. Mendokumentasikan daftar hadir serta data pribadi seluruh panitia pelaksana pameran seni di lapangan."
                 ],
                 a: 1,
                 kategori: "Publikasi Karya",
-                p: "Katalog pameran adalah buku panduan informasi berisi foto karya, ukuran, bahan, konsep, profil seniman, serta esai kurator tentang benang merah pameran."
+                p: "Katalog adalah dokumen resmi pemandu pameran yang memuat rekam jejak karya, profil perupa, dan penjelasan konsep kuratorial."
             },
 
-            // 9. Keuntungan publikasi karya (27-29)
+            // 9. Keuntungan publikasi karya
             {
-                q: "Bagi seorang seniman muda atau pemula, keuntungan paling utama melakukan publikasi karya seni rupa secara konsisten adalah...",
+                q: "Bagi seorang perupa pemula, apa keuntungan paling mendasar dari aktivitas memublikasikan karya secara konsisten?",
                 o: [
-                    "A. Pasti langsung diundang ke luar negeri tanpa seleksi portofolio.",
-                    "B. Membangun rekam jejak profesional (branding), mendapat kritik konstruktif untuk evaluasi diri, dan memperluas jaringan relasi (networking).",
-                    "C. Menghindari pajak pendapatan dari hasil penjualan karya.",
-                    "D. Menjadi kebal dari segala macam kesalahan teknik menggambar.",
-                    "E. Membuat karya seni tersebut tidak bisa ditiru atau dilihat lagi oleh publik."
+                    "A. Menjamin seniman langsung memperoleh undangan pameran tunggal di luar negeri tanpa seleksi portofolio.",
+                    "B. Membangun personal branding, memperoleh masukan evaluasi kritis, dan memperluas jaringan komunikasi profesional.",
+                    "C. Memperoleh pembebasan kewajiban membayar pajak penghitungan hasil penjualan karya seni rupa selamanya.",
+                    "D. Meningkatkan keterampilan teknis secara instan sehingga terhindar dari segala kesalahan komposisi visual.",
+                    "E. Menjaga karya seni tersebut agar tidak bisa diakses, dilihat, atau ditiru oleh seniman kompetitor di industri."
                 ],
                 a: 1,
                 kategori: "Publikasi Karya",
-                p: "Publikasi membangun portofolio profesional seniman, membiasakan diri menerima apresiasi atau kritik membangun, serta membuka pasar industri kreatif."
+                p: "Aktivitas publikasi membantu membangun portofolio, reputasi (branding), relasi (networking), serta ruang evaluasi karya."
             },
             {
-                q: "Salah satu keuntungan memublikasikan karya seni secara daring (online) menggunakan media sosial atau website pribadi dibanding pameran fisik adalah...",
+                q: "Salah satu kelebihan utama publikasi karya seni rupa secara daring (online) dibandingkan dengan pameran konvensional adalah...",
                 o: [
-                    "A. Pengunjung bisa menyentuh tekstur fisik cat minyak secara langsung.",
-                    "B. Jangkauan audiens yang luas tanpa batas geografis, hemat biaya sewa tempat, serta interaksi instan dua arah melalui komentar.",
-                    "C. Karya seni dijamin aman 100% dari pencurian hak cipta digital.",
-                    "D. Tidak memerlukan jaringan internet atau gawai untuk melihatnya.",
-                    "E. Gambar otomatis terlihat lebih bagus dari aslinya tanpa editing."
+                    "A. Memungkinkan apresiator merasakan langsung tekstur fisik ketebalan cat minyak di atas kanvas lukis.",
+                    "B. Memiliki jangkauan audiens global tanpa sekat geografis, efisiensi biaya operasional, dan umpan balik yang instan.",
+                    "C. Menjamin keamanan karya digital secara mutlak dari segala bentuk pembajakan atau modifikasi tanpa izin.",
+                    "D. Tidak memerlukan perangkat elektronik, kuota data, maupun jaringan internet stabil untuk mengakses gambarnya.",
+                    "E. Secara otomatis meningkatkan kualitas estetika warna gambar asli tanpa bantuan proses pengeditan digital."
                 ],
                 a: 1,
                 kategori: "Publikasi Karya",
-                p: "Publikasi daring memiliki keuntungan jangkauan global secara instan, meniadakan biaya fisik sewa gedung, serta mendatangkan feedback real-time."
+                p: "Publikasi online menawarkan kebebasan jangkauan global tanpa batas ruang, hemat biaya fisik, serta interaksi real-time."
             },
             {
-                q: "Dari sudut pandang finansial atau ekonomi kreatif, apa keuntungan dilakukannya publikasi karya yang terencana dengan baik?",
+                q: "Dilihat dari sisi ekonomi kreatif, keuntungan publikasi karya seni rupa yang dikelola secara profesional adalah...",
                 o: [
-                    "A. Menghilangkan nilai komersial karya agar murni menjadi koleksi pribadi.",
-                    "B. Meningkatkan nilai tawar ekonomis karya, menarik minat kolektor seni, pembeli potensial, serta membuka peluang kolaborasi komersial.",
-                    "C. Membuat seniman tidak perlu membuat laporan pajak usaha.",
-                    "D. Menurunkan biaya pembelian bahan kanvas dan kuas.",
-                    "E. Menjadikan karya seni sebagai barang langka yang terlarang untuk diperjualbelikan."
+                    "A. Menurunkan nilai komersial karya demi menjaga idealisme karya agar murni menjadi koleksi pribadi di rumah.",
+                    "B. Menaikkan nilai tawar ekonomi, menarik minat kolektor, dan membuka peluang kerja sama komersial industri.",
+                    "C. Membebaskan seniman dari kewajiban melaporkan laporan keuangan pameran kepada dinas perpajakan daerah.",
+                    "D. Mendapatkan subsidi khusus untuk pembelian bahan baku kertas gambar dan cat berkualitas tinggi dari produsen.",
+                    "E. Menjadikan karya seni tersebut sebagai aset langka yang dilarang keras untuk diperjualbelikan di pasar bebas."
                 ],
                 a: 1,
                 kategori: "Publikasi Karya",
-                p: "Publikasi yang rapi dan profesional meningkatkan daya tawar, reputasi, serta memancing minat kolektor untuk berinvestasi membeli karya tersebut."
+                p: "Publikasi yang baik meningkatkan nilai reputasi seniman, daya tawar karya di pasar seni, serta menggaet pasar potensial."
             },
 
-            // 10. Unsur2 dalam Seni Rupa (30-33)
+            // 10. Unsur-unsur dalam seni rupa
             {
-                q: "Manakah di bawah ini yang merupakan unsur paling dasar dalam seni rupa, yang darinya semua unsur rupa lainnya berawal?",
+                q: "Manakah di bawah ini unsur seni rupa paling dasar yang menjadi awal mula terbentuknya unsur rupa lainnya?",
                 o: [
-                    "A. Bidang",
-                    "B. Garis",
-                    "C. Titik / Bintik",
-                    "D. Tekstur",
-                    "E. Ruang"
+                    "A. Bidang yang membatasi ruang visual karya.",
+                    "B. Garis yang menghubungkan dua koordinat ruang.",
+                    "C. Titik yang menjadi penanda posisi spasial terkecil.",
+                    "D. Tekstur yang mendefinisikan karakteristik nilai raba.",
+                    "E. Warna yang memancarkan panjang gelombang cahaya."
                 ],
                 a: 2,
                 kategori: "Unsur Seni Rupa",
-                p: "Titik (dot) adalah unsur seni rupa paling dasar dan terkecil. Gabungan titik-titik yang rapat akan melahirkan sebuah garis."
+                p: "Titik (dot) adalah unsur seni rupa terkecil dan paling elementer. Gabungan dari titik-titik akan melahirkan sebuah garis."
             },
             {
-                q: "Unsur seni rupa yang terbentuk dari hubungan atau pertemuan beberapa buah garis, sehingga memiliki dimensi panjang dan lebar (dwimatra) disebut...",
+                q: "Unsur seni rupa dwimatra yang terbentuk dari pertemuan ujung-ujung garis dan membatasi suatu area disebut...",
                 o: [
-                    "A. Garis",
-                    "B. Bidang",
-                    "C. Bentuk",
-                    "D. Tekstur",
-                    "E. Gelap-Terang"
+                    "A. Garis yang membentang di atas kertas gambar.",
+                    "B. Bidang yang dibatasi oleh dimensi panjang dan lebar.",
+                    "C. Bentuk yang memiliki kedalaman volume dan ruang.",
+                    "D. Tekstur yang dapat dirasakan oleh indra peraba manusia.",
+                    "E. Gelap-terang yang diatur oleh pancaran intensitas cahaya."
                 ],
                 a: 1,
                 kategori: "Unsur Seni Rupa",
-                p: "Bidang memiliki dimensi dua dimensi (panjang dan lebar) dibatasi garis, sedangkan Bentuk memiliki tiga dimensi (panjang, lebar, dan volume)."
+                p: "Bidang memiliki karakter dua dimensi (panjang & lebar), berbeda dengan bentuk (volume) yang berkarakter tiga dimensi."
             },
             {
-                q: "Unsur seni rupa yang memberikan kesan nilai raba (halus, kasar, licin, bergerigi) dari permukaan suatu benda disebut...",
+                q: "Unsur rupa yang menyatakan kualitas atau karakteristik nilai raba dari permukaan suatu bidang gambar disebut...",
                 o: [
-                    "A. Warna",
-                    "B. Bentuk",
-                    "C. Tekstur",
-                    "D. Ruang",
-                    "E. Proporsi"
+                    "A. Warna yang mengelompokkan frekuensi visual cahaya.",
+                    "B. Bentuk yang memberikan identitas dimensi fisik objek.",
+                    "C. Tekstur yang menggambarkan sifat permukaan suatu benda.",
+                    "D. Ruang yang menentukan jarak antara unsur-unsur visual.",
+                    "E. Proporsi yang membandingkan skala antar komponen desain."
                 ],
                 a: 2,
                 kategori: "Unsur Seni Rupa",
-                p: "Tekstur mendeskripsikan karakteristik permukaan suatu objek, baik tekstur nyata (terasa saat diraba) maupun tekstur semu (hanya ilusi pandangan)."
+                p: "Tekstur mengindikasikan rasa permukaan objek saat disentuh, baik bertekstur kasar, halus, licin, nyata, maupun semu."
             },
             {
-                q: "Ketika Anda mencampurkan warna merah (primer) dengan warna kuning (primer) dalam takaran sebanding, maka akan menghasilkan warna sekunder berupa...",
+                q: "Campuran warna merah dan warna kuning dalam takaran seimbang akan menghasilkan warna sekunder berupa...",
                 o: [
-                    "A. Hijau",
-                    "B. Jingga / Oranye",
-                    "C. Ungu",
-                    "D. Cokelat",
-                    "E. Merah Muda"
+                    "A. Hijau yang merepresentasikan kesegaran alam.",
+                    "B. Jingga (Oranye) yang memberikan kesan hangat dinamis.",
+                    "C. Ungu yang melambangkan kemewahan dan keagungan.",
+                    "D. Cokelat yang memberikan kesan stabilitas alami bumi.",
+                    "E. Merah muda yang memancarkan kesan kelembutan kasih."
                 ],
                 a: 1,
                 kategori: "Unsur Seni Rupa",
-                p: "Merah + Kuning = Jingga (Oranye). Merah + Biru = Ungu. Kuning + Biru = Hijau."
+                p: "Warna sekunder jingga dihasilkan dari pencampuran dua warna primer yaitu merah dan kuning dalam porsi yang sama."
             },
 
-            // 11. Prinsip karya Seni Rupa (34-37)
+            // 11. Prinsip seni rupa
             {
-                q: "Prinsip dasar tata letak dalam seni rupa yang mengatur agar unsur-unsur rupa diletakkan sedemikian rupa sehingga tidak ada satu bagian pun yang terlalu dominan secara visual sampai merusak ketenangan disebut...",
+                q: "Prinsip seni rupa yang mengatur penempatan unsur-unsur visual agar tidak ada satu area yang terlalu berat sebelah disebut...",
                 o: [
-                    "A. Keselarasan / Harmoni",
-                    "B. Keseimbangan / Balance",
-                    "C. Penonjolan / Center of Interest",
-                    "D. Irama / Rythm",
-                    "E. Gradasi"
+                    "A. Keselarasan (Harmoni) yang menyatukan gradasi warna.",
+                    "B. Keseimbangan (Balance) yang mendistribusikan bobot visual secara merata.",
+                    "C. Penonjolan (Emphasis) yang mengarahkan pandangan pertama apresiator.",
+                    "D. Irama (Rhythm) yang menciptakan pengulangan elemen rupa dinamis.",
+                    "E. Gradasi yang menyusun perubahan warna secara bertahap."
                 ],
                 a: 1,
                 kategori: "Prinsip Seni Rupa",
-                p: "Keseimbangan (Balance) mengatur pembagian berat visual unsur-unsur rupa secara simetris, asimetris, memancar, atau acak agar karya nyaman dipandang."
+                p: "Keseimbangan (Balance) mengatur kesetaraan daya tarik visual antar bagian karya agar nyaman dipandang."
             },
             {
-                q: "Jika seorang pelukis sengaja mewarnai satu objek utama dengan warna merah membara di tengah-tengah latar belakang dominan warna abu-abu sunyi, prinsip seni rupa yang ia terapkan adalah...",
+                q: "Jika seorang seniman sengaja menggambar objek utama berwarna merah di tengah latar belakang berwarna abu-abu, seniman menerapkan prinsip...",
                 o: [
-                    "A. Keselarasan (Harmoni)",
-                    "B. Keseimbangan Simetris",
-                    "C. Pusat Perhatian / Penonjolan (Emphasis / Center of Interest)",
-                    "D. Proporsi",
-                    "E. Pengulangan (Repetisi)"
+                    "A. Keselarasan (Harmoni) untuk menyatukan nuansa warna.",
+                    "B. Keseimbangan Simetris untuk membagi komposisi kiri dan kanan.",
+                    "C. Pusat Perhatian (Emphasis) untuk menonjolkan objek utama lukisan.",
+                    "D. Proporsi untuk menyelaraskan dimensi perbandingan anatomi objek.",
+                    "E. Pengulangan (Repetisi) untuk menciptakan pola corak dekoratif."
                 ],
                 a: 2,
                 kategori: "Prinsip Seni Rupa",
-                p: "Emphasis atau kontras ekstrim pada suatu area bertujuan menarik pandangan mata apresiator pertama kali ke objek utama tersebut sebagai pusat perhatian."
+                p: "Emphasis atau kontras ekstrem diciptakan untuk memicu pandangan apresiator langsung tertuju pada vokal poin utama karya."
             },
             {
-                q: "Prinsip seni rupa yang mengacu pada keserasian hubungan ukuran antara bagian yang satu dengan bagian yang lain, atau ukuran bagian terhadap keseluruhan objek gambar disebut...",
+                q: "Prinsip seni rupa yang berkaitan dengan perbandingan ukuran ideal antara bagian-bagian objek gambar adalah...",
                 o: [
-                    "A. Irama (Rythm)",
-                    "B. Kesatuan (Unity)",
-                    "C. Keseimbangan (Balance)",
-                    "D. Proporsi (Proportion)",
-                    "E. Kontras"
+                    "A. Irama (Rhythm) yang mengarahkan gerakan mata menyusuri desain.",
+                    "B. Kesatuan (Unity) yang merangkai keselarasan elemen visual karya.",
+                    "C. Keseimbangan (Balance) yang memelihara stabilitas letak komponen rupa.",
+                    "D. Proporsi (Proportion) yang mengatur perbandingan rasio dimensi objek.",
+                    "E. Kontras yang mempertajam perbedaan intensitas warna gelap terang."
                 ],
                 a: 3,
                 kategori: "Prinsip Seni Rupa",
-                p: "Proporsi adalah perbandingan ukuran matematis dan estetis yang ideal antar komponen objek (contoh: proporsi tinggi kepala terhadap tubuh manusia)."
+                p: "Proporsi menentukan kesesuaian rasio perbandingan ukuran antar unsur rupa maupun komponen keseluruhan objek."
             },
             {
-                q: "Prinsip 'Kesatuan' (Unity) dalam karya seni rupa dua dimensi penting untuk dicapai agar...",
+                q: "Prinsip 'Kesatuan' (Unity) dalam karya seni rupa dua dimensi sangat krusial diwujudkan dengan tujuan untuk...",
                 o: [
-                    "A. Setiap unsur rupa berdiri sendiri tanpa kaitan erat satu sama lain.",
-                    "B. Seluruh elemen rupa saling mendukung secara harmonis membentuk satu kesatuan yang utuh, padu, dan tidak terpisah-pisah.",
-                    "C. Karya tersebut bisa dipecah menjadi beberapa bagian lukisan kecil secara bebas.",
-                    "D. Warna cat lukisan tidak mudah mengalami keretakan seiring berjalannya waktu.",
-                    "E. Karya hanya didominasi oleh satu warna monoton saja."
+                    "A. Memisahkan setiap elemen rupa agar berdiri sendiri tanpa ada keterikatan konsep.",
+                    "B. Menyatukan seluruh unsur rupa secara harmonis agar membentuk komposisi yang padu.",
+                    "C. Mempermudah proses pembagian karya seni lukis menjadi potongan-potongan terpisah.",
+                    "D. Menghindari keretakan media cat pada permukaan kanvas lukis akibat pengaruh suhu ruangan.",
+                    "E. Membatasi eksplorasi warna agar lukisan hanya didominasi satu warna monoton saja."
                 ],
                 a: 1,
                 kategori: "Prinsip Seni Rupa",
-                p: "Kesatuan (Unity) menyatukan elemen-elemen rupa (garis, bentuk, warna) agar berpadu serasi dan tidak terkesan berserakan terpisah-pisah."
+                p: "Kesatuan (Unity) merangkai interaksi garis, bentuk, warna agar saling bertaut menciptakan satu harmoni komposisi."
             },
 
-            // 12. Perbedaan teknik gambar: sketsa, arsir, dusel, pointilis, dan blok (38-42)
+            // 12. Perbedaan teknik gambar: sketsa, arsir, dusel, pointilis, dan blok
             {
-                q: "Teknik menggambar yang menggunakan barisan garis-garis sejajar atau menyilang secara berulang-ulang untuk memunculkan kesan gelap-terang dinamakan...",
+                q: "Teknik menggambar yang memunculkan kesan gelap-terang menggunakan barisan garis sejajar atau bersilang disebut...",
                 o: [
-                    "A. Teknik Dusel",
-                    "B. Teknik Pointilis",
-                    "C. Teknik Arsir (Hatching / Cross-Hatching)",
-                    "D. Teknik Blok (Silhouette)",
-                    "E. Teknik Plakat"
+                    "A. Teknik Dusel yang menitikberatkan pada kehalusan hasil goresan.",
+                    "B. Teknik Pointilis yang mengandalkan kumpulan bintik warna spidol.",
+                    "C. Teknik Arsir yang menggoreskan garis berulang untuk mengatur bayangan.",
+                    "D. Teknik Blok yang menutup bidang gambar menggunakan warna pekat tunggal.",
+                    "E. Teknik Plakat yang menyapukan cat poster tebal pada permukaan kanvas."
                 ],
                 a: 2,
                 kategori: "Teknik Menggambar",
-                p: "Teknik Arsir diwujudkan dengan menggoreskan garis-garis tipis sejajar atau bersilang untuk memunculkan gradasi volume bayangan gelap-terang."
+                p: "Teknik Arsir (hatching/cross-hatching) mengandalkan kerapatan garis berulang untuk menentukan volume bayangan objek."
             },
             {
-                q: "Bagaimanakah ciri khas utama yang membedakan teknik menggambar 'Dusel' dengan teknik 'Arsir'?",
+                q: "Apakah perbedaan mendasar antara teknik menggambar 'Dusel' dengan teknik 'Arsir'?",
                 o: [
-                    "A. Teknik Dusel hanya menggunakan cat air basah, sedangkan arsir menggunakan kuas kering.",
-                    "B. Teknik Dusel menggosok goresan pensil menggunakan jari, kapas, atau paper stump agar terlihat halus bergradasi, sedangkan arsir tetap menongalkan garis-garis tajam.",
-                    "C. Teknik Dusel menumpuk garis tegak lurus, sedangkan arsir menitikkan spidol.",
-                    "D. Teknik Dusel menghasilkan gambar siluet hitam pekat tanpa gradasi gradasi gelap terang.",
-                    "E. Teknik Dusel membutuhkan krayon lilin warna-warni."
+                    "A. Dusel disapukan menggunakan kuas basah cat poster, sedangkan arsir dikerjakan dengan pena tinta kering.",
+                    "B. Dusel menggosok goresan pensil agar bergradasi halus, sedangkan arsir menonjolkan kerapatan garis tajam.",
+                    "C. Dusel menumpuk barisan garis menyilang tegak lurus, sedangkan arsir menitikkan tinta ujung spidol.",
+                    "D. Dusel menghasilkan gambar siluet hitam pekat searah, sedangkan arsir murni menyisakan outline putih objek.",
+                    "E. Dusel membutuhkan krayon lilin warna-warni, sedangkan arsir mutlak digambar menggunakan pensil grafit harafiah."
                 ],
                 a: 1,
                 kategori: "Teknik Menggambar",
-                p: "Teknik Dusel dilakukan dengan meratakan/menggosok goresan pensil lunak (seperti 2B-6B) menggunakan alat khusus atau jari untuk menciptakan gradasi yang sangat lembut."
+                p: "Dusel menggosok goresan pensil medium lunak (kapas/jari) agar bergradasi lembut, sementara arsir mempertahankan goresan garis tegas."
             },
             {
-                q: "Teknik menggambar yang memanfaatkan susunan ribuan titik-titik dengan tingkat kerapatan yang berbeda untuk menentukan volume gelap-terang objek disebut...",
+                q: "Teknik menggambar yang memanfaatkan susunan kerapatan bintik-bintik kecil untuk menentukan volume bayangan gelap-terang adalah...",
                 o: [
-                    "A. Teknik Sketsa",
-                    "B. Teknik Blok (Silhouette)",
-                    "C. Teknik Pointilis",
-                    "D. Teknik Arsir",
-                    "E. Teknik Linear"
+                    "A. Teknik Sketsa yang menggoreskan garis rancangan awal secara tipis.",
+                    "B. Teknik Blok (Siluet) yang menutup rata objek menggunakan warna monokrom.",
+                    "C. Teknik Pointilis yang membentuk objek lewat variasi kerapatan bintik kecil.",
+                    "D. Teknik Arsir yang menyusun garis-garis sejajar atau saling menyilang.",
+                    "E. Teknik Linear yang memetakan objek murni mengandalkan garis tepi luar."
                 ],
                 a: 2,
                 kategori: "Teknik Menggambar",
-                p: "Teknik Pointilis menghasilkan bentuk gambar dengan menyusun kerapatan titik-titik (makin rapat titiknya, efek bayangan makin gelap)."
+                p: "Pointilis menggunakan akumulasi titik-titik (makin rapat titik diletakkan, efek visual bayangan akan tampak makin gelap)."
             },
             {
-                q: "Jika Anda ingin menggambar sebuah objek dengan menutup seluruh permukaannya menggunakan satu warna tunggal secara merata (tanpa gradasi) sehingga hanya terlihat bentuk siluet luarnya saja, teknik ini disebut...",
+                q: "Jika Anda menggambar objek dengan menutup permukaannya rata menggunakan satu warna pekat sehingga terlihat bentuk siluetnya, teknik ini disebut...",
                 o: [
-                    "A. Teknik Pointilis",
-                    "B. Teknik Arsir",
-                    "C. Teknik Dusel",
-                    "D. Teknik Blok (Silhouette)",
-                    "E. Teknik Aquarel"
+                    "A. Teknik Pointilis yang mengandalkan kumpulan ribuan titik-titik halus.",
+                    "B. Teknik Arsir yang menyilangkan goresan mata pensil grafit tipis.",
+                    "C. Teknik Dusel yang menggosok arsir pensil memakai kertas pemulas.",
+                    "D. Teknik Blok (Siluet) yang menyapukan warna solid menutupi outline objek.",
+                    "E. Teknik Aquarel yang mengencerkan cat air tipis di atas permukaan kertas."
                 ],
                 a: 3,
                 kategori: "Teknik Menggambar",
-                p: "Teknik Blok (siluet) menutup penuh objek gambar menggunakan satu warna pekat (biasanya hitam) sehingga menyisakan batas siluet bentuk luarnya."
+                p: "Teknik Blok (siluet) menutup penuh seluruh penampang objek gambar dengan satu warna solid rata tanpa gradasi gelap-terang."
             },
             {
-                q: "Manakah pernyataan di bawah ini yang paling tepat menggambarkan perbedaan esensial antara 'Sketsa' dengan 'Teknik Gambar Selesai' (seperti arsir penuh)?",
+                q: "Bagaimanakah pernyataan yang paling tepat membedakan antara 'Sketsa' dengan 'Teknik Gambar Selesai'?",
                 o: [
-                    "A. Sketsa selalu digambar menggunakan cat minyak mahal, sedangkan arsir hanya di kertas.",
-                    "B. Sketsa adalah gambar rancangan awal yang cepat, spontan, garis-garisnya sederhana dan belum detail, sedangkan gambar selesai memiliki arsir gelap-terang yang matang dan berdimensi penuh.",
-                    "C. Sketsa mutlak dilarang menggunakan media pensil hitam.",
-                    "D. Sketsa hanya berisi tulisan konsep tanpa ada garis visual sama sekali.",
-                    "E. Sketsa dibuat setelah lukisan selesai dipasang di pigura."
+                    "A. Sketsa diwajibkan menggunakan sapuan cat minyak mahal, sedangkan gambar selesai cukup digambar pada lembaran kertas saja.",
+                    "B. Sketsa merupakan gambar rancangan awal yang cepat dan spontan, sedangkan gambar selesai memiliki arsir bayangan matang.",
+                    "C. Sketsa mutlak dilarang dikerjakan memakai alat tulis berupa pensil grafit hitam arang.",
+                    "D. Sketsa hanya memuat coretan tulisan deskripsi konsep tanpa menampilkan visualisasi garis bentuk dasar sama sekali.",
+                    "E. Sketsa dibuat setelah lukisan murni dipasang rapi pada bingkai kayu pameran galeri seni rupa."
                 ],
                 a: 1,
                 kategori: "Teknik Menggambar",
-                p: "Sketsa adalah gambar rancangan cepat/draft garis dasar yang merekam gagasan bentuk esensial, sedangkan gambar selesai (finished drawing) mengolah arsiran, detail, dan gelap-terang secara matang."
+                p: "Sketsa adalah gambar draf rancangan cepat/kasar (spontan), sedangkan gambar selesai diolah matang bayang-bayangnya (berdimensi)."
             },
 
-            // 13. Tujuan pembuatan prototype (43-45)
+            // 13. Tujuan pembuatan prototype
             {
-                q: "Dalam proses perancangan produk kriya fungsional atau desain, apa tujuan utama dibuatnya sebuah 'Prototype' (purwarupa)?",
+                q: "Dalam proses desain kriya atau industri, apa tujuan utama pembuatan model 'Prototype' (purwarupa)?",
                 o: [
-                    "A. Untuk langsung diproduksi massal jutaan unit tanpa diuji terlebih dahulu.",
-                    "B. Sebagai bentuk visualisasi nyata skala terbatas untuk menguji fungsi, dimensi, estetika, dan kelayakan produk sebelum diproduksi massal.",
-                    "C. Sebagai barang pajangan museum yang tidak boleh disentuh siapa pun.",
-                    "D. Untuk menghemat biaya bahan baku pembuatan produk akhir.",
-                    "E. Sebagai pengganti dokumen laporan tertulis pameran."
+                    "A. Untuk diproduksi massal secara langsung di pabrik tanpa melewati tahap pengujian kelayakan fungsi.",
+                    "B. Sebagai visualisasi nyata guna menguji fungsi, ergonomi, dan kelemahan produk sebelum diproduksi massal.",
+                    "C. Menjadikan produk tersebut sebagai dekorasi museum eksklusif yang dilarang keras disentuh pengunjung.",
+                    "D. Membantu desainer menghemat pengeluaran anggaran untuk pembelian bahan-bahan baku produk akhir.",
+                    "E. Menggantikan peran lembar dokumentasi proposal tertulis dalam pengajuan sponsor kegiatan pameran seni."
                 ],
                 a: 1,
                 kategori: "Prototype",
-                p: "Tujuan prototype adalah menguji fungsi kerja, bentuk fisik, estetika, serta ergonomi rancangan awal sehingga kelemahan produk dapat dideteksi dini dan diperbaiki sebelum tahap manufaktur massal."
+                p: "Prototype (purwarupa) dibuat untuk mengevaluasi kegunaan, kekuatan material, dan kelemahan desain fisik secara dini sebelum diproduksi masal."
             },
             {
-                q: "Membuat prototype fisik yang tidak fungsional (hanya berupa bentuk visual luar dari bahan murah seperti styrofoam atau karton) bermanfaat untuk...",
+                q: "Mengapa pembuatan prototype visual awal (mock-up) dari bahan murah seperti kertas tebal atau karton sangat berguna?",
                 o: [
-                    "A. Menguji kekuatan daya tahan gesekan mesin di dalam produk.",
-                    "B. Memvalidasi tampilan luar, estetika bentuk, proporsi ukuran benda, serta layout fisik produk dengan biaya yang sangat murah.",
-                    "C. Menjual prototype tersebut langsung ke konsumen dengan harga penuh.",
-                    "D. Mengganti produk asli di toko retail tanpa memberi tahu konsumen.",
-                    "E. Menilai kualitas sistem kelistrikan di dalam sirkuit elektronik."
+                    "A. Untuk menguji kekuatan daya tahan gesekan mesin-mesin mekanis di dalam komponen produk fungsional.",
+                    "B. Memvalidasi proporsi bentuk luar, visualisasi estetis, dan layout produk dengan biaya operasional minim.",
+                    "C. Untuk langsung dijual kepada konsumen di pasar ritel dengan patokan tarif harga normal produk jadi.",
+                    "D. Berfungsi menggantikan posisi produk asli di etalase toko tanpa memberikan informasi kepada pihak pembeli.",
+                    "E. Mengevaluasi keandalan instalasi arus listrik di dalam rangkaian sirkuit elektronik mikro kontroler."
                 ],
                 a: 1,
                 kategori: "Prototype",
-                p: "Prototype visual/low-fidelity (mock-up) digunakan desainer untuk menilai proporsi ukuran, estetika bentuk luar, dan kecocokan visual secara murah tanpa biaya bahan mahal."
+                p: "Mock-up (low-fidelity prototype) bermanfaat menguji aspek visual, proporsi dimensi, dan bentuk estetika luar dengan biaya minim."
             },
             {
-                q: "Jika desainer tidak membuat prototype terlebih dahulu dan langsung memproduksi barang fungsional dalam jumlah sangat besar, risiko fatal yang paling mungkin terjadi adalah...",
+                q: "Risiko fatal apa yang paling mungkin dialami perusahaan jika memproduksi desain produk fungsional langsung secara massal tanpa tahap prototype?",
                 o: [
-                    "A. Produk tersebut menjadi terlalu laku keras di pasaran dunia.",
-                    "B. Kerugian finansial besar akibat ditemukannya cacat desain fatal pada fungsi produk yang baru diketahui setelah barang di tangan konsumen.",
-                    "C. Seniman akan mendapatkan penghargaan desain terbaik dunia.",
-                    "D. Harga bahan baku di pasar tiba-tiba merosot drastis.",
-                    "E. Konsumen akan memperbaiki cacat desain produk secara mandiri."
+                    "A. Produk yang dipasarkan dijamin langsung laku keras dibeli oleh kalangan konsumen internasional.",
+                    "B. Kerugian finansial akibat ditemukannya cacat desain fatal setelah barang terlanjur dikirim ke konsumen.",
+                    "C. Desainer produk tersebut otomatis dianugerahi sertifikat penghargaan inovasi ramah lingkungan terbaik dunia.",
+                    "D. Harga beli material bahan mentah di tingkat pemasok lokal tiba-tiba merosot drastis menguntungkan perajin.",
+                    "E. Para konsumen akan berinisiatif memperbaiki sendiri kegagalan fungsi mekanis produk secara sukarela."
                 ],
                 a: 1,
                 kategori: "Prototype",
-                p: "Tanpa tahapan prototype, kesalahan desain (cacat ergonomi, kegagalan fungsi) berisiko lolos ke manufaktur massal, memicu penarikan barang, dan menyebabkan kerugian finansial yang masif."
+                p: "Tanpa prototype, cacat fungsional fatal berisiko lolos ke manufaktur massal, memicu retur produk besar-besaran, dan kerugian finansial."
             },
 
-            // 14. Tahapan penentuan tema pameran dalam perencanaan pameran (46-48)
+            // 14. Tahapan penentuan tema pameran dalam perencanaan pameran
             {
-                q: "Tema pameran seni rupa merupakan jembatan komunikasi antara karya seniman dengan apresiator. Tahap awal yang paling tepat dilakukan panitia untuk merumuskan tema pameran adalah...",
+                q: "Tahapan awal manakah yang paling ideal dilakukan oleh panitia pameran seni rupa untuk menetapkan tema pameran?",
                 o: [
-                    "A. Menghubungi percetakan untuk mencetak baliho promosi pameran.",
-                    "B. Menghitung jumlah keuntungan bersih dari tiket masuk penonton.",
-                    "C. Melakukan analisis latar belakang isu sosial/lingkungan, mencermati kecenderungan jenis karya seniman yang akan dipamerkan, serta merumuskan pesan moral utama yang ingin disampaikan.",
-                    "D. Menentukan harga jual masing-masing lukisan di galeri.",
-                    "E. Membuka sesi pendaftaran stan makanan di sekitar galeri."
+                    "A. Menghubungi pihak percetakan komersial untuk memproduksi poster baliho pengumuman pameran skala besar.",
+                    "B. Menghitung persentase keuntungan finansial yang akan didapatkan dari penjualan tiket masuk para pengunjung.",
+                    "C. Melakukan analisis isu sosial aktual, menyinkronkan karakter karya seniman, dan merumuskan pesan kuratorial.",
+                    "D. Menetapkan batas harga jual minimal masing-masing lukisan murni sebelum karya-karya dikurasi oleh tim pameran.",
+                    "E. Membuka pendaftaran penyewaan stan kuliner bagi pelaku usaha mikro di area pelataran luar gedung pameran."
                 ],
                 a: 2,
                 kategori: "Perencanaan Pameran",
-                p: "Tahap awal merumuskan tema adalah menggali isu kontekstual, mencermati keselarasan pesan moral, serta menyinkronkan karakter karya-karya yang akan dikurasi."
+                p: "Tahap awal merancang tema adalah mengkaji isu-isu relevan, menyelaraskan pesan, dan menyatukan karakter kurasi karya perupa."
             },
             {
-                q: "Mengapa penentuan tema pameran harus dilakukan di awal perencanaan pameran sebelum mengumpulkan karya seni rupa?",
+                q: "Mengapa penetapan tema pameran harus diputuskan di awal perencanaan sebelum panitia mengurasi karya seni rupa?",
                 o: [
-                    "A. Agar karya-karya yang dikumpulkan memiliki keselarasan konsep (benang merah), fokus kuratorial yang jelas, dan memudahkan penataan ruang pameran.",
-                    "B. Biar harga tiket masuk pameran bisa dipatok lebih mahal.",
-                    "C. Supaya panitia tidak perlu bekerja keras menyusun jadwal acara pameran.",
-                    "D. Karena aturan kepolisian mewajibkan penulisan tema pameran di surat izin keramaian.",
-                    "E. Agar pameran bisa selesai dalam waktu satu hari kerja saja."
+                    "A. Agar karya terpilih memiliki kesatuan narasi (benang merah), arah kurasi yang jelas, dan kemudahan tata ruang.",
+                    "B. Membantu panitia mematok harga karcis masuk ruang pameran dengan nominal tarif setinggi mungkin ke apresiator.",
+                    "C. Menjamin agar seluruh panitia pelaksana tidak perlu lagi menyusun jadwal detail runtutan acara pameran.",
+                    "D. Memenuhi syarat administratif kepolisian daerah agar memperoleh surat izin pelaksanaan keramaian pameran seni.",
+                    "E. Mengondisikan agar pameran seni rupa dapat dirampungkan kegiatannya secara efektif dalam tempo satu hari saja."
                 ],
                 a: 0,
                 kategori: "Perencanaan Pameran",
-                p: "Tema berfungsi sebagai kompas penunjuk arah kuratorial, sehingga karya-karya yang dipajang memiliki kesatuan narasi visual (benang merah) yang utuh bagi pengunjung."
+                p: "Tema pameran berfungsi sebagai panduan kuratorial agar karya seni rupa yang dipajang memiliki keselarasan konsep (benang merah)."
             },
             {
-                q: "Setelah isu utama terpilih, langkah penulisan rumusan tema pameran yang baik di dalam proposal pameran harus dikemas dengan...",
+                q: "Rumusan judul tema pameran seni rupa yang baik dalam proposal pameran sebaiknya dikemas dengan...",
                 o: [
-                    "A. Kalimat ilmiah sepanjang lima paragraf penuh agar terlihat rumit.",
-                    "B. Judul atau jargon yang singkat, padat, estetis, representatif, serta memicu rasa penasaran calon pengunjung.",
-                    "C. Menggunakan bahasa asing yang tidak dimengerti oleh panitia sendiri.",
-                    "D. Menyalin secara persis nama tema pameran nasional tahun lalu.",
-                    "E. Menyembunyikan kata tema dari pamflet pengumuman pameran."
+                    "A. Kalimat penjelasan ilmiah sepanjang satu halaman penuh agar terkesan sangat berbobot akademis bagi donatur.",
+                    "B. Jargon singkat, padat, estetis, representatif terhadap karya, serta memicu keingintahuan calon pengunjung.",
+                    "C. Pilihan kosakata bahasa asing teoretis tingkat lanjut yang sulit dimengerti oleh kalangan panitia pelaksana.",
+                    "D. Menyalin secara utuh judul tema pameran berskala nasional yang telah diselenggarakan oleh kementerian tahun lalu.",
+                    "E. Menghapus pencantuman kata tema dari selebaran publikasi pameran demi mempertahankan kejutan alur pameran."
                 ],
                 a: 1,
                 kategori: "Perencanaan Pameran",
-                p: "Judul tema pameran harus dibuat estetik, puitis namun padat, serta langsung menangkap pesan kuratorial (contoh: 'Kembali ke Akar', 'Siklus Tanpa Akhir')."
+                p: "Judul tema pameran yang efektif harus ringkas, bernilai puitis/estetis, dan mampu mencerminkan esensi kuratorial pameran secara persuasif."
             },
 
-            // 15. Fungsi dari sketsa (49-50)
+            // 15. Fungsi dari sketsa
             {
-                q: "Manakah di bawah ini yang merupakan salah satu FUNGSI utama dari pembuatan sketsa bagi seorang pelukis atau desainer?",
+                q: "Manakah di bawah ini yang mempresentasikan salah satu FUNGSI esensial dari pembuatan sketsa bagi seniman perupa?",
                 o: [
-                    "A. Sebagai pengganti bingkai lukisan cat minyak.",
-                    "B. Media rekam ide/gagasan kreatif instan, sarana eksplorasi komposisi bentuk, dan cetak biru rencana pengerjaan karya seni agar lebih terarah.",
-                    "C. Untuk mempersulit proses melukis di atas permukaan kanvas.",
-                    "D. Dijadikan sebagai satu-satunya bukti bahwa seniman tidak mencontek karya.",
-                    "E. Mengurangi masa simpan kelayakan kertas gambar."
+                    "A. Berfungsi utama sebagai pengganti bingkai pelindung fisik lukisan cat minyak dari ancaman kerusakan eksternal.",
+                    "B. Wadah perekam ide instan, eksplorasi alternatif komposisi rupa, dan cetak biru panduan eksekusi karya.",
+                    "C. Dibuat sengaja untuk mempersulit tahapan seniman saat melukis detail pigmen warna pada permukaan kanvas.",
+                    "D. Menjadi dokumen bukti tunggal bebas plagiat untuk ditunjukkan kepada pihak pengadilan hak kekayaan intelektual.",
+                    "E. Mengurangi usia kelayakan simpan kertas gambar agar seniman dapat beralih menggunakan teknologi gawai gambar."
                 ],
                 a: 1,
                 kategori: "Fungsi Sketsa",
-                p: "Sketsa berfungsi menangkap kilatan inspirasi pikiran secara cepat agar tidak lupa, sarana mencorat-coret alternatif layout komposisi (thumbnail), serta pedoman dasar eksekusi warna."
+                p: "Sketsa berfungsi mengabadikan ide spontan agar tidak hilang, media uji komposisi objek (thumbnail), dan acuan eksekusi karya."
             },
             {
-                q: "Mengapa membuat beberapa variasi sketsa alternatif (thumbnail sketches) sangat dianjurkan sebelum memulai pengerjaan karya seni rupa besar?",
+                q: "Mengapa seniman dianjurkan membuat beberapa variasi sketsa alternatif (thumbnail sketches) sebelum melukis kanvas besar?",
                 o: [
-                    "A. Agar kuas gambar menjadi lebih lunak sebelum menyentuh cat basah.",
-                    "B. Membantu seniman membandingkan kelebihan/kekurangan tata letak komposisi, perspektif, dan keseimbangan visual objek sehingga bisa memilih konsep visual terbaik.",
-                    "C. Menghabiskan sisa kertas gambar bekas yang tidak terpakai di studio.",
-                    "D. Untuk mengulur-ulur waktu penyerahan karya kepada pemesan.",
-                    "E. Memaksa seniman bekerja lembur sepanjang malam."
+                    "A. Menjaga kelenturan ujung kuas bulu binatang agar tidak kaku saat terkena cairan pengencer cat minyak.",
+                    "B. Membantu membandingkan kelebihan letak objek, proporsi ruang, dan keseimbangan agar terpilih konsep visual terbaik.",
+                    "C. Menghabiskan persediaan lembaran kertas gambar bekas yang menumpuk tidak terpakai di dalam studio pribadi perupa.",
+                    "D. Digunakan sebagai alasan teknis memperpanjang batas waktu penyerahan lukisan jadi kepada pihak pemesan karya.",
+                    "E. Memaksa kreativitas seniman agar terbiasa bekerja lembur semalaman penuh dalam merancang detail bayangan bentuk."
                 ],
                 a: 1,
                 kategori: "Fungsi Sketsa",
-                p: "Variasi sketsa alternatif menghindarkan seniman dari penyesalan komposisi setelah cat terlanjur diaplikasikan permanen di atas kanvas besar."
+                p: "Thumbnail sketches membantu membandingkan tata letak komposisi secara cepat agar didapatkan komposisi visual yang paling matang."
             }
         ];
 
@@ -1029,6 +1029,12 @@
             document.getElementById('statCorrect').textContent = correctCount;
             document.getElementById('statWrong').textContent = total - correctCount;
         }
+
+        // --- ENGINE SCROLL REVEAL (UNTUK HAL KUIS) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(el => el.classList.add('reveal-active'));
+        });
     </script>
 </body>
 </html>
