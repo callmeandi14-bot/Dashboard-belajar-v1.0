@@ -1,0 +1,1035 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Seni Rupa - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Seni Rupa</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer berdasarkan kisi-kisi resmi seni rupa.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Design Thinking dalam Seni</div>
+                        <div>✔ Konsep & Manfaat Seni Terpadu</div>
+                        <div>✔ Publikasi Karya & Pameran</div>
+                        <div>✔ Unsur-Unsur Rupa Dasar</div>
+                        <div>✔ Prinsip Tata Letak Seni Rupa</div>
+                        <div>✔ Teknik Gambar (Arsir, Dusel, dll)</div>
+                        <div>✔ Pembuatan Prototype Karya</div>
+                        <div>✔ Fungsi Sketsa & Perencanaan Tema</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Seni Rupa</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Seni Rupa.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA SENI RUPA -->
+    <script>
+        // BANK DATA SENI RUPA (LENGKAP 50 SOAL MULTIPLE CHOICE A SAMPAI E SESUAI KISI-KISI)
+        const bankSoal = [
+            // 1. Tujuan utama penerapan desain thinking (1-3)
+            {
+                q: "Apa tujuan utama dari penerapan metode 'Design Thinking' dalam proses penciptaan karya seni rupa maupun produk desain?",
+                o: [
+                    "A. Menghasilkan karya seni yang semata-mata mahal untuk dilelang.",
+                    "B. Menemukan solusi kreatif yang berpusat pada manusia (human-centered) untuk memecahkan masalah nyata.",
+                    "C. Meniru karya seni klasik tanpa melakukan modifikasi.",
+                    "D. Membatasi kreativitas seniman agar sesuai dengan aturan baku pasar seni.",
+                    "E. Mempercepat proses produksi massal tanpa memikirkan kualitas estetis."
+                ],
+                a: 1,
+                kategori: "Design Thinking",
+                p: "Tujuan utama design thinking adalah merancang solusi kreatif yang human-centered (berpusat pada manusia) untuk menyelesaikan masalah kehidupan sehari-hari secara relevan."
+            },
+            {
+                q: "Dalam aspek inovasi seni rupa terapan, penerapan design thinking bertujuan untuk menyelaraskan tiga faktor utama, yaitu...",
+                o: [
+                    "A. Harga bahan, kecepatan pembuatan, dan ketenaran seniman.",
+                    "B. Kebutuhan manusia (desirability), kelayakan teknologi (feasibility), dan kelangsungan bisnis (viability).",
+                    "C. Ukuran karya, pigura penyangga, dan lokasi pameran.",
+                    "D. Keinginan kolektor pribadi, tren politik, dan ketersediaan galeri seni.",
+                    "E. Ketebalan warna, jenis kanvas, dan kuas yang digunakan."
+                ],
+                a: 1,
+                kategori: "Design Thinking",
+                p: "Design thinking berupaya menyeimbangkan tiga pilar inovasi: Desirability (kebutuhan pengguna), Feasibility (aspek teknis/teknologi), dan Viability (nilai ekonomi/bisnis)."
+            },
+            {
+                q: "Penerapan design thinking pada pembuatan kriya atau kerajinan fungsional membantu perajin agar...",
+                o: [
+                    "A. Membuat produk yang hanya indah dipandang mata namun tidak bisa digunakan.",
+                    "B. Menghindari penggunaan teknologi modern sama sekali.",
+                    "C. Menghasilkan produk yang benar-benar menjawab kebutuhan dan keterbatasan fisik calon penggunanya.",
+                    "D. Menjual produk dengan harga yang sangat murah tanpa memedulikan modal.",
+                    "E. Membuat tiruan produk luar negeri secara persis."
+                ],
+                a: 2,
+                kategori: "Design Thinking",
+                p: "Metode ini memastikan produk fungsional tidak hanya estetis, tetapi juga ergonomis, aman, dan memecahkan hambatan fisik yang dialami calon penggunanya."
+            },
+
+            // 2. Tahapan dalam proses desain thinking (4-7)
+            {
+                q: "Manakah urutan tahapan yang benar dan logis dalam siklus proses Design Thinking?",
+                o: [
+                    "A. Empathize - Ideate - Define - Prototype - Test",
+                    "B. Define - Empathize - Prototype - Ideate - Test",
+                    "C. Empathize - Define - Ideate - Prototype - Test",
+                    "D. Prototype - Test - Empathize - Define - Ideate",
+                    "E. Ideate - Empathize - Define - Test - Prototype"
+                ],
+                a: 2,
+                kategori: "Design Thinking",
+                p: "Urutan standar Design Thinking adalah: 1) Empathize (empati), 2) Define (merumuskan masalah), 3) Ideate (brainstorming ide), 4) Prototype (pembuatan purwarupa), dan 5) Test (uji coba)."
+            },
+            {
+                q: "Tahapan dalam design thinking di mana desainer mengamati secara langsung, mewawancarai, dan merasakan posisi calon pengguna untuk memahami kebutuhan mereka disebut...",
+                o: [
+                    "A. Define",
+                    "B. Empathize",
+                    "C. Ideate",
+                    "D. Prototype",
+                    "E. Test"
+                ],
+                a: 1,
+                kategori: "Design Thinking",
+                p: "Empathize adalah tahapan awal untuk menaruh empati serta menyelami kebutuhan, perasaan, dan keluhan dari sudut pandang pengguna secara mendalam."
+            },
+            {
+                q: "Pada tahap 'Define' di proses design thinking, tindakan utama yang harus dilakukan oleh desainer atau seniman adalah...",
+                o: [
+                    "A. Membuat sketsa acak sebanyak-banyaknya tanpa arah.",
+                    "B. Menguji produk akhir langsung ke pasar global.",
+                    "C. Menganalisis hasil observasi tahap empati untuk merumuskan masalah inti (problem statement) yang jelas.",
+                    "D. Membeli bahan baku utama di toko seni rupa terdekat.",
+                    "E. Membuka pameran seni rupa publik skala lokal."
+                ],
+                a: 2,
+                kategori: "Design Thinking",
+                p: "Tahap Define fokus menyaring semua temuan dari tahap Empathize untuk merumuskan satu kalimat masalah inti (problem statement) yang akan dipecahkan."
+            },
+            {
+                q: "Ketika sekelompok perancang mengadakan sesi curah pendapat (brainstorming) untuk melahirkan gagasan-gagasan kreatif yang radikal, inovatif, dan bebas tanpa batasan terlebih dahulu, mereka berada dalam tahap...",
+                o: [
+                    "A. Empathize",
+                    "B. Define",
+                    "C. Ideate",
+                    "D. Prototype",
+                    "E. Test"
+                ],
+                a: 2,
+                kategori: "Design Thinking",
+                p: "Ideate (penciptaan ide) adalah proses mengumpulkan sebanyak mungkin alternatif ide kreatif guna memecahkan masalah tanpa batasan atau penilaian kaku terlebih dahulu."
+            },
+
+            // 3. Pengertian berpikir kritis dalam Seni Rupa (8-10)
+            {
+                q: "Apakah yang dimaksud dengan 'berpikir kritis' (critical thinking) dalam konteks penciptaan dan apresiasi Seni Rupa?",
+                o: [
+                    "A. Kemampuan untuk mencela dan meremehkan karya seni orang lain tanpa alasan ilmiah.",
+                    "B. Proses menganalisis, mengevaluasi, dan merefleksikan konsep, teknik, estetika, serta makna di balik suatu karya seni.",
+                    "C. Menghafal seluruh nama seniman dunia beserta tahun kelahiran mereka secara mekanis.",
+                    "D. Menolak masuknya aliran seni rupa modern dan hanya menerima seni rupa tradisional.",
+                    "E. Membuat lukisan secara cepat tanpa melalui pertimbangan konsep awal."
+                ],
+                a: 1,
+                kategori: "Berpikir Kritis",
+                p: "Berpikir kritis dalam seni rupa melibatkan kegiatan intelektual untuk menganalisis, menafsirkan keindahan, mengevaluasi komposisi, dan menangkap pesan mendalam dari karya."
+            },
+            {
+                q: "Bagaimana berpikir kritis membantu seorang seniman saat ia mengalami hambatan kreatif (creative block)?",
+                o: [
+                    "A. Membantu seniman menganalisis akar masalah, meninjau kembali konsepnya secara objektif, dan mencari referensi visual baru dari berbagai sudut pandang.",
+                    "B. Memaksa seniman berhenti berkarya selamanya dan berganti profesi.",
+                    "C. Membuat seniman menyalin karya orang lain secara ilegal.",
+                    "D. Mengarahkan seniman untuk bersikap pasrah tanpa melakukan tindakan evaluasi apa pun.",
+                    "E. Membantu menaikkan nilai jual lukisan secara tidak wajar."
+                ],
+                a: 0,
+                kategori: "Berpikir Kritis",
+                p: "Berpikir kritis memandu seniman membedah karyanya, mengevaluasi kegagalan komposisi secara teknis, dan mengonseptualisasikan ulang gagasan baru secara terukur."
+            },
+            {
+                q: "Dalam proses apresiasi seni rupa, perilaku kritis yang paling tepat ditunjukkan dengan cara...",
+                o: [
+                    "A. Menilai bagus atau tidaknya suatu karya seni murni berdasarkan harga jual bingkainya saja.",
+                    "B. Menilai subyektif bahwa karya abstrak tidak bernilai karena tidak menyerupai bentuk nyata.",
+                    "C. Mengapresiasi karya lewat pemahaman tentang latar belakang budaya seniman, konsep pesan, dan keunikan teknik yang digunakan.",
+                    "D. Mengikuti pendapat kritikus terkenal tanpa memiliki argumen pribadi.",
+                    "E. Merusak instalasi seni di galeri untuk menguji kekuatannya."
+                ],
+                a: 2,
+                kategori: "Berpikir Kritis",
+                p: "Apresiasi kritis menuntut penghargaan yang didasarkan pada pemahaman kontekstual sejarah, nilai estetis, konseptual, dan eksplorasi material dari karya tersebut."
+            },
+
+            // 4. Pengertian Seni terpadu (11-13)
+            {
+                q: "Apakah esensi utama dari istilah 'Seni Terpadu' (Integrated Arts) dalam dunia pembelajaran dan penciptaan seni?",
+                o: [
+                    "A. Seni rupa yang diproduksi menggunakan mesin terintegrasi pabrik raksasa.",
+                    "B. Pendekatan seni yang mengombinasikan dan menghubungkan berbagai cabang seni (rupa, musik, tari, drama) atau mengaitkan seni dengan disiplin ilmu non-seni.",
+                    "C. Aliran seni rupa yang melarang penggunaan warna selain hitam dan putih.",
+                    "D. Karya seni yang hanya boleh dipasang di dinding luar ruangan terbuka.",
+                    "E. Komunitas seniman yang memiliki izin resmi dari badan hukum pemerintah."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni Terpadu (Integrated Arts) adalah praktik penggabungan disiplin seni rupa dengan disiplin seni lain (seperti suara atau gerak) ataupun dengan ilmu pengetahuan lain (seperti sains, matematika, sejarah)."
+            },
+            {
+                q: "Manakah di bawah ini yang merupakan contoh konkret dari aplikasi 'Seni Terpadu' dalam bentuk karya kreatif?",
+                o: [
+                    "A. Sebuah lukisan cat minyak murni di atas kanvas yang menggambarkan pemandangan alam pegunungan.",
+                    "B. Patung batu pahat tradisional yang meniru bentuk arca peninggalan Majapahit.",
+                    "C. Pertunjukan seni instalasi interaktif yang memadukan patung kinetik, proyeksi video digital, efek suara alam, dan narasi teaterikal.",
+                    "D. Sketsa hitam putih menggunakan pensil 2B di kertas gambar ukuran A4.",
+                    "E. Kaligrafi aksara kuno yang ditulis menggunakan tinta Cina hitam."
+                ],
+                a: 2,
+                kategori: "Seni Terpadu",
+                p: "Instalasi interaktif dengan perpaduan patung (rupa), video (multimedia), efek suara (musik), dan teaterikal merupakan integrasi multidisiplin seni terpadu."
+            },
+            {
+                q: "Konsep Seni Terpadu memandang bahwa karya seni tidak berdiri di ruang hampa yang terisolasi. Artinya, seni terpadu selalu berusaha...",
+                o: [
+                    "A. Menjual karya dengan paket promosi khusus.",
+                    "B. Menjembatani ekspresi estetika dengan pemahaman konteks sosial, budaya, sejarah, sains, lingkungan, dan kehidupan sehari-hari.",
+                    "C. Membatasi seniman agar tidak bekerja sama dengan ilmuwan di luar bidang seni.",
+                    "D. Mewajibkan setiap lukisan memiliki musik pengiring yang diputar dari CD player.",
+                    "E. Menyatukan seluruh galeri seni menjadi satu kepengurusan terpusat."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni Terpadu memandang seni sebagai alat bantu koneksi pemahaman holistik terhadap isu riil, sains, sejarah, maupun emosi manusia secara komparatif."
+            },
+
+            // 5. Tujuan utama Seni terpadu (14-16)
+            {
+                q: "Apa tujuan utama dari implementasi program atau konsep 'Seni Terpadu' bagi pengembangan kemampuan kreativitas siswa?",
+                o: [
+                    "A. Agar siswa mampu menghafal nama semua aliran seni dalam waktu singkat.",
+                    "B. Merangsang cara berpikir holistik, meningkatkan ekspresi diri secara multisensori, serta menghubungkan konsep seni dengan kehidupan nyata.",
+                    "C. Melatih siswa agar bisa bersaing menjual lukisan dengan harga tertinggi di pasar modal.",
+                    "D. Mewajibkan siswa menjadi seniman profesional di masa depan.",
+                    "E. Membantu sekolah menghemat biaya pengadaan alat musik dan bahan lukis."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Tujuan utama seni terpadu adalah menumbuhkan cara berpikir lintas disiplin (holistik), kepekaan indrawi ganda (multisensori), dan pemecahan masalah kontekstual."
+            },
+            {
+                q: "Dari segi apresiasi budaya, apa tujuan dirancangnya sebuah karya seni terpadu yang mengangkat tema kearifan lokal?",
+                o: [
+                    "A. Menghapus tradisi asli demi menyambut seni modern kebarat-baratan.",
+                    "B. Melestarikan dan merevitalisasi nilai tradisi leluhur lewat kemasan ekspresi baru yang relevan dengan generasi modern.",
+                    "C. Menjadikan kebudayaan lokal sebagai komoditas industri monopoli komersial.",
+                    "D. Membuktikan bahwa kesenian daerah lebih buruk dibanding kesenian kontemporer mancanegara.",
+                    "E. Menjual kerajinan tangan lokal ke kolektor luar negeri tanpa royalti."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni Terpadu bertema lokal bertujuan menghidupkan kembali esensi tradisi lokal melalui media ekspresi modern agar mudah diterima oleh masyarakat masa kini."
+            },
+            {
+                q: "Tujuan penerapan aspek estetis fungsional dalam rancangan proyek seni terpadu sains-seni (misalnya infografis ekosistem hutan) adalah...",
+                o: [
+                    "A. Menghilangkan akurasi data ilmiah agar gambar terlihat lebih indah.",
+                    "B. Membantu menyampaikan pesan informasi ilmiah yang rumit agar lebih mudah dipahami secara visual, menarik, dan interaktif.",
+                    "C. Mempersulit pembaca dalam memahami pesan tertulis.",
+                    "D. Menghemat penggunaan kertas laporan penelitian.",
+                    "E. Menghasilkan poster dekoratif tanpa teks penjelasan sama sekali."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Integrasi visual seni dengan ilmu sains bertujuan agar data yang kering dan rumit dapat dinikmati secara estetis serta mudah dipahami secara intuitif oleh masyarakat luas."
+            },
+
+            // 6. Kelebihan dan kekurangan Seni terpadu (17-20)
+            {
+                q: "Manakah di bawah ini yang merupakan KELEBIHAN utama dari pembuatan karya berbasis pendekatan Seni Terpadu?",
+                o: [
+                    "A. Proses pengerjaan karya yang sangat instan dan tidak memerlukan keterampilan teknis apa pun.",
+                    "B. Menghasilkan karya yang kaya makna, dinamis, unik, serta mampu menyentuh berbagai indra penikmat seni secara bersamaan.",
+                    "C. Biaya produksi karya yang selalu gratis tanpa memerlukan modal materiil.",
+                    "D. Tidak memerlukan perencanaan konsep atau kolaborasi antarseniman.",
+                    "E. Pasti langsung disukai oleh semua kolektor seni konvensional tanpa kecuali."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Kelebihan seni terpadu terletak pada kayanya lapis makna (multidimensional), kedalaman estetika, keunikan medium, dan kemampuan menyajikan pengalaman multisensori."
+            },
+            {
+                q: "Di samping memiliki kelebihan, Seni Terpadu juga memiliki tantangan atau KEKURANGAN dalam proses produksinya, yaitu...",
+                o: [
+                    "A. Tidak memiliki nilai keindahan sama sekali jika dipajang di ruang tamu.",
+                    "B. Membutuhkan perencanaan konsep yang rumit, koordinasi lintas disiplin yang menantang, serta penguasaan banyak medium sekaligus.",
+                    "C. Dilarang dipamerkan di museum nasional oleh undang-undang kebudayaan.",
+                    "D. Selalu menghasilkan limbah beracun berbahaya bagi lingkungan.",
+                    "E. Hanya bisa dibuat oleh anak-anak usia sekolah dasar saja."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Kekurangan/tantangan seni terpadu adalah kompleksitas perancangannya, risiko biasnya fokus karya jika tidak dikonsep dengan baik, serta perlunya kolaborasi intensif."
+            },
+            {
+                q: "Mengapa faktor 'kolaborasi' dalam seni terpadu kadang dapat menjadi suatu kelemahan atau hambatan dalam pengerjaannya?",
+                o: [
+                    "A. Karena kolaborasi membuat seniman mengantuk saat bekerja.",
+                    "B. Adanya potensi benturan ego, kesulitan menyatukan visi artistik yang berbeda dari masing-masing kepala seniman, dan koordinasi waktu.",
+                    "C. Kolaborasi menurunkan harga jual orisinalitas karya di galeri internasional.",
+                    "D. Membuat karya seni menjadi cepat pudar warna catnya.",
+                    "E. Membatasi jumlah penonton yang boleh hadir melihat pameran."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Tantangan non-teknis terbesar dalam proyek seni terintegrasi kelompok adalah sinkronisasi ide, pembagian peran kerja, dan manajemen ego artistik."
+            },
+            {
+                q: "Bagaimanakah cara meminimalisir kekurangan atau hambatan rumitnya manajemen teknis pada proyek Seni Terpadu?",
+                o: [
+                    "A. Menghilangkan koordinasi dan membiarkan setiap anggota bekerja sendiri-sendiri tanpa aturan.",
+                    "B. Membuat jadwal kerja teratur, pembagian tugas (jobdesk) yang jelas berdasarkan keahlian, dan komunikasi yang terbuka sejak awal proyek.",
+                    "C. Membatalkan proyek ketika muncul perbedaan pendapat pertama kali.",
+                    "D. Menyerahkan seluruh keputusan pengerjaan pada satu orang tanpa mendengarkan masukan anggota kelompok.",
+                    "E. Menghapus elemen rupa dan menyisakan elemen gerak tari saja."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Manajemen proyek yang baik dengan timeline, pembagian keahlian spesifik, dan komunikasi yang sehat adalah kunci kelancaran instalasi karya seni terpadu."
+            },
+
+            // 7. Manfaat Seni terpadu (21-23)
+            {
+                q: "Bagi masyarakat penikmat (apresiator), manfaat utama menyaksikan pameran berbasis Seni Terpadu adalah...",
+                o: [
+                    "A. Mendapatkan sensasi pusing akibat terlalu banyak media yang digunakan.",
+                    "B. Memperoleh pengalaman estetis yang lebih interaktif, menggugah imajinasi, dan memberikan sudut pandang pemecahan masalah baru.",
+                    "C. Bisa menyentuh dan membawa pulang karya seni secara gratis.",
+                    "D. Membandingkan seniman mana yang paling kaya dan sukses.",
+                    "E. Membantu mengabaikan isu-isu sosial yang terjadi di sekeliling mereka."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni terpadu memberi apresiator pengalaman mendalam karena melibatkan stimulasi interaksi fisik, suara, rupa, sehingga merangsang imajinasi kognitif secara aktif."
+            },
+            {
+                q: "Bagaimana Seni Terpadu memberikan manfaat dalam dunia pendidikan anak usia dini atau sekolah menengah?",
+                o: [
+                    "A. Mempercepat proses kelulusan tanpa harus menempuh ujian teori.",
+                    "B. Mengintegrasikan motorik halus, kognitif, imajinasi, dan emosi anak sehingga belajar terasa menyenangkan dan materi non-seni lebih membekas.",
+                    "C. Menghilangkan mata pelajaran matematika dan menggantinya dengan melukis bebas setiap hari.",
+                    "D. Memaksa siswa menghabiskan uang untuk membeli alat lukis mahal.",
+                    "E. Menjadikan siswa acuh tak acuh terhadap kebersihan lingkungan sekolah."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Dalam pendidikan, seni terpadu mengaktifkan memori jangka panjang siswa karena mereka belajar secara kinestetik, visual, dan auditori sekaligus."
+            },
+            {
+                q: "Bagi lingkungan perkotaan, manfaat dari instalasi seni terpadu ruang publik (public integrated art) adalah...",
+                o: [
+                    "A. Menutup jalan protokol sehingga lalu lintas macet.",
+                    "B. Membantu mempercantik kota, menghidupkan ruang sosial mati menjadi ruang publik interaktif, serta menyampaikan pesan sadar lingkungan.",
+                    "C. Memaksa warga kota membayar pajak keindahan yang tinggi.",
+                    "D. Menghalangi cahaya matahari masuk ke gedung perkantoran sekitar.",
+                    "E. Mengurangi luas lahan parkir kendaraan bermotor di pusat perbelanjaan."
+                ],
+                a: 1,
+                kategori: "Seni Terpadu",
+                p: "Seni ruang publik terpadu menyulap area gersang perkotaan menjadi tempat rekreasi, interaksi sosial, serta media kampanye isu lingkungan hidup."
+            },
+
+            // 8. Pengertian Publikasi karya (24-26)
+            {
+                q: "Apakah definisi yang paling tepat dari istilah 'Publikasi Karya Seni'?",
+                o: [
+                    "A. Menyimpan karya seni rapat-rapat di dalam lemari atau gudang rumah agar aman dari debu.",
+                    "B. Kegiatan memperkenalkan, menyebarluaskan, menyajikan, atau mengomunikasikan karya seni rupa kepada khalayak luas agar diapresiasi dan dievaluasi.",
+                    "C. Menjual hak cipta lukisan kepada pihak asing secara rahasia.",
+                    "D. Menandatangani lukisan di pojok kanan bawah menggunakan tinta emas.",
+                    "E. Menghapus identitas nama pencipta asli karya demi keamanan pribadi."
+                ],
+                a: 1,
+                kategori: "Publikasi Karya",
+                p: "Publikasi karya adalah upaya sengaja dari seniman untuk menyajikan, mendisplay, menerbitkan, atau memamerkan karyanya ke publik luas agar mendapat umpan balik dan apresiasi."
+            },
+            {
+                q: "Manakah di bawah ini yang tergolong dalam bentuk publikasi karya seni rupa secara luring (offline)?",
+                o: [
+                    "A. Mengunggah foto instalasi seni ke platform Instagram pribadi.",
+                    "B. Membuat video pameran virtual 3D menggunakan tautan Google Drive.",
+                    "C. Menggelar pameran seni rupa fisik di galeri sekolah, museum daerah, atau ruang alternatif publik.",
+                    "D. Mengirimkan portofolio karya lewat surat elektronik (E-mail).",
+                    "E. Menulis utas (thread) analisis karya di media sosial X."
+                ],
+                a: 2,
+                kategori: "Publikasi Karya",
+                p: "Pameran fisik di gedung galeri, sekolah, atau ruang komunitas publik adalah saluran publikasi karya secara luring (offline)."
+            },
+            {
+                q: "Publikasi karya berupa penulisan 'Katalog Pameran' di dalam perencanaan pameran seni rupa berfungsi untuk...",
+                o: [
+                    "A. Mencatat jumlah anggaran pengeluaran pameran.",
+                    "B. Menyediakan data teknis karya, foto karya, biografi seniman, serta kuratorial tertulis yang menjelaskan tema pameran secara mendalam.",
+                    "C. Menjadi karcis tanda masuk resmi bagi para pengunjung pameran.",
+                    "D. Menampilkan foto-foto seluruh sponsor komersial tanpa menampilkan info karya.",
+                    "E. Mencatat alamat rumah para panitia penyelenggara pameran."
+                ],
+                a: 1,
+                kategori: "Publikasi Karya",
+                p: "Katalog pameran adalah buku panduan informasi berisi foto karya, ukuran, bahan, konsep, profil seniman, serta esai kurator tentang benang merah pameran."
+            },
+
+            // 9. Keuntungan publikasi karya (27-29)
+            {
+                q: "Bagi seorang seniman muda atau pemula, keuntungan paling utama melakukan publikasi karya seni rupa secara konsisten adalah...",
+                o: [
+                    "A. Pasti langsung diundang ke luar negeri tanpa seleksi portofolio.",
+                    "B. Membangun rekam jejak profesional (branding), mendapat kritik konstruktif untuk evaluasi diri, dan memperluas jaringan relasi (networking).",
+                    "C. Menghindari pajak pendapatan dari hasil penjualan karya.",
+                    "D. Menjadi kebal dari segala macam kesalahan teknik menggambar.",
+                    "E. Membuat karya seni tersebut tidak bisa ditiru atau dilihat lagi oleh publik."
+                ],
+                a: 1,
+                kategori: "Publikasi Karya",
+                p: "Publikasi membangun portofolio profesional seniman, membiasakan diri menerima apresiasi atau kritik membangun, serta membuka pasar industri kreatif."
+            },
+            {
+                q: "Salah satu keuntungan memublikasikan karya seni secara daring (online) menggunakan media sosial atau website pribadi dibanding pameran fisik adalah...",
+                o: [
+                    "A. Pengunjung bisa menyentuh tekstur fisik cat minyak secara langsung.",
+                    "B. Jangkauan audiens yang luas tanpa batas geografis, hemat biaya sewa tempat, serta interaksi instan dua arah melalui komentar.",
+                    "C. Karya seni dijamin aman 100% dari pencurian hak cipta digital.",
+                    "D. Tidak memerlukan jaringan internet atau gawai untuk melihatnya.",
+                    "E. Gambar otomatis terlihat lebih bagus dari aslinya tanpa editing."
+                ],
+                a: 1,
+                kategori: "Publikasi Karya",
+                p: "Publikasi daring memiliki keuntungan jangkauan global secara instan, meniadakan biaya fisik sewa gedung, serta mendatangkan feedback real-time."
+            },
+            {
+                q: "Dari sudut pandang finansial atau ekonomi kreatif, apa keuntungan dilakukannya publikasi karya yang terencana dengan baik?",
+                o: [
+                    "A. Menghilangkan nilai komersial karya agar murni menjadi koleksi pribadi.",
+                    "B. Meningkatkan nilai tawar ekonomis karya, menarik minat kolektor seni, pembeli potensial, serta membuka peluang kolaborasi komersial.",
+                    "C. Membuat seniman tidak perlu membuat laporan pajak usaha.",
+                    "D. Menurunkan biaya pembelian bahan kanvas dan kuas.",
+                    "E. Menjadikan karya seni sebagai barang langka yang terlarang untuk diperjualbelikan."
+                ],
+                a: 1,
+                kategori: "Publikasi Karya",
+                p: "Publikasi yang rapi dan profesional meningkatkan daya tawar, reputasi, serta memancing minat kolektor untuk berinvestasi membeli karya tersebut."
+            },
+
+            // 10. Unsur2 dalam Seni Rupa (30-33)
+            {
+                q: "Manakah di bawah ini yang merupakan unsur paling dasar dalam seni rupa, yang darinya semua unsur rupa lainnya berawal?",
+                o: [
+                    "A. Bidang",
+                    "B. Garis",
+                    "C. Titik / Bintik",
+                    "D. Tekstur",
+                    "E. Ruang"
+                ],
+                a: 2,
+                kategori: "Unsur Seni Rupa",
+                p: "Titik (dot) adalah unsur seni rupa paling dasar dan terkecil. Gabungan titik-titik yang rapat akan melahirkan sebuah garis."
+            },
+            {
+                q: "Unsur seni rupa yang terbentuk dari hubungan atau pertemuan beberapa buah garis, sehingga memiliki dimensi panjang dan lebar (dwimatra) disebut...",
+                o: [
+                    "A. Garis",
+                    "B. Bidang",
+                    "C. Bentuk",
+                    "D. Tekstur",
+                    "E. Gelap-Terang"
+                ],
+                a: 1,
+                kategori: "Unsur Seni Rupa",
+                p: "Bidang memiliki dimensi dua dimensi (panjang dan lebar) dibatasi garis, sedangkan Bentuk memiliki tiga dimensi (panjang, lebar, dan volume)."
+            },
+            {
+                q: "Unsur seni rupa yang memberikan kesan nilai raba (halus, kasar, licin, bergerigi) dari permukaan suatu benda disebut...",
+                o: [
+                    "A. Warna",
+                    "B. Bentuk",
+                    "C. Tekstur",
+                    "D. Ruang",
+                    "E. Proporsi"
+                ],
+                a: 2,
+                kategori: "Unsur Seni Rupa",
+                p: "Tekstur mendeskripsikan karakteristik permukaan suatu objek, baik tekstur nyata (terasa saat diraba) maupun tekstur semu (hanya ilusi pandangan)."
+            },
+            {
+                q: "Ketika Anda mencampurkan warna merah (primer) dengan warna kuning (primer) dalam takaran sebanding, maka akan menghasilkan warna sekunder berupa...",
+                o: [
+                    "A. Hijau",
+                    "B. Jingga / Oranye",
+                    "C. Ungu",
+                    "D. Cokelat",
+                    "E. Merah Muda"
+                ],
+                a: 1,
+                kategori: "Unsur Seni Rupa",
+                p: "Merah + Kuning = Jingga (Oranye). Merah + Biru = Ungu. Kuning + Biru = Hijau."
+            },
+
+            // 11. Prinsip karya Seni Rupa (34-37)
+            {
+                q: "Prinsip dasar tata letak dalam seni rupa yang mengatur agar unsur-unsur rupa diletakkan sedemikian rupa sehingga tidak ada satu bagian pun yang terlalu dominan secara visual sampai merusak ketenangan disebut...",
+                o: [
+                    "A. Keselarasan / Harmoni",
+                    "B. Keseimbangan / Balance",
+                    "C. Penonjolan / Center of Interest",
+                    "D. Irama / Rythm",
+                    "E. Gradasi"
+                ],
+                a: 1,
+                kategori: "Prinsip Seni Rupa",
+                p: "Keseimbangan (Balance) mengatur pembagian berat visual unsur-unsur rupa secara simetris, asimetris, memancar, atau acak agar karya nyaman dipandang."
+            },
+            {
+                q: "Jika seorang pelukis sengaja mewarnai satu objek utama dengan warna merah membara di tengah-tengah latar belakang dominan warna abu-abu sunyi, prinsip seni rupa yang ia terapkan adalah...",
+                o: [
+                    "A. Keselarasan (Harmoni)",
+                    "B. Keseimbangan Simetris",
+                    "C. Pusat Perhatian / Penonjolan (Emphasis / Center of Interest)",
+                    "D. Proporsi",
+                    "E. Pengulangan (Repetisi)"
+                ],
+                a: 2,
+                kategori: "Prinsip Seni Rupa",
+                p: "Emphasis atau kontras ekstrim pada suatu area bertujuan menarik pandangan mata apresiator pertama kali ke objek utama tersebut sebagai pusat perhatian."
+            },
+            {
+                q: "Prinsip seni rupa yang mengacu pada keserasian hubungan ukuran antara bagian yang satu dengan bagian yang lain, atau ukuran bagian terhadap keseluruhan objek gambar disebut...",
+                o: [
+                    "A. Irama (Rythm)",
+                    "B. Kesatuan (Unity)",
+                    "C. Keseimbangan (Balance)",
+                    "D. Proporsi (Proportion)",
+                    "E. Kontras"
+                ],
+                a: 3,
+                kategori: "Prinsip Seni Rupa",
+                p: "Proporsi adalah perbandingan ukuran matematis dan estetis yang ideal antar komponen objek (contoh: proporsi tinggi kepala terhadap tubuh manusia)."
+            },
+            {
+                q: "Prinsip 'Kesatuan' (Unity) dalam karya seni rupa dua dimensi penting untuk dicapai agar...",
+                o: [
+                    "A. Setiap unsur rupa berdiri sendiri tanpa kaitan erat satu sama lain.",
+                    "B. Seluruh elemen rupa saling mendukung secara harmonis membentuk satu kesatuan yang utuh, padu, dan tidak terpisah-pisah.",
+                    "C. Karya tersebut bisa dipecah menjadi beberapa bagian lukisan kecil secara bebas.",
+                    "D. Warna cat lukisan tidak mudah mengalami keretakan seiring berjalannya waktu.",
+                    "E. Karya hanya didominasi oleh satu warna monoton saja."
+                ],
+                a: 1,
+                kategori: "Prinsip Seni Rupa",
+                p: "Kesatuan (Unity) menyatukan elemen-elemen rupa (garis, bentuk, warna) agar berpadu serasi dan tidak terkesan berserakan terpisah-pisah."
+            },
+
+            // 12. Perbedaan teknik gambar: sketsa, arsir, dusel, pointilis, dan blok (38-42)
+            {
+                q: "Teknik menggambar yang menggunakan barisan garis-garis sejajar atau menyilang secara berulang-ulang untuk memunculkan kesan gelap-terang dinamakan...",
+                o: [
+                    "A. Teknik Dusel",
+                    "B. Teknik Pointilis",
+                    "C. Teknik Arsir (Hatching / Cross-Hatching)",
+                    "D. Teknik Blok (Silhouette)",
+                    "E. Teknik Plakat"
+                ],
+                a: 2,
+                kategori: "Teknik Menggambar",
+                p: "Teknik Arsir diwujudkan dengan menggoreskan garis-garis tipis sejajar atau bersilang untuk memunculkan gradasi volume bayangan gelap-terang."
+            },
+            {
+                q: "Bagaimanakah ciri khas utama yang membedakan teknik menggambar 'Dusel' dengan teknik 'Arsir'?",
+                o: [
+                    "A. Teknik Dusel hanya menggunakan cat air basah, sedangkan arsir menggunakan kuas kering.",
+                    "B. Teknik Dusel menggosok goresan pensil menggunakan jari, kapas, atau paper stump agar terlihat halus bergradasi, sedangkan arsir tetap menongalkan garis-garis tajam.",
+                    "C. Teknik Dusel menumpuk garis tegak lurus, sedangkan arsir menitikkan spidol.",
+                    "D. Teknik Dusel menghasilkan gambar siluet hitam pekat tanpa gradasi gradasi gelap terang.",
+                    "E. Teknik Dusel membutuhkan krayon lilin warna-warni."
+                ],
+                a: 1,
+                kategori: "Teknik Menggambar",
+                p: "Teknik Dusel dilakukan dengan meratakan/menggosok goresan pensil lunak (seperti 2B-6B) menggunakan alat khusus atau jari untuk menciptakan gradasi yang sangat lembut."
+            },
+            {
+                q: "Teknik menggambar yang memanfaatkan susunan ribuan titik-titik dengan tingkat kerapatan yang berbeda untuk menentukan volume gelap-terang objek disebut...",
+                o: [
+                    "A. Teknik Sketsa",
+                    "B. Teknik Blok (Silhouette)",
+                    "C. Teknik Pointilis",
+                    "D. Teknik Arsir",
+                    "E. Teknik Linear"
+                ],
+                a: 2,
+                kategori: "Teknik Menggambar",
+                p: "Teknik Pointilis menghasilkan bentuk gambar dengan menyusun kerapatan titik-titik (makin rapat titiknya, efek bayangan makin gelap)."
+            },
+            {
+                q: "Jika Anda ingin menggambar sebuah objek dengan menutup seluruh permukaannya menggunakan satu warna tunggal secara merata (tanpa gradasi) sehingga hanya terlihat bentuk siluet luarnya saja, teknik ini disebut...",
+                o: [
+                    "A. Teknik Pointilis",
+                    "B. Teknik Arsir",
+                    "C. Teknik Dusel",
+                    "D. Teknik Blok (Silhouette)",
+                    "E. Teknik Aquarel"
+                ],
+                a: 3,
+                kategori: "Teknik Menggambar",
+                p: "Teknik Blok (siluet) menutup penuh objek gambar menggunakan satu warna pekat (biasanya hitam) sehingga menyisakan batas siluet bentuk luarnya."
+            },
+            {
+                q: "Manakah pernyataan di bawah ini yang paling tepat menggambarkan perbedaan esensial antara 'Sketsa' dengan 'Teknik Gambar Selesai' (seperti arsir penuh)?",
+                o: [
+                    "A. Sketsa selalu digambar menggunakan cat minyak mahal, sedangkan arsir hanya di kertas.",
+                    "B. Sketsa adalah gambar rancangan awal yang cepat, spontan, garis-garisnya sederhana dan belum detail, sedangkan gambar selesai memiliki arsir gelap-terang yang matang dan berdimensi penuh.",
+                    "C. Sketsa mutlak dilarang menggunakan media pensil hitam.",
+                    "D. Sketsa hanya berisi tulisan konsep tanpa ada garis visual sama sekali.",
+                    "E. Sketsa dibuat setelah lukisan selesai dipasang di pigura."
+                ],
+                a: 1,
+                kategori: "Teknik Menggambar",
+                p: "Sketsa adalah gambar rancangan cepat/draft garis dasar yang merekam gagasan bentuk esensial, sedangkan gambar selesai (finished drawing) mengolah arsiran, detail, dan gelap-terang secara matang."
+            },
+
+            // 13. Tujuan pembuatan prototype (43-45)
+            {
+                q: "Dalam proses perancangan produk kriya fungsional atau desain, apa tujuan utama dibuatnya sebuah 'Prototype' (purwarupa)?",
+                o: [
+                    "A. Untuk langsung diproduksi massal jutaan unit tanpa diuji terlebih dahulu.",
+                    "B. Sebagai bentuk visualisasi nyata skala terbatas untuk menguji fungsi, dimensi, estetika, dan kelayakan produk sebelum diproduksi massal.",
+                    "C. Sebagai barang pajangan museum yang tidak boleh disentuh siapa pun.",
+                    "D. Untuk menghemat biaya bahan baku pembuatan produk akhir.",
+                    "E. Sebagai pengganti dokumen laporan tertulis pameran."
+                ],
+                a: 1,
+                kategori: "Prototype",
+                p: "Tujuan prototype adalah menguji fungsi kerja, bentuk fisik, estetika, serta ergonomi rancangan awal sehingga kelemahan produk dapat dideteksi dini dan diperbaiki sebelum tahap manufaktur massal."
+            },
+            {
+                q: "Membuat prototype fisik yang tidak fungsional (hanya berupa bentuk visual luar dari bahan murah seperti styrofoam atau karton) bermanfaat untuk...",
+                o: [
+                    "A. Menguji kekuatan daya tahan gesekan mesin di dalam produk.",
+                    "B. Memvalidasi tampilan luar, estetika bentuk, proporsi ukuran benda, serta layout fisik produk dengan biaya yang sangat murah.",
+                    "C. Menjual prototype tersebut langsung ke konsumen dengan harga penuh.",
+                    "D. Mengganti produk asli di toko retail tanpa memberi tahu konsumen.",
+                    "E. Menilai kualitas sistem kelistrikan di dalam sirkuit elektronik."
+                ],
+                a: 1,
+                kategori: "Prototype",
+                p: "Prototype visual/low-fidelity (mock-up) digunakan desainer untuk menilai proporsi ukuran, estetika bentuk luar, dan kecocokan visual secara murah tanpa biaya bahan mahal."
+            },
+            {
+                q: "Jika desainer tidak membuat prototype terlebih dahulu dan langsung memproduksi barang fungsional dalam jumlah sangat besar, risiko fatal yang paling mungkin terjadi adalah...",
+                o: [
+                    "A. Produk tersebut menjadi terlalu laku keras di pasaran dunia.",
+                    "B. Kerugian finansial besar akibat ditemukannya cacat desain fatal pada fungsi produk yang baru diketahui setelah barang di tangan konsumen.",
+                    "C. Seniman akan mendapatkan penghargaan desain terbaik dunia.",
+                    "D. Harga bahan baku di pasar tiba-tiba merosot drastis.",
+                    "E. Konsumen akan memperbaiki cacat desain produk secara mandiri."
+                ],
+                a: 1,
+                kategori: "Prototype",
+                p: "Tanpa tahapan prototype, kesalahan desain (cacat ergonomi, kegagalan fungsi) berisiko lolos ke manufaktur massal, memicu penarikan barang, dan menyebabkan kerugian finansial yang masif."
+            },
+
+            // 14. Tahapan penentuan tema pameran dalam perencanaan pameran (46-48)
+            {
+                q: "Tema pameran seni rupa merupakan jembatan komunikasi antara karya seniman dengan apresiator. Tahap awal yang paling tepat dilakukan panitia untuk merumuskan tema pameran adalah...",
+                o: [
+                    "A. Menghubungi percetakan untuk mencetak baliho promosi pameran.",
+                    "B. Menghitung jumlah keuntungan bersih dari tiket masuk penonton.",
+                    "C. Melakukan analisis latar belakang isu sosial/lingkungan, mencermati kecenderungan jenis karya seniman yang akan dipamerkan, serta merumuskan pesan moral utama yang ingin disampaikan.",
+                    "D. Menentukan harga jual masing-masing lukisan di galeri.",
+                    "E. Membuka sesi pendaftaran stan makanan di sekitar galeri."
+                ],
+                a: 2,
+                kategori: "Perencanaan Pameran",
+                p: "Tahap awal merumuskan tema adalah menggali isu kontekstual, mencermati keselarasan pesan moral, serta menyinkronkan karakter karya-karya yang akan dikurasi."
+            },
+            {
+                q: "Mengapa penentuan tema pameran harus dilakukan di awal perencanaan pameran sebelum mengumpulkan karya seni rupa?",
+                o: [
+                    "A. Agar karya-karya yang dikumpulkan memiliki keselarasan konsep (benang merah), fokus kuratorial yang jelas, dan memudahkan penataan ruang pameran.",
+                    "B. Biar harga tiket masuk pameran bisa dipatok lebih mahal.",
+                    "C. Supaya panitia tidak perlu bekerja keras menyusun jadwal acara pameran.",
+                    "D. Karena aturan kepolisian mewajibkan penulisan tema pameran di surat izin keramaian.",
+                    "E. Agar pameran bisa selesai dalam waktu satu hari kerja saja."
+                ],
+                a: 0,
+                kategori: "Perencanaan Pameran",
+                p: "Tema berfungsi sebagai kompas penunjuk arah kuratorial, sehingga karya-karya yang dipajang memiliki kesatuan narasi visual (benang merah) yang utuh bagi pengunjung."
+            },
+            {
+                q: "Setelah isu utama terpilih, langkah penulisan rumusan tema pameran yang baik di dalam proposal pameran harus dikemas dengan...",
+                o: [
+                    "A. Kalimat ilmiah sepanjang lima paragraf penuh agar terlihat rumit.",
+                    "B. Judul atau jargon yang singkat, padat, estetis, representatif, serta memicu rasa penasaran calon pengunjung.",
+                    "C. Menggunakan bahasa asing yang tidak dimengerti oleh panitia sendiri.",
+                    "D. Menyalin secara persis nama tema pameran nasional tahun lalu.",
+                    "E. Menyembunyikan kata tema dari pamflet pengumuman pameran."
+                ],
+                a: 1,
+                kategori: "Perencanaan Pameran",
+                p: "Judul tema pameran harus dibuat estetik, puitis namun padat, serta langsung menangkap pesan kuratorial (contoh: 'Kembali ke Akar', 'Siklus Tanpa Akhir')."
+            },
+
+            // 15. Fungsi dari sketsa (49-50)
+            {
+                q: "Manakah di bawah ini yang merupakan salah satu FUNGSI utama dari pembuatan sketsa bagi seorang pelukis atau desainer?",
+                o: [
+                    "A. Sebagai pengganti bingkai lukisan cat minyak.",
+                    "B. Media rekam ide/gagasan kreatif instan, sarana eksplorasi komposisi bentuk, dan cetak biru rencana pengerjaan karya seni agar lebih terarah.",
+                    "C. Untuk mempersulit proses melukis di atas permukaan kanvas.",
+                    "D. Dijadikan sebagai satu-satunya bukti bahwa seniman tidak mencontek karya.",
+                    "E. Mengurangi masa simpan kelayakan kertas gambar."
+                ],
+                a: 1,
+                kategori: "Fungsi Sketsa",
+                p: "Sketsa berfungsi menangkap kilatan inspirasi pikiran secara cepat agar tidak lupa, sarana mencorat-coret alternatif layout komposisi (thumbnail), serta pedoman dasar eksekusi warna."
+            },
+            {
+                q: "Mengapa membuat beberapa variasi sketsa alternatif (thumbnail sketches) sangat dianjurkan sebelum memulai pengerjaan karya seni rupa besar?",
+                o: [
+                    "A. Agar kuas gambar menjadi lebih lunak sebelum menyentuh cat basah.",
+                    "B. Membantu seniman membandingkan kelebihan/kekurangan tata letak komposisi, perspektif, dan keseimbangan visual objek sehingga bisa memilih konsep visual terbaik.",
+                    "C. Menghabiskan sisa kertas gambar bekas yang tidak terpakai di studio.",
+                    "D. Untuk mengulur-ulur waktu penyerahan karya kepada pemesan.",
+                    "E. Memaksa seniman bekerja lembur sepanjang malam."
+                ],
+                a: 1,
+                kategori: "Fungsi Sketsa",
+                p: "Variasi sketsa alternatif menghindarkan seniman dari penyesalan komposisi setelah cat terlanjur diaplikasikan permanen di atas kanvas besar."
+            }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+
