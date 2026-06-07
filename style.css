@@ -553,6 +553,21 @@ footer .company-brand {
     50% { transform: translateY(-10px); }
 }
 
+/* ==========================================
+   INTERACTION: SCROLL REVEAL ANIMATIONS
+   ========================================== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 @media(max-width: 640px) {
     .grid-subjects {
         grid-template-columns: 1fr;
@@ -567,36 +582,3 @@ footer .company-brand {
         padding: 1.5rem;
     }
 }
-/* ==========================================
-   ANIMASI MUNCUL DARI BAWAH (FADE IN UP)
-   ========================================== */
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Terapkan animasi pada elemen hero dan kartu-kartu di dashboard */
-.hero-section {
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-/* Animasi beruntun (staggered effect) untuk kartu mapel */
-.card-subject {
-    opacity: 0; /* Mulai dari tidak terlihat */
-    animation: fadeInUp 0.5s ease-out forwards;
-}
-
-.grid-subjects .card-subject:nth-child(1) { animation-delay: 0.1s; }
-.grid-subjects .card-subject:nth-child(2) { animation-delay: 0.2s; }
-.grid-subjects .card-subject:nth-child(3) { animation-delay: 0.3s; }
-.grid-subjects .card-subject:nth-child(4) { animation-delay: 0.4s; }
-.grid-subjects .card-subject:nth-child(5) { animation-delay: 0.5s; }
-.grid-subjects .card-subject:nth-child(6) { animation-delay: 0.6s; }
-
