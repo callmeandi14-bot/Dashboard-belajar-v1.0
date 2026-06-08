@@ -1,0 +1,383 @@
+```html
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Desain Web - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Desain Web (DWB)</h2>
+                <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Tag Struktur HTML Dasar</div>
+                        <div>✔ Atribut Penting (src, href, alt)</div>
+                        <div>✔ Pembuatan Tabel & layout CV</div>
+                        <div>✔ Fungsi Garis Pembatas (<hr>)</div>
+                        <div>✔ Integrasi CSS (Inline, Internal, External)</div>
+                        <div>✔ Properti Border & Border-Collapse</div>
+                        <div>✔ Atribut Form & Input Password</div>
+                        <div>✔ General Nouns vs Specific Nouns</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Desain Web (DWB)</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Desain Web Dasar.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA DWB -->
+    <script>
+        const bankSoal = [
+            { q: "Apakah kepanjangan yang benar dari singkatan istilah HTML?", o: ["A. Hyper Text Markup Language", "B. High Technical Modern Language", "C. Hyper Transfer Multi Language", "D. Home Text Makeup Lineup", "E. Hyper Tool Management Logical"], a: 0, p: "HTML adalah singkatan dari Hyper Text Markup Language, yaitu bahasa markup standar untuk membuat struktur halaman web." },
+            { q: "Di dalam pembuatan website, peran HTML paling tepat dianalogikan sebagai...", o: ["A. Cat dan dekorasi warna rumah", "B. Pondasi dan struktur rangka dasar bangunan rumah", "C. Saluran air bersih", "D. Arus listrik otomatis", "E. Pagar halaman rumah"], a: 1, p: "HTML berperan sebagai struktur rangka dasar (layout) sebuah halaman web, sedangkan CSS adalah cat dan dekorasinya." },
+            { q: "Tag HTML manakah yang digunakan untuk membuat judul utama atau heading yang menghasilkan ukuran teks paling besar?", o: ["A. <h6>", "B. <heading>", "C. <h1>", "D. <head>", "E. <h-max>"], a: 2, p: "Tag heading terkecil adalah <h6> dan yang terbesar adalah <h1>." },
+            { q: "Ketika Anda ingin membuat teks paragraf baru di halaman web, tag pembungkus manakah yang paling tepat digunakan?", o: ["A. <br>", "B. <paragraph>", "C. <span>", "D. <p>", "E. <text>"], a: 3, p: "Tag <p> digunakan untuk mendefinisikan sebuah paragraf baru pada HTML." },
+            { q: "Tag HTML manakah yang berfungsi untuk membuat garis lurus pembatas secara horizontal (Horizontal Rule) dari kiri ke kanan?", o: ["A. <line>", "B. <br>", "C. <hr>", "D. <border>", "E. <div-line>"], a: 2, p: "Tag <hr> (Horizontal Rule) digunakan untuk menyisipkan garis horizontal tipis sebagai pembatas materi." },
+            { q: "Bagaimanakah sifat penulisan tag pembatas <hr> yang benar di dalam kode HTML?", o: ["A. Wajib ditutup dengan tag </hr>", "B. Merupakan self-closing tag sehingga tidak memerlukan tag penutup", "C. Harus diletakkan di dalam tag <title>", "D. Hanya bisa ditulis di dalam tag CSS", "E. Harus ditulis berulang-ulang sebanyak 3 kali"], a: 1, p: "Tag <hr> dan <br> adalah contoh self-closing tag yang tidak membutuhkan pasangan tag penutup." },
+            { q: "Seorang siswa membuat kode: <img scr='foto.jpg'>, namun fotonya tidak tampil. Apakah penyebab kesalahan kode tersebut?", o: ["A. Tidak diakhiri dengan tag </img-close>", "B. Penulisan atribut wajib 'src' salah ketik menjadi 'scr'", "C. Format foto harus menggunakan .png saja", "D. Tag img harus ditulis di dalam tag <title>", "E. Browser tidak mendukung gambar"], a: 1, p: "Atribut yang benar untuk menentukan lokasi/jalur file gambar adalah 'src' (source), bukan 'scr'." },
+            { q: "Apakah fungsi utama dari penggunaan atribut 'alt' pada tag gambar <img>?", o: ["A. Mengubah ukuran gambar secara otomatis", "B. Mengubah format warna gambar menjadi abu-abu", "C. Menampilkan teks alternatif pengganti jika gambar gagal dimuat oleh browser", "D. Membuat link download gambar", "E. Menghubungkan gambar ke website luar"], a: 2, p: "Atribut 'alt' (alternate text) berfungsi menampilkan teks penjelas jika gambar gagal dirender atau koneksi bermasalah." },
+            { q: "Di dalam pembuatan Curriculum Vitae (CV) terstruktur, tag apa yang digunakan untuk membuat baris baru di dalam tabel?", o: ["A. <table>", "B. <td>", "C. <tr>", "D. <th>", "E. <br>"], a: 2, p: "Tag <tr> (Table Row) digunakan untuk mendefinisikan pembuatan baris baru di dalam tabel HTML." },
+            { q: "Tag HTML manakah yang merepresentasikan sel data atau kolom pengisi konten di dalam baris tabel?", o: ["A. <tr>", "B. <td>", "C. <table>", "D. <th>", "E. <column>"], a: 1, p: "Tag <td> (Table Data) digunakan untuk membuat sel data atau kolom isi di dalam baris tabel." },
+            { q: "Siswa menulis kode link: <a herf='tentang.html'>Profil</a>. Mengapa link tersebut tidak mengarah ke mana-mana saat diklik?", o: ["A. Atribut 'href' salah ditulis menjadi 'herf'", "B. Kata 'Profil' harusnya diletakkan di dalam tag <p>", "C. Tidak menggunakan tag target='_blank'", "D. HTML tidak mendukung link lokal", "E. Menggunakan huruf kapital pada awal tag"], a: 0, p: "Atribut penunjuk alamat URL/tujuan link yang benar adalah 'href' (hypertext reference), bukan 'herf'." },
+            { q: "Jika kita ingin membuat link yang apabila diklik akan membuka halaman tujuan di tab baru browser, atribut manakah yang wajib ditambahkan?", o: ["A. href='_blank'", "B. link='new-tab'", "C. target='_blank'", "D. open='new'", "E. type='external'"], a: 2, p: "Atribut target='_blank' pada tag <a> menginstruksikan browser untuk membuka tautan di jendela atau tab baru." },
+            { q: "Di dalam dokumen HTML, di manakah letak terbaik untuk menuliskan tag komentar agar tidak dibaca dan dirender oleh browser?", o: ["A. /* komentar */", "B. # komentar", "C. <!-- komentar -->", "D. // komentar", "E. ' komentar"], a: 2, p: "Komentar di HTML dibungkus menggunakan simbol '<!--' di awal dan '-->' di akhir." },
+            { q: "Manakah penulisan CSS Inline yang benar untuk merubah warna teks paragraf menjadi merah?", o: ["A. <p color='red'>", "B. <p style='color: red;'>", "C. <p css='color: red;'>", "D. <p text-color='red'>", "E. <p style='text: red'>"], a: 1, p: "CSS Inline ditulis langsung pada tag HTML menggunakan atribut 'style' yang diisi dengan properti dan nilainya." },
+            { q: "Di manakah letak penulisan kode CSS jika Anda menggunakan metode penulisan CSS Internal?", o: ["A. Ditulis langsung di dalam tag HTML menggunakan atribut style", "B. Ditulis di dalam tag <style> yang diletakkan di dalam bagian <head>", "C. Ditulis di file terpisah berformat .js", "D. Ditulis di bagian paling bawah setelah tag </html>", "E. Ditulis di dalam database server"], a: 1, p: "CSS Internal ditulis di dalam tag <style> ... </style> dan diletakkan di antara tag pembuka dan penutup <head>." },
+            { q: "Bagaimanakah cara memanggil file CSS eksternal (misalnya style.css) agar terhubung ke dokumen HTML?", o: ["A. Menggunakan tag <script src='style.css'>", "B. Menggunakan tag <link rel='stylesheet' href='style.css'> di bagian <head>", "C. Menggunakan tag <style href='style.css'>", "D. Menggunakan tag <import css='style.css'>", "E. Cukup meletakkan file css di folder yang sama saja tanpa memanggilnya"], a: 1, p: "File CSS eksternal dipanggil di bagian <head> menggunakan tag <link> dengan rel='stylesheet' dan href berisi jalur file css." },
+            { q: "Apakah kegunaan utama dari properti CSS 'border' saat mendesain CV di halaman web?", o: ["A. Mengatur bayangan tulisan", "B. Memberikan garis bingkai di sekeliling elemen", "C. Mengatur ketebalan huruf", "D. Memberikan warna latar belakang", "E. Mengatur jarak teks dengan tepi"], a: 1, p: "Properti 'border' digunakan untuk membuat atau mendesain garis bingkai di sekeliling batas elemen HTML." },
+            { q: "Di dalam aturan penulisan CSS, nilai properti border: 3px solid black; memiliki arti...", o: ["A. Garis putus-putus hitam setebal 3px", "B. Garis tipis hitam dengan bentuk titik-titik setebal 3px", "C. Garis utuh (tanpa putus) berwarna hitam setebal 3px", "D. Garis hitam ganda berjarak 3px", "E. Bingkai warna hitam berkedip"], a: 2, p: "Properti border terdiri dari ketebalan (3px), tipe garis (solid = utuh/tanpa putus), dan warna garis (black)." },
+            { q: "Gaya (style) border CSS manakah yang menghasilkan garis berbentuk putus-putus pada halaman web?", o: ["A. solid", "B. dotted", "C. dashed", "D. double", "E. groove"], a: 2, p: "Gaya 'dashed' menghasilkan garis putus-putus, sedangkan 'dotted' menghasilkan garis berupa titik-titik." },
+            { q: "Secara default, garis pembatas tabel yang dibuat menggunakan border CSS akan terlihat ganda dan memiliki celah renggang. Properti CSS apakah yang digunakan untuk meleburkan/menyatukan garis-garis tersebut menjadi satu garis lurus tipis?", o: ["A. border-style: collapse;", "B. border-collapse: collapse;", "C. border-merge: true;", "D. table-border: thin;", "E. border-width: 1px;"], a: 1, p: "Properti border-collapse: collapse; digunakan untuk meratakan atau menyatukan bingkai-bingkai sel tabel menjadi satu garis lurus rapi." },
+            { q: "Untuk menyamarkan karakter teks yang diketik pengguna di dalam form login/pendaftaran agar berubah menjadi titik-titik bulat, tipe input apakah yang harus digunakan?", o: ["A. type='text'", "B. type='hidden'", "C. type='password'", "D. type='secure'", "E. type='submit'"], a: 2, p: "Input dengan type='password' secara otomatis menyamarkan input teks menjadi simbol bulat/bintang demi keamanan privasi sandi." },
+            { q: "Apakah fungsi dari atribut 'placeholder' di dalam elemen tag <input>?", o: ["A. Menyimpan data input secara permanen", "B. Memberikan teks petunjuk samar di dalam kotak sebelum diisi oleh pengguna", "C. Mengunci kotak agar tidak bisa diketik", "D. Mengubah warna kotak input", "E. Memeriksa kecocokan password"], a: 1, p: "Atribut 'placeholder' menampilkan petunjuk atau instruksi teks samar di dalam kolom input ketika nilainya masih kosong." },
+            { q: "Di dalam Report Text, kita sering menggunakan kata benda umum seperti 'Computers', 'Smartphones', atau 'Reptiles'. Kata benda umum ini dikenal sebagai...", o: ["A. Specific Nouns", "B. General Nouns", "C. Pronouns", "D. Adjectives", "E. Action Verbs"], a: 1, p: "General Nouns adalah kata benda yang merujuk pada suatu kelompok, jenis, atau spesies secara umum/keseluruhan." },
+            { q: "Manakah di bawah ini yang merupakan contoh dari Specific Noun, bukan General Noun?", o: ["A. Laptops", "B. My Asus ROG laptop", "C. Cities", "D. Animals", "E. Cars"], a: 1, p: "'My Asus ROG laptop' menunjuk langsung ke benda spesifik tertentu, sedangkan pilihan lainnya menunjuk benda umum." },
+            { q: "Properti CSS apakah yang digunakan untuk mengatur jenis gaya huruf atau font pada halaman web?", o: ["A. font-style", "B. font-type", "C. font-family", "D. font-weight", "E. text-font"], a: 2, p: "Properti font-family digunakan untuk memilih dan mengganti jenis gaya huruf (seperti Arial, Times New Roman, dll)." },
+            { q: "Properti CSS manakah yang digunakan untuk mengatur ukuran besar atau kecilnya huruf teks?", o: ["A. text-size", "B. font-size", "C. font-weight", "D. size", "E. text-scale"], a: 1, p: "Properti font-size digunakan untuk mengubah ukuran font, biasanya diukur dalam pixel (px) atau rem." },
+            { q: "Properti CSS apakah yang dipanggil untuk mengubah warna latar belakang sebuah elemen halaman web?", o: ["A. color", "B. text-color", "C. background-color", "D. bg-color", "E. paint-color"], a: 2, p: "Properti background-color digunakan untuk mewarnai bidang latar belakang suatu tag elemen." },
+            { q: "Jika kita ingin membuat teks paragraf di halaman web rata tengah, properti CSS manakah yang harus digunakan?", o: ["A. align: center;", "B. text-align: center;", "C. text-position: middle;", "D. content-align: center;", "E. text-center: true;"], a: 1, p: "Properti text-align: center; digunakan untuk mengatur perataan tulisan agar rata tengah." },
+            { q: "Tag HTML Semantik manakah yang secara khusus dirancang untuk membungkus jajaran menu link navigasi utama di bagian atas website?", o: ["A. <header>", "B. <menu>", "C. <nav>", "D. <navigation>", "E. <section>"], a: 2, p: "Tag <nav> adalah tag semantik HTML5 yang digunakan untuk mendefinisikan navigasi atau menu link utama website." },
+            { q: "Atribut wajib yang harus disisipkan pada tag `<audio>` atau `<video>` agar tombol play, pause, volume, dan timeline pengatur musik muncul di layar browser adalah...", o: ["A. autoplay", "B. loop", "C. controls", "D. buttons", "E. show"], a: 2, p: "Atribut 'controls' memunculkan antarmuka pengendali pemutaran media secara standar bawaan browser." },
+            { q: "Di dalam struktur tabel HTML, manakah tag yang digunakan untuk mendefinisikan baris sel judul tabel yang biasanya tercetak tebal dan rata tengah secara default?", o: ["A. <td>", "B. <th>", "C. <tr-title>", "D. <head>", "E. <thead>"], a: 1, p: "Tag <th> (Table Header) mendefinisikan sel kepala tabel yang format teksnya tebal dan rata tengah." },
+            { q: "Berapakah jumlah baris yang dihasilkan oleh susunan kode HTML tabel berikut:\n<table>\n  <tr><td>A</td></tr>\n  <tr><td>B</td></tr>\n</table>", o: ["A. 1 Baris", "B. 2 Baris", "C. 3 Baris", "D. 4 Baris", "E. 0 Baris"], a: 1, p: "Setiap pasang tag <tr> ... </tr> mewakili 1 baris tabel. Pada kode di atas terdapat dua pasang tag <tr>, berarti menghasilkan 2 baris." },
+            { q: "Apakah tujuan utama dari penulisan tag DOCTYPE html di baris paling awal dokumen HTML?", o: ["A. Untuk memanggil file CSS eksternal", "B. Untuk memberi tahu browser bahwa dokumen tersebut adalah dokumen HTML5", "C. Untuk mengubah bahasa website ke bahasa Indonesia", "D. Untuk mendaftarkan website ke google", "E. Untuk membuat tampilan web menjadi gelap"], a: 1, p: "Deklarasi <!DOCTYPE html> berfungsi memberi sinyal informasi kepada browser bahwa tipe dokumen yang dimuat adalah standar HTML5." },
+            { q: "Tag HTML manakah yang membungkus semua informasi meta, tautan stylesheet, dan judul tab web yang tidak ditampilkan langsung di halaman utama browser?", o: ["A. <body>", "B. <meta>", "C. <head>", "D. <title>", "E. <html>"], a: 2, p: "Tag <head> adalah penampung informasi meta, judul tab (<title>), serta stylesheet yang tidak dirender di halaman visual utama." },
+            { q: "Tag HTML manakah yang bertugas membungkus seluruh konten visual (teks, gambar, tombol, tabel) yang ditampilkan langsung di layar browser kepada pengguna?", o: ["A. <html>", "B. <head>", "C. <body>", "D. <main-screen>", "E. <container>"], a: 2, p: "Tag <body> adalah penampung semua elemen konten visual yang bisa dilihat langsung oleh pengunjung web." },
+            { q: "Tag HTML manakah yang tepat digunakan untuk memberikan penekanan penting pada teks dengan format huruf miring (italic) secara semantik?", o: ["A. <i>", "B. <em>", "C. <mark>", "D. <strong>", "E. <underline>"], a: 1, p: "Tag <em> (emphasis) digunakan untuk mencetak teks miring dan memberi nilai semantik penting di mata mesin pencari." },
+            { q: "Di dalam tag gambar <img>, jika file logo.png berada di dalam folder bernama 'assets', bagaimanakah cara pengisian atribut 'src' yang benar?", o: ["A. src='logo.png'", "B. src='folder/logo.png'", "C. src='assets/logo.png'", "D. src='assets.logo.png'", "E. scr='assets/logo.png'"], a: 2, p: "Jalur relatif folder ditulis dengan nama_folder diikuti tanda garis miring (/) dan nama file: 'assets/logo.png'." },
+            { q: "CSS merupakan singkatan dari istilah...", o: ["A. Coding Style Sheets", "B. Creative System Sheets", "C. Cascading Style Sheets", "D. Computer Syntax System", "E. Core Stylesheet Standard"], a: 2, p: "CSS singkatan dari Cascading Style Sheets, teknologi untuk mengatur presentasi visual dokumen HTML." },
+            { q: "Manakah penulisan CSS yang benar jika kita ingin mewarnai semua teks elemen paragraf <p> menjadi biru menggunakan Internal/External CSS?", o: ["A. p { text-color: blue; }", "B. p { color: blue; }", "C. p = blue", "D. <p> { color: blue; }", "E. class-p { color: blue; }"], a: 1, p: "Selektor elemen 'p' diikuti kurung kurawal, diisi properti 'color' dan nilai 'blue'. Properti teks berwarna bukan 'text-color'." },
+            { q: "Bagaimanakah penulisan selektor CSS yang tepat jika kita ingin menargetkan elemen HTML yang memiliki atribut class='konten'?", o: ["A. #konten { }", "B. .konten { }", "C. class-konten { }", "D. *konten { }", "E. @konten { }"], a: 1, p: "Di CSS, selektor Class diawali dengan tanda titik (.), sedangkan ID diawali dengan tanda pagar (#)." },
+            { q: "Bagaimanakah penulisan selektor CSS yang tepat jika kita ingin menargetkan elemen HTML yang memiliki atribut id='utama'?", o: ["A. .utama { }", "B. #utama { }", "C. id-utama { }", "D. *utama { }", "E. @utama { }"], a: 1, p: "Selektor ID ditandai dengan tanda pagar (#) di awal nama selektor pada CSS." },
+            { q: "Jika Anda ingin membuat garis bingkai berupa deretan titik-titik (dotted) di bawah elemen paragraf saja, properti CSS manakah yang harus dipanggil?", o: ["A. border-bottom: 2px dotted grey;", "B. border: 2px dotted grey;", "C. border-style: dotted;", "D. border-under: 2px dotted grey;", "E. text-underline: dotted;"], a: 0, p: "Properti 'border-bottom' membatasi pembuatan bingkai hanya pada bagian bawah elemen saja." },
+            { q: "Di dalam CSS, apa perbedaan fungsi antara properti 'padding' dengan 'margin'?", o: ["A. Padding mengatur jarak di luar bingkai, Margin jarak di dalam bingkai", "B. Padding mengatur jarak di dalam bingkai (antara konten dan border), Margin mengatur jarak luar bingkai", "C. Padding mengatur warna garis, Margin mengatur ketebalan garis", "D. Padding hanya untuk gambar, Margin hanya untuk teks", "E. Tidak ada perbedaan sama sekali"], a: 1, p: "Padding mengatur ruang kosong di dalam bingkai elemen, sedangkan Margin mengatur batas luar elemen dengan elemen tetangganya." },
+            { q: "Di dalam form HTML, bagaimanakah cara membuat tombol kirim yang berfungsi mengirimkan seluruh data isian form ke server?", o: ["A. <input type='button' value='Kirim'>", "B. <input type='submit' value='Kirim'>", "C. <button type='click'>Kirim</button>", "D. <input type='text' value='Kirim'>", "E. <input type='send'>"], a: 1, p: "Input type='submit' adalah tipe input tombol khusus untuk mengeksekusi pengiriman data form." },
+            { q: "Apakah fungsi utama dari tag `<form>` pada halaman HTML?", o: ["A. Untuk membuat paragraf bergaya khusus", "B. Sebagai wadah penampung berbagai elemen input data dari pengguna untuk dikirim ke server", "C. Untuk memanggil file CSS eksternal", "D. Untuk menampilkan video dan lagu otomatis", "E. Untuk mengatur tata letak tabel"], a: 1, p: "Tag <form> bertindak sebagai kontainer utama penampung data isian interaktif pengguna (input, select, textarea)." },
+            { q: "Pada penulisan form HTML: <form action='simpan.php' method='POST'>, fungsi dari atribut 'action' adalah...", o: ["A. Menentukan jenis animasi tombol saat diklik", "B. Menentukan file pemroses data tujuan saat form dikirimkan", "C. Menentukan warna latar belakang halaman form", "D. Mengunci data form agar aman", "E. Menampilkan pop-up terima kasih"], a: 1, p: "Atribut 'action' menunjukkan ke berkas/halaman mana data isian formulir akan disalurkan dan diproses." },
+            { q: "Manakah pilihan di bawah ini yang merupakan tag HTML berjenis self-closing (tidak membutuhkan pasangan tag penutup)?", o: ["A. <p>", "B. <img>", "C. <table>", "D. <a>", "E. <h1>"], a: 1, p: "Tag <img> (image) adalah contoh self-closing tag. Dia tidak memiliki penutup </img>." },
+            { q: "Jika ingin membuat tulisan bercetak tebal biasa tanpa membawa nilai penting secara semantik di mata mesin pencari, tag manakah yang paling pas?", o: ["A. <strong>", "B. <b>", "C. <i>", "D. <mark>", "E. <em-bold>"], a: 1, p: "Tag <b> (bold) hanya memberikan efek tebal secara fisik, berbeda dengan <strong> yang mengandung penekanan nilai penting." },
+            { q: "Di dalam dokumen HTML, tag pembungkus manakah yang digunakan untuk membuat daftar butir yang tidak berurutan (Unordered List) menggunakan simbol bullet?", o: ["A. <ol>", "B. <ul>", "C. <li>", "D. <list>", "E. <dl>"], a: 1, p: "Tag <ul> (Unordered List) digunakan untuk membuat daftar butir simbol, sedangkan <ol> untuk daftar urutan angka/huruf." },
+            { q: "Setiap butir isi di dalam daftar tag <ul> atau <ol> wajib dibungkus menggunakan tag...", o: ["A. <list-item>", "B. <li>", "C. <dt>", "D. <item>", "E. <list>"], a: 1, p: "Setiap item di dalam list teratur/tidak teratur wajib diletakkan di dalam tag <li> (List Item)." }
+        ];
+
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = [];
+        let tempSelectedIdx = null;
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda (HTML & CSS)";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    btn.disabled = true;
+                    
+                    if (optIdx === activeQuestion.a) {
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected');
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx);
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3);
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                feedbackBox.style.display = 'none';
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null);
+            }
+
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion();
+        }
+
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion();
+                }
+            } else {
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+    </script>
+</body>
+</html>
+
