@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="id" data-theme="light">
 <head>
@@ -41,20 +41,20 @@
                 <p class="setup-subtitle">Atur jumlah soal yang ingin Anda kerjakan di bawah ini untuk memulai latihan mandiri.</p>
                 
                 <div class="input-soal-wrapper">
-                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 52)</label>
                     <div class="input-soal-flex">
-                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="52">
                         <p style="font-size: 0.85rem; color: var(--text-muted)">Semua pertanyaan akan diacak secara dinamis oleh sistem tryout komputer.</p>
                     </div>
                     <div class="info-materi-list">
                         <div>✔ Tag Struktur HTML Dasar</div>
                         <div>✔ Atribut Penting (src, href, alt)</div>
-                        <div>✔ Pembuatan Tabel & layout CV</div>
-                        <div>✔ Fungsi Garis Pembatas (<hr>)</div>
+                        <div>✔ Pembuatan Tabel & Layout CV</div>
+                        <div>✔ Fungsi Garis Pembatas (&lt;hr&gt;)</div>
                         <div>✔ Integrasi CSS (Inline, Internal, External)</div>
                         <div>✔ Properti Border & Border-Collapse</div>
                         <div>✔ Atribut Form & Input Password</div>
-                        <div>✔ General Nouns vs Specific Nouns</div>
+                        <div>✔ Box Model CSS (Margin & Padding)</div>
                     </div>
                 </div>
 
@@ -154,8 +154,6 @@
             { q: "Secara default, garis pembatas tabel yang dibuat menggunakan border CSS akan terlihat ganda dan memiliki celah renggang. Properti CSS apakah yang digunakan untuk meleburkan/menyatukan garis-garis tersebut menjadi satu garis lurus tipis?", o: ["A. border-style: collapse;", "B. border-collapse: collapse;", "C. border-merge: true;", "D. table-border: thin;", "E. border-width: 1px;"], a: 1, p: "Properti border-collapse: collapse; digunakan untuk meratakan atau menyatukan bingkai-bingkai sel tabel menjadi satu garis lurus rapi." },
             { q: "Untuk menyamarkan karakter teks yang diketik pengguna di dalam form login/pendaftaran agar berubah menjadi titik-titik bulat, tipe input apakah yang harus digunakan?", o: ["A. type='text'", "B. type='hidden'", "C. type='password'", "D. type='secure'", "E. type='submit'"], a: 2, p: "Input dengan type='password' secara otomatis menyamarkan input teks menjadi simbol bulat/bintang demi keamanan privasi sandi." },
             { q: "Apakah fungsi dari atribut 'placeholder' di dalam elemen tag <input>?", o: ["A. Menyimpan data input secara permanen", "B. Memberikan teks petunjuk samar di dalam kotak sebelum diisi oleh pengguna", "C. Mengunci kotak agar tidak bisa diketik", "D. Mengubah warna kotak input", "E. Memeriksa kecocokan password"], a: 1, p: "Atribut 'placeholder' menampilkan petunjuk atau instruksi teks samar di dalam kolom input ketika nilainya masih kosong." },
-            { q: "Di dalam Report Text, kita sering menggunakan kata benda umum seperti 'Computers', 'Smartphones', atau 'Reptiles'. Kata benda umum ini dikenal sebagai...", o: ["A. Specific Nouns", "B. General Nouns", "C. Pronouns", "D. Adjectives", "E. Action Verbs"], a: 1, p: "General Nouns adalah kata benda yang merujuk pada suatu kelompok, jenis, atau spesies secara umum/keseluruhan." },
-            { q: "Manakah di bawah ini yang merupakan contoh dari Specific Noun, bukan General Noun?", o: ["A. Laptops", "B. My Asus ROG laptop", "C. Cities", "D. Animals", "E. Cars"], a: 1, p: "'My Asus ROG laptop' menunjuk langsung ke benda spesifik tertentu, sedangkan pilihan lainnya menunjuk benda umum." },
             { q: "Properti CSS apakah yang digunakan untuk mengatur jenis gaya huruf atau font pada halaman web?", o: ["A. font-style", "B. font-type", "C. font-family", "D. font-weight", "E. text-font"], a: 2, p: "Properti font-family digunakan untuk memilih dan mengganti jenis gaya huruf (seperti Arial, Times New Roman, dll)." },
             { q: "Properti CSS manakah yang digunakan untuk mengatur ukuran besar atau kecilnya huruf teks?", o: ["A. text-size", "B. font-size", "C. font-weight", "D. size", "E. text-scale"], a: 1, p: "Properti font-size digunakan untuk mengubah ukuran font, biasanya diukur dalam pixel (px) atau rem." },
             { q: "Properti CSS apakah yang dipanggil untuk mengubah warna latar belakang sebuah elemen halaman web?", o: ["A. color", "B. text-color", "C. background-color", "D. bg-color", "E. paint-color"], a: 2, p: "Properti background-color digunakan untuk mewarnai bidang latar belakang suatu tag elemen." },
@@ -181,7 +179,11 @@
             { q: "Manakah pilihan di bawah ini yang merupakan tag HTML berjenis self-closing (tidak membutuhkan pasangan tag penutup)?", o: ["A. <p>", "B. <img>", "C. <table>", "D. <a>", "E. <h1>"], a: 1, p: "Tag <img> (image) adalah contoh self-closing tag. Dia tidak memiliki penutup </img>." },
             { q: "Jika ingin membuat tulisan bercetak tebal biasa tanpa membawa nilai penting secara semantik di mata mesin pencari, tag manakah yang paling pas?", o: ["A. <strong>", "B. <b>", "C. <i>", "D. <mark>", "E. <em-bold>"], a: 1, p: "Tag <b> (bold) hanya memberikan efek tebal secara fisik, berbeda dengan <strong> yang mengandung penekanan nilai penting." },
             { q: "Di dalam dokumen HTML, tag pembungkus manakah yang digunakan untuk membuat daftar butir yang tidak berurutan (Unordered List) menggunakan simbol bullet?", o: ["A. <ol>", "B. <ul>", "C. <li>", "D. <list>", "E. <dl>"], a: 1, p: "Tag <ul> (Unordered List) digunakan untuk membuat daftar butir simbol, sedangkan <ol> untuk daftar urutan angka/huruf." },
-            { q: "Setiap butir isi di dalam daftar tag <ul> atau <ol> wajib dibungkus menggunakan tag...", o: ["A. <list-item>", "B. <li>", "C. <dt>", "D. <item>", "E. <list>"], a: 1, p: "Setiap item di dalam list teratur/tidak teratur wajib diletakkan di dalam tag <li> (List Item)." }
+            { q: "Setiap butir isi di dalam daftar tag <ul> atau <ol> wajib dibungkus menggunakan tag...", o: ["A. <list-item>", "B. <li>", "C. <dt>", "D. <item>", "E. <list>"], a: 1, p: "Setiap item di dalam list teratur/tidak teratur wajib diletakkan di dalam tag <li> (List Item)." },
+            { q: "Dalam CSS Box Model, bagian yang membatasi antara area padding (jarak dalam) dengan area margin (jarak luar) disebut...", o: ["A. Content", "B. Background", "C. Border", "D. Frame", "E. Box-line"], a: 2, p: "Border adalah pembatas atau bingkai fisik yang berada di antara area padding (dalam) dan margin (luar)." },
+            { q: "Untuk menyisipkan halaman web lain di dalam halaman web kita saat ini (embedded page), tag HTML manakah yang harus dipanggil?", o: ["A. <link>", "B. <embed-page>", "C. <iframe>", "D. <window>", "E. <web-view>"], a: 2, p: "Tag <iframe> (inline frame) digunakan untuk merender dokumen web lain di dalam frame halaman web saat ini." },
+            { q: "Properti CSS manakah yang digunakan untuk membuat teks menjadi tebal (bold)?", o: ["A. font-style", "B. font-weight", "C. font-bold", "D. text-transform", "E. text-bold"], a: 1, p: "Properti font-weight: bold; (atau nilai angka seperti 700) digunakan untuk menentukan ketebalan huruf teks." },
+            { q: "Jika kita ingin menghapus garis bawah bawaan pada elemen link tautan <a> menggunakan CSS, properti apakah yang harus diatur?", o: ["A. text-style: none;", "B. font-decoration: none;", "C. text-decoration: none;", "D. border-bottom: none;", "E. text-underline: false;"], a: 2, p: "Properti text-decoration: none; digunakan untuk menghapus garis bawah bawaan (*default underline*) pada elemen link HTML." }
         ];
 
         let quizQuestions = [];
@@ -381,3 +383,4 @@
 </body>
 </html>
 
+```
