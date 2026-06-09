@@ -1,0 +1,1020 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Proyek IPAS - EDUPINTAR</title>
+    <!-- Hubungkan Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Hubungkan berkas CSS Modular -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Portal -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section">
+                <div class="logo-box">E</div>
+                <div class="logo-title">
+                    <h1>EDUPINTAR</h1>
+                    <p>Dashboard Tryout Mandiri</p>
+                </div>
+            </a>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Mode Malam</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Inti Aplikasi Kuis -->
+    <main>
+        <div class="quiz-card scroll-reveal">
+            
+            <!-- SECTION 1: SETUP KELOLA SOAL -->
+            <div id="setup-section">
+                <h2 class="setup-title">Simulasi Kuis: Proyek IPAS</h2>
+                <p class="setup-subtitle">Latihan soal HOTS berdasarkan kurikulum IPAS SMK Kelas X untuk mengasah kemampuan analisismu.</p>
+                
+                <div class="input-soal-wrapper">
+                    <label for="questionCountInput" class="input-soal-label">Berapa jumlah soal tryout? (Maks 50)</label>
+                    <div class="input-soal-flex">
+                        <input type="number" id="questionCountInput" class="input-soal-field" value="15" min="1" max="50">
+                        <p style="font-size: 0.85rem; color: var(--text-muted)">Semua soal dikonsep seimbang, ringkas, dan kunci jawaban tersebar merata dari A sampai E.</p>
+                    </div>
+                    <div class="info-materi-list">
+                        <div>✔ Makhluk Hidup & Lingkungannya</div>
+                        <div>✔ Zat & Perubahannya</div>
+                        <div>✔ Energi & Perubahannya</div>
+                        <div>✔ Bumi & Antariksa</div>
+                        <div>✔ Konektivitas Ruang & Waktu</div>
+                        <div>✔ Interaksi Sosial & Sosialisasi</div>
+                        <div>✔ Perilaku Ekonomi & Kesejahteraan</div>
+                        <div>✔ Mitigasi Bencana & Ekologi</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="border:none; padding-top:0;">
+                    <a href="index.html" class="btn-secondary" style="text-decoration:none">← Kembali</a>
+                    <button class="btn-primary" onclick="initiateQuiz()">Mulai Kuis</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LEMBAR INTERFACE JALANNYA KUIS -->
+            <div id="quiz-section" style="display: none;">
+                <div class="progress-container">
+                    <span id="currentSubjectTag">Mata Pelajaran: Proyek IPAS</span>
+                    <span id="progressText">Soal 1 dari 15</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+
+                <div class="question-meta" id="questionMeta">Kategori Soal</div>
+                <div class="question-text" id="questionText">Memuat narasi pertanyaan kuis di sini...</div>
+
+                <ul class="options-list" id="optionsContainer">
+                    <!-- Dinamis terisi opsi jawaban A s.d. E lewat JavaScript -->
+                </ul>
+
+                <!-- Box Hasil & Pembahasan Kuis -->
+                <div id="feedbackBox" class="explanation-box" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="backBtn" onclick="navigatePrev()">Kembali</button>
+                    <!-- Tombol Aksi Utama Dinamis (Cek Jawaban / Lanjut) -->
+                    <button class="btn-primary" id="actionBtn" onclick="handlePrimaryAction()" disabled>Cek Jawaban</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: REKAPITULASI HASIL EVALUASI -->
+            <div id="result-section" class="result-container" style="display: none;">
+                <div class="trophy-icon">🏆</div>
+                <h2 class="setup-title">Evaluasi Hasil Akhir</h2>
+                <p class="setup-subtitle">Lembar hasil capaian tingkat pemahaman materi simulasi ujian Proyek IPAS.</p>
+
+                <div class="score-num" id="scoreValue">0</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-title">Skor Kuis</div>
+                        <div class="stat-box-num" id="statScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Benar</div>
+                        <div class="stat-box-num" id="statCorrect" style="color:var(--success-color)">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-title">Jawaban Salah</div>
+                        <div class="stat-box-num" id="statWrong" style="color:var(--danger-color)">0</div>
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center; gap: 1rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Ulangi Kuis</button>
+                    <a href="index.html" class="btn-primary" style="text-decoration:none; display:inline-block">Dashboard Utama</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hak Cipta dipertahankan sesuai instruksi -->
+    <footer>
+        <p class="company-brand">BRONDI STUDIOS</p>
+        <p>© 2026 BRONDI STUDIOS. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- LOGIKA UTAMA & BANK DATA IPAS -->
+    <script>
+        // BANK DATA PROYEK IPAS (50 SOAL HOTS - KUNCI JAWABAN TERDISTRIBUSI MERATA: A=10, B=10, C=10, D=10, E=10)
+        const bankSoal = [
+            // --- MAKHLUK HIDUP DAN LINGKUNGANNYA (1-10) ---
+            {
+                q: "Jika populasi belalang di sebuah ekosistem sawah mendadak punah akibat pestisida, dampak langsung apa yang terjadi pada padi?",
+                o: [
+                    "A. Jumlah padi menurun secara drastis.",
+                    "B. Padi akan menghasilkan panen melimpah.",
+                    "C. Katak akan beralih memakan tanaman padi.",
+                    "D. Perkembangan akar padi menjadi terhambat.",
+                    "E. Padi akan langsung layu tanpa konsumen."
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Padi akan meningkat karena belalang yang berperan sebagai herbivora pemakan padi berkurang."
+            },
+            {
+                q: "Fenomena eutrofikasi berupa ledakan pertumbuhan eceng gondok di danau disebabkan oleh...",
+                o: [
+                    "A. Berkurangnya kandungan oksigen terlarut.",
+                    "B. Masuknya limbah pupuk fosfat ke perairan.",
+                    "C. Penurunan intensitas sinar matahari.",
+                    "D. Meningkatnya populasi ikan pemangsa.",
+                    "E. Pendangkalan dasar danau secara alami."
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Limbah pupuk pertanian yang kaya fosfat merangsang pertumbuhan tanaman air secara berlebihan."
+            },
+            {
+                q: "Bentuk interaksi simbiosis antara tanaman paku yang menempel di pohon jati adalah...",
+                o: [
+                    "A. Mutualisme",
+                    "B. Parasitisme",
+                    "C. Komensalisme",
+                    "D. Amensalisme",
+                    "E. Kompetisi"
+                ],
+                a: 2, // C
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Tanaman paku mendapat tumpangan hidup, sedangkan pohon jati tidak diuntungkan maupun dirugikan."
+            },
+            {
+                q: "Peran utama bakteri dekomposer dalam menjaga keseimbangan siklus biogeokimia di tanah adalah...",
+                o: [
+                    "A. Menghasilkan zat hara organik dari tanah.",
+                    "B. Menyerap sisa air tanah untuk tanaman.",
+                    "C. Menguraikan materi organik menjadi anorganik.",
+                    "D. Mengikat gas nitrogen bebas di atmosfer.",
+                    "E. Membantu proses fotosintesis pada akar."
+                ],
+                a: 2, // C
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Dekomposer memecah jasad mati menjadi senyawa anorganik sederhana kembali ke dalam tanah."
+            },
+            {
+                q: "Dampak jangka panjang dari penebangan hutan secara liar terhadap siklus air global adalah...",
+                o: [
+                    "A. Peningkatan cadangan air di dalam tanah.",
+                    "B. Penurunan laju transpirasi dan curah hujan.",
+                    "C. Meningkatnya kelembapan udara di atmosfer.",
+                    "D. Penurunan suhu rata-rata wilayah tersebut.",
+                    "E. Laju infiltrasi air ke tanah semakin lambat."
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Hilangnya vegetasi mengurangi pelepasan uap air (transpirasi) sehingga curah hujan menurun."
+            },
+            {
+                q: "Komponen biotik yang menduduki tingkat trofik pertama dalam ekosistem laut dalam adalah...",
+                o: [
+                    "A. Zooplankton",
+                    "B. Fitoplankton",
+                    "C. Ikan kecil",
+                    "D. Ubur-ubur",
+                    "E. Kepiting"
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Fitoplankton adalah organisme autotrof yang bertindak sebagai produsen utama di laut."
+            },
+            {
+                q: "Adaptasi morfologi hewan yang hidup di ekosistem gurun yang gersang ditunjukkan oleh...",
+                o: [
+                    "A. Tubuh berukuran kecil dan lincah.",
+                    "B. Kemampuan urinasi yang sangat pekat.",
+                    "C. Memiliki selaput tebal pada mata kaki.",
+                    "D. Memiliki punuk penyimpanan lemak tubuh.",
+                    "E. Melakukan estivasi di musim kemarau."
+                ],
+                a: 3, // D
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Punuk unta menyimpan cadangan lemak yang dapat diubah menjadi energi dan air saat gurun gersang."
+            },
+            {
+                q: "Polutan gas sisa pembakaran batu bara yang memicu terjadinya fenomena hujan asam adalah...",
+                o: [
+                    "A. Karbon monoksida (CO)",
+                    "B. Nitrogen oksida (NOx) dan sulfur dioksida (SO2)",
+                    "C. Karbon dioksida (CO2) dan metana (CH4)",
+                    "D. Hidrokarbon (HC) volatil",
+                    "E. Partikulat debu jelaga halus"
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "SO2 dan NOx bereaksi dengan uap air di atmosfer membentuk senyawa asam kuat."
+            },
+            {
+                q: "Cara pelestarian keanekaragaman hayati secara in-situ yang tepat dilakukan adalah...",
+                o: [
+                    "A. Pembiakan harimau sumatera di kebun binatang.",
+                    "B. Penyimpanan sperma satwa langka di laboratorium.",
+                    "C. Perlindungan komodo langsung di habitat aslinya.",
+                    "D. Penangkaran burung jalak bali di penangkaran.",
+                    "E. Koleksi tanaman kantong semar di kebun raya."
+                ],
+                a: 2, // C
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "In-situ adalah metode pelestarian makhluk hidup di dalam habitat asli mereka sendiri."
+            },
+            {
+                q: "Dampak pencemaran mikroplastik pada biota laut di rantai makanan puncak adalah...",
+                o: [
+                    "A. Penurunan berat badan ikan herbivora.",
+                    "B. Akumulasi bahan beracun lewat biomagnifikasi.",
+                    "C. Peningkatan laju reproduksi mamalia laut.",
+                    "D. Pertumbuhan cangkang kerang menjadi tebal.",
+                    "E. Penurunan kadar asam di dalam lambung."
+                ],
+                a: 1, // B
+                kategori: "Makhluk Hidup & Lingkungan",
+                p: "Konsentrasi racun mikroplastik meningkat seiring naiknya tingkat trofik makanan (biomagnifikasi)."
+            },
+
+            // --- ZAT DAN PERUBAHANNYA (11-20) ---
+            {
+                q: "Contoh dari perubahan kimia yang terjadi pada kehidupan sehari-hari adalah...",
+                o: [
+                    "A. Pembuatan es batu di dalam lemari pendingin.",
+                    "B. Pelarutan sesendok gula ke dalam secangkir air.",
+                    "C. Proses fotosintesis pada daun tanaman hijau.",
+                    "D. Penguapan air laut saat proses pembuatan garam.",
+                    "E. Penyubliman kapur barus di dalam lemari pakaian."
+                ],
+                a: 2, // C
+                kategori: "Zat & Perubahannya",
+                p: "Fotosintesis menghasilkan zat baru (glukosa dan oksigen) lewat reaksi kimia."
+            },
+            {
+                q: "Metode pemisahan campuran yang digunakan untuk memurnikan air dari garam adalah...",
+                o: [
+                    "A. Filtrasi",
+                    "B. Kromatografi",
+                    "C. Distilasi",
+                    "D. Sentrifugasi",
+                    "E. Sublimasi"
+                ],
+                a: 2, // C
+                kategori: "Zat & Perubahannya",
+                p: "Distilasi memisahkan air dan garam berdasarkan perbedaan titik didihnya."
+            },
+            {
+                q: "Ciri fisik yang menunjukkan terjadinya suatu reaksi kimia pada zat adalah...",
+                o: [
+                    "A. Terjadinya perubahan bentuk dan ukuran zat.",
+                    "B. Terbentuknya endapan dan perubahan suhu zat.",
+                    "C. Perubahan wujud dari padat menjadi cair.",
+                    "D. Zat terlarut sepenuhnya dalam pelarut cair.",
+                    "E. Massa zat sebelum dan sesudah reaksi berbeda."
+                ],
+                a: 1, // B
+                kategori: "Zat & Perubahannya",
+                p: "Pembentukan endapan dan perubahan suhu merupakan indikator terjadinya reaksi kimia."
+            },
+            {
+                q: "Pengelompokan materi berikut yang termasuk ke dalam kategori unsur adalah...",
+                o: [
+                    "A. Air murni, garam dapur, dan asam sulfat.",
+                    "B. Udara bersih, perunggu, dan baja ringan.",
+                    "C. Besi murni, tembaga padat, dan gas oksigen.",
+                    "D. Air laut, tanah humus, dan sirup manis.",
+                    "E. Karbon dioksida, silika, dan gas metana."
+                ],
+                a: 2, // C
+                kategori: "Zat & Perubahannya",
+                p: "Besi, tembaga, dan oksigen merupakan materi tunggal yang tidak bisa disederhanakan lagi."
+            },
+            {
+                q: "Sifat fisika zat yang dimanfaatkan pada pembuatan kabel listrik tembaga adalah...",
+                o: [
+                    "A. Kerapatan massa",
+                    "B. Kelenturan bahan",
+                    "C. Konduktivitas panas",
+                    "D. Daya hantar listrik",
+                    "E. Titik didih tinggi"
+                ],
+                a: 3, // D
+                kategori: "Zat & Perubahannya",
+                p: "Kabel tembaga memanfaatkan sifat daya hantar listrik yang sangat baik (konduktor)."
+            },
+            {
+                q: "Zat tunggal yang terbentuk dari gabungan dua unsur atau lebih melalui reaksi kimia disebut...",
+                o: [
+                    "A. Campuran homogen",
+                    "B. Senyawa",
+                    "C. Koloid",
+                    "D. Suspensi",
+                    "E. Campuran heterogen"
+                ],
+                a: 1, // B
+                kategori: "Zat & Perubahannya",
+                p: "Senyawa terbentuk dari kombinasi unsur-unsur kimia berbeda secara proporsional."
+            },
+            {
+                q: "Metode kromatografi kertas didasarkan pada prinsip perbedaan...",
+                o: [
+                    "A. Titik didih zat",
+                    "B. Ukuran partikel zat",
+                    "C. Kecepatan rambat zat",
+                    "D. Berat molekul zat",
+                    "E. Massa jenis larutan"
+                ],
+                a: 2, // C
+                kategori: "Zat & Perubahannya",
+                p: "Kromatografi memisahkan komponen warna berdasarkan kecepatan rambat pelarut pada medium."
+            },
+            {
+                q: "Bahan kimia rumah tangga yang bersifat asam lemah dan aman dikonsumsi adalah...",
+                o: [
+                    "A. Asam klorida pembersih lantai.",
+                    "B. Larutan cuka dapur untuk memasak.",
+                    "C. Natrium hidroksida pembersih pipa.",
+                    "D. Deterjen bubuk pencuci pakaian.",
+                    "E. Soda kue pengembang adonan roti."
+                ],
+                a: 1, // B
+                kategori: "Zat & Perubahannya",
+                p: "Cuka dapur mengandung asam asetat yang merupakan asam lemah yang aman dikonsumsi."
+            },
+            {
+                q: "Langkah penanganan yang tepat jika kulit terkena tumpahan larutan asam sulfat encer di laboratorium adalah...",
+                o: [
+                    "A. Mengusap dengan kain lap kering secara kasar.",
+                    "B. Membilas kulit dengan air mengalir selama 15 menit.",
+                    "C. Mengoleskan minyak goreng hangat pada luka.",
+                    "D. Membilas dengan larutan natrium hidroksida kuat.",
+                    "E. Menutup rapat luka dengan perban kain steril."
+                ],
+                a: 1, // B
+                kategori: "Zat & Perubahannya",
+                p: "Air mengalir menetralkan dan membasuh sisa asam sulfat tanpa memperparah kerusakan sel."
+            },
+            {
+                q: "Contoh dari campuran heterogen yang mudah memisah jika didiamkan adalah...",
+                o: [
+                    "A. Udara bersih bebas debu.",
+                    "B. Larutan garam dapur jenuh.",
+                    "C. Campuran pasir halus dan air.",
+                    "D. Perunggu bahan pembuat piala.",
+                    "E. Sirup manis rasa buah-buahan."
+                ],
+                a: 2, // C
+                kategori: "Zat & Perubahannya",
+                p: "Campuran air dan pasir membentuk suspensi yang mudah mengendap akibat gravitasi."
+            },
+
+            // --- ENERGI DAN PERUBAHANNYA (21-30) ---
+            {
+                q: "Perubahan energi yang terjadi pada pengoperasian panel surya (photovoltaic) adalah...",
+                o: [
+                    "A. Energi cahaya menjadi energi kimia.",
+                    "B. Energi cahaya menjadi energi listrik.",
+                    "C. Energi panas menjadi energi listrik.",
+                    "D. Energi kinetik menjadi energi listrik.",
+                    "E. Energi potensial menjadi energi kinetik."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Panel surya mengubah radiasi gelombang cahaya matahari menjadi aliran listrik."
+            },
+            {
+                q: "Keuntungan utama pemanfaatan energi biomassa dibanding bahan bakar fosil adalah...",
+                o: [
+                    "A. Memiliki nilai kalor pembakaran lebih tinggi.",
+                    "B. Ramah lingkungan karena bersifat karbon netral.",
+                    "C. Tidak memerlukan teknologi pengolahan lanjut.",
+                    "D. Biaya eksplorasi awal yang sangat murah sekali.",
+                    "E. Tidak memancarkan gas karbon dioksida sama sekali."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Biomassa menggunakan siklus karbon tanaman hidup sehingga emisi CO2 yang dilepaskan bersifat seimbang."
+            },
+            {
+                q: "Hukum Kekekalan Energi menyatakan bahwa energi tidak dapat...",
+                o: [
+                    "A. Berubah bentuk menjadi energi jenis lainnya.",
+                    "B. Dimusnahkan maupun diciptakan oleh manusia.",
+                    "C. Ditransfer antar partikel zat yang bergesekan.",
+                    "D. Dimanfaatkan untuk melakukan usaha mekanik.",
+                    "E. Disimpan dalam jangka waktu lama di baterai."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Energi bersifat kekal, hanya bisa diubah bentuknya dari satu tipe ke tipe lainnya."
+            },
+            {
+                q: "Prinsip konversi energi pada Pembangkit Listrik Tenaga Air (PLTA) adalah...",
+                o: [
+                    "A. Energi potensial air langsung diubah menjadi listrik.",
+                    "B. Energi kinetik air memutar turbin untuk memutar generator.",
+                    "C. Energi panas air menguapkan fluida pemutar rotor.",
+                    "D. Energi kimia air memicu reaksi redoks penghasil arus.",
+                    "E. Energi mekanis air menggesek magnet kumparan diam."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Aliran air (kinetik) memutar turbin generator untuk membangkitkan induksi elektromagnetik (listrik)."
+            },
+            {
+                q: "Contoh dari sumber energi alternatif yang tidak ramah lingkungan jika dikelola salah adalah...",
+                o: [
+                    "A. Energi gelombang pasang air laut.",
+                    "B. Pembangkit listrik tenaga panas bumi.",
+                    "C. Pembangkit listrik tenaga angin kincir.",
+                    "D. Pembangkit listrik tenaga nuklir uranium.",
+                    "E. Panel surya sel silikon monokristalin."
+                ],
+                a: 3, // D
+                kategori: "Energi & Perubahannya",
+                p: "Nuklir bersih dari emisi karbon namun berisiko tinggi memicu limbah radioaktif berbahaya."
+            },
+            {
+                q: "Faktor utama yang menentukan besarnya energi kinetik sebuah benda bergerak adalah...",
+                o: [
+                    "A. Massa benda dan tinggi posisinya.",
+                    "B. Tinggi posisi dan gravitasi bumi.",
+                    "C. Massa dan kecepatan gerak benda.",
+                    "D. Gaya gesek dan berat total benda.",
+                    "E. Waktu tempuh dan jarak tempuh."
+                ],
+                a: 2, // C
+                kategori: "Energi & Perubahannya",
+                p: "Energi kinetik berbanding lurus dengan massa dan kuadrat kecepatan benda (Ek = 0.5 * m * v^2)."
+            },
+            {
+                q: "Penyebab utama berkurangnya efisiensi energi pada mesin kendaraan bermotor adalah...",
+                o: [
+                    "A. Perubahan energi kimia menjadi mekanik.",
+                    "B. Hilangnya energi dalam bentuk gesekan dan panas.",
+                    "C. Penggunaan sistem injeksi bahan bakar elektronik.",
+                    "D. Meningkatnya putaran piston per menit (RPM).",
+                    "E. Rendahnya kadar karbon di dalam bensin murni."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Gesekan antar komponen mesin mengubah sebagian energi gerak menjadi energi panas yang terbuang sia-sia."
+            },
+            {
+                q: "Energi potensial gravitasi sebuah benda akan meningkat secara signifikan apabila...",
+                o: [
+                    "A. Kecepatan gerak benda dinaikkan.",
+                    "B. Ketinggian posisi benda dinaikkan.",
+                    "C. Massa jenis materialnya diperkecil.",
+                    "D. Volume fisik benda diperbesar.",
+                    "E. Suhu permukaan benda diturunkan."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Energi potensial gravitasi sebanding dengan massa, gravitasi, dan ketinggian objek (Ep = m * g * h)."
+            },
+            {
+                q: "Bahan bakar fosil terbentuk dari sisa-sisa organisme purba yang mengalami proses...",
+                o: [
+                    "A. Oksidasi cepat akibat pembakaran alami bumi.",
+                    "B. Dekomposisi di bawah tekanan dan suhu tinggi.",
+                    "C. Pelarutan asam tanah di dalam cekungan batuan.",
+                    "D. Karbonisasi di permukaan tanah terbuka lebar.",
+                    "E. Pembekuan ekstrem pada zaman es purbakala."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Fosil terkubur jutaan tahun tanpa oksigen di bawah tekanan bumi ekstrem untuk menjadi batu bara/minyak."
+            },
+            {
+                q: "Upaya penghematan energi listrik yang paling efektif pada sektor rumah tangga adalah...",
+                o: [
+                    "A. Menggunakan lampu pijar kuning sepanjang hari.",
+                    "B. Mengganti semua lampu pijar dengan lampu LED.",
+                    "C. Memasang saklar otomatis pada kulkas penyimpan makanan.",
+                    "D. Menghidupkan pendingin ruangan (AC) saat pintu dibuka.",
+                    "E. Mencabut kabel charger setelah daya baterai terisi penuh."
+                ],
+                a: 1, // B
+                kategori: "Energi & Perubahannya",
+                p: "Lampu LED mengonsumsi daya listrik jauh lebih kecil dibanding lampu pijar biasa untuk tingkat terang yang sama."
+            },
+
+            // --- BUMI DAN ANTARIKSA (31-40) ---
+            {
+                q: "Penyebab terjadinya pergantian musim di belahan bumi utara dan selatan adalah...",
+                o: [
+                    "A. Jarak bumi ke matahari yang berubah-ubah.",
+                    "B. Kemiringan poros bumi saat berevolusi.",
+                    "C. Kecepatan rotasi bumi yang tidak konstan.",
+                    "D. Bentuk bumi yang tidak bulat sempurna.",
+                    "E. Pengaruh gaya gravitasi bulan terhadap laut."
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Kemiringan poros bumi sebesar 23,5 derajat menyebabkan intensitas cahaya matahari berbeda sepanjang revolusi bumi."
+            },
+            {
+                q: "Lapisan atmosfer bumi yang berfungsi memantulkan gelombang radio untuk komunikasi jarak jauh adalah...",
+                o: [
+                    "A. Troposfer",
+                    "B. Stratosfer",
+                    "C. Ionosfer (Termosfer)",
+                    "D. Mesosfer",
+                    "E. Eksosfer"
+                ],
+                a: 2, // C
+                kategori: "Bumi & Antariksa",
+                p: "Ionosfer mengandung partikel bermuatan listrik (ion) yang mampu memantulkan gelombang radio kembali ke bumi."
+            },
+            {
+                q: "Teori pembentukan tata surya yang menyatakan planet terbentuk dari gumpalan kabut gas panas adalah...",
+                o: [
+                    "A. Teori Pasang Surut",
+                    "B. Teori Planetesimal",
+                    "C. Teori Nebula",
+                    "D. Teori Bintang Kembar",
+                    "E. Teori Big Bang"
+                ],
+                a: 2, // C
+                kategori: "Bumi & Antariksa",
+                p: "Teori Nebula (Kant-Laplace) menyatakan tata surya berasal dari kabut gas panas berputar yang mendingin dan memadat."
+            },
+            {
+                q: "Faktor utama yang menyebabkan wilayah Indonesia sering mengalami bencana gempa bumi tektonik adalah...",
+                o: [
+                    "A. Berada di garis ekuator khatulistiwa.",
+                    "B. Pertemuan lempeng tektonik aktif dunia.",
+                    "C. Banyaknya wilayah perairan laut dalam.",
+                    "D. Tingginya curah hujan tahunan daerah tropis.",
+                    "E. Pengikisan daratan akibat abrasi ombak pantai."
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Indonesia terletak di pertemuan Lempeng Indo-Australia, Eurasia, dan Pasifik yang aktif bergeser."
+            },
+            {
+                q: "Lapisan bumi yang berbentuk cair dan kaya akan kandungan besi serta nikel panas adalah...",
+                o: [
+                    "A. Kerak bumi",
+                    "B. Mantel bumi",
+                    "C. Inti luar",
+                    "D. Inti dalam",
+                    "E. Litosfer"
+                ],
+                a: 2, // C
+                kategori: "Bumi & Antariksa",
+                p: "Inti luar bumi berupa cairan kental yang didominasi besi cair panas, berbeda dengan inti dalam yang padat."
+            },
+            {
+                q: "Fenomena pasang surut air laut maksimum di bumi terjadi pada saat fase bulan...",
+                o: [
+                    "A. Bulan sabit awal",
+                    "B. Bulan mati (baru) dan bulan purnama",
+                    "C. Bulan setengah kuartal pertama",
+                    "D. Bulan cembung menjelang akhir",
+                    "E. Bulan meredup di akhir kuartal"
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Gaya gravitasi bulan dan matahari sejajar menarik bumi pada fase purnama dan bulan baru."
+            },
+            {
+                q: "Fungsi vital lapisan ozon (O3) di lapisan stratosfer bagi kehidupan di bumi adalah...",
+                o: [
+                    "A. Menyerap gas rumah kaca yang memicu pemanasan.",
+                    "B. Menyerap radiasi sinar ultraviolet matahari.",
+                    "C. Membakar meteoroid yang jatuh mendekati bumi.",
+                    "D. Mengatur suhu rata-rata permukaan daratan.",
+                    "E. Menyediakan cadangan oksigen untuk bernafas."
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Ozon stratosfer menyaring radiasi ultraviolet berbahaya agar tidak merusak sel makhluk hidup di daratan."
+            },
+            {
+                q: "Gas rumah kaca yang paling melimpah dan berperan besar meningkatkan suhu global akibat industri adalah...",
+                o: [
+                    "A. Oksigen (O2)",
+                    "B. Karbon dioksida (CO2)",
+                    "C. Argon (Ar)",
+                    "D. Hidrogen (H2)",
+                    "E. Nitrogen (N2)"
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Emisi pembakaran bahan bakar industri meningkatkan konsentrasi CO2 di udara, memerangkap panas matahari."
+            },
+            {
+                q: "Tindakan mitigasi bencana yang paling tepat saat terjadi gempa bumi ketika berada di lantai tiga gedung adalah...",
+                o: [
+                    "A. Berlari panik menuju lift evakuasi.",
+                    "B. Berlindung di bawah meja yang kokoh.",
+                    "C. Melompat keluar melewati jendela kaca.",
+                    "D. Berdiam diri di tengah koridor terbuka.",
+                    "E. Mengemasi barang berharga untuk dibawa."
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Tindakan utama darurat gempa adalah melindungi kepala dan organ vital di bawah perabot kokoh (drop & cover)."
+            },
+            {
+                q: "Penyebab utama dari terjadinya peristiwa gerhana matahari total di bumi adalah...",
+                o: [
+                    "A. Bumi berada di antara matahari dan bulan.",
+                    "B. Bulan berada di antara bumi dan matahari.",
+                    "C. Matahari berada di antara bumi dan bulan.",
+                    "D. Cahaya bulan dibiaskan penuh oleh atmosfer.",
+                    "E. Orbit bulan bersilangan menjauhi bumi."
+                ],
+                a: 1, // B
+                kategori: "Bumi & Antariksa",
+                p: "Bulan menutupi piringan matahari sepenuhnya sehingga bayangan umbra bulan jatuh ke bumi."
+            },
+
+            // --- KONEKTIVITAS RUANG DAN WAKTU & SOSIAL EKONOMI (41-50) ---
+            {
+                q: "Pengaruh interaksi konektivitas antarruang di bidang ekonomi pembangunan ditunjukkan oleh...",
+                o: [
+                    "A. Penjualan barang secara konvensional lokal.",
+                    "B. Pendistribusian hasil panen desa ke wilayah kota.",
+                    "C. Pembatasan jalur perdagangan antardaerah.",
+                    "D. Penurunan jumlah tenaga kerja di perkotaan.",
+                    "E. Monopoli kepemilikan modal oleh segelintir elite."
+                ],
+                a: 1, // B
+                kategori: "Konektivitas Ruang & Waktu",
+                p: "Konektivitas ruang mendorong distribusi barang kebutuhan pokok dari produsen (desa) ke konsumen (kota)."
+            },
+            {
+                q: "Lembaga sosial yang berfungsi melestarikan nilai budaya luhur antargenerasi secara informal adalah...",
+                o: [
+                    "A. Lembaga politik negara.",
+                    "B. Lembaga keluarga.",
+                    "C. Lembaga ekonomi formal.",
+                    "D. Lembaga hukum adat.",
+                    "E. Lembaga pendidikan negeri."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Keluarga merupakan media sosialisasi primer pertama anak menyerap tata nilai kebudayaan moral."
+            },
+            {
+                q: "Tujuan utama manusia melakukan aktivitas ekonomi berdasarkan prinsip ekonomi adalah...",
+                o: [
+                    "A. Memperoleh keuntungan tanpa pengorbanan apa pun.",
+                    "B. Memenuhi kebutuhan hidup dengan sumber daya terbatas.",
+                    "C. Membeli semua barang mewah yang tersedia di pasar.",
+                    "D. Menguasai seluruh faktor produksi secara monopoli.",
+                    "E. Mengurangi pengeluaran belanja negara tiap tahun."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Prinsip ekonomi memandu manusia menyeimbangkan kelangkaan sumber daya dengan kebutuhan yang tak terbatas."
+            },
+            {
+                q: "Dampak positif dari terjadinya mobilitas sosial vertikal naik bagi kehidupan individu adalah...",
+                o: [
+                    "A. Penurunan status sosial dalam masyarakat.",
+                    "B. Peningkatan kesejahteraan hidup dan prestise diri.",
+                    "C. Terjadinya konflik sosial antar kelompok masyarakat.",
+                    "D. Berkurangnya tanggung jawab sosial di lingkungan.",
+                    "E. Kehilangan hak milik tanah warisan masa lalu."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Mobilitas vertikal naik (social climbing) menaikkan status, martabat, dan taraf hidup individu."
+            },
+            {
+                q: "Faktor penentu utama penawaran suatu barang di pasar berdasarkan hukum penawaran adalah...",
+                o: [
+                    "A. Tingkat selera konsumen yang dinamis.",
+                    "B. Jumlah pendapatan riil konsumen.",
+                    "C. Harga jual barang itu sendiri.",
+                    "D. Biaya promosi iklan di media sosial.",
+                    "E. Jumlah populasi penduduk perkotaan."
+                ],
+                a: 2, // C
+                kategori: "Sosial Ekonomi",
+                p: "Hukum penawaran menyatakan jika harga barang naik, jumlah penawaran produsen akan meningkat."
+            },
+            {
+                q: "Penyebab terjadinya konflik sosial akibat perbedaan kebudayaan dalam masyarakat majemuk adalah...",
+                o: [
+                    "A. Kurangnya sosialisasi sekunder di lingkungan sekolah.",
+                    "B. Sikap etnosentrisme kelompok yang berlebihan.",
+                    "C. Pembagian kelas sosial yang tidak adil di perkantoran.",
+                    "D. Adanya asimilasi budaya yang harmonis antarsuku.",
+                    "E. Berubahnya sistem politik ketatanegaraan nasional."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Etnosentrisme menilai budaya luar memakai standar budaya sendiri secara berlebihan sehingga memicu konflik."
+            },
+            {
+                q: "Perilaku konsumen rasional dalam mengalokasikan pendapatan bulanannya ditunjukkan dengan...",
+                o: [
+                    "A. Membeli barang berdasarkan gengsi sosial kelompok.",
+                    "B. Memprioritaskan pemenuhan kebutuhan pokok dahulu.",
+                    "C. Menghabiskan tabungan untuk membeli barang promo.",
+                    "D. Menghindari kegiatan investasi jangka panjang.",
+                    "E. Meminjam uang untuk memenuhi gaya hidup mewah."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Konsumen rasional mementingkan aspek kegunaan riil dan menyusun skala prioritas kebutuhan pokok terlebih dahulu."
+            },
+            {
+                q: "Asosiasi perdagangan bebas kawasan Asia Tenggara (AFTA) dibentuk untuk...",
+                o: [
+                    "A. Melarang ekspor bahan tambang mentah ke luar kawasan.",
+                    "B. Menghapus tarif perdagangan guna meningkatkan daya saing.",
+                    "C. Membatasi pergerakan tenaga kerja antarnegara anggota.",
+                    "D. Menyatukan mata uang seluruh negara Asia Tenggara.",
+                    "E. Mengambil alih kepemilikan pelabuhan logistik asing."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "AFTA menghilangkan hambatan tarif bea masuk antaranggota untuk menciptakan pasar tunggal."
+            },
+            {
+                q: "Fungsi dari pasar modal dalam sistem perekonomian nasional adalah...",
+                o: [
+                    "A. Tempat mencetak uang kartal untuk diedarkan pemerintah.",
+                    "B. Sarana pendanaan bagi perusahaan dan alternatif investasi.",
+                    "C. Menetapkan regulasi tarif suku bunga bank komersial.",
+                    "D. Melayani pinjaman modal usaha ultra mikro tanpa jaminan.",
+                    "E. Mengatur laju ekspor impor komoditas pangan pokok."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Pasar modal mempertemukan emiten yang butuh dana modal jangka panjang dengan investor."
+            },
+            {
+                q: "Pemberian bantuan subsidi bersasaran langsung oleh pemerintah ditujukan untuk...",
+                o: [
+                    "A. Meningkatkan pendapatan para produsen barang mewah.",
+                    "B. Menjaga daya beli masyarakat kurang mampu.",
+                    "C. Menurunkan nilai tarif pajak ekspor impor barang.",
+                    "D. Membatasi persaingan usaha antara BUMN dan swasta.",
+                    "E. Membiayai pembangunan infrastruktur megah di kota."
+                ],
+                a: 1, // B
+                kategori: "Sosial Ekonomi",
+                p: "Subsidi langsung berfungsi meredam laju pengeluaran konsumsi harian kelompok masyarakat rentan ekonomi."
+            }
+        ];
+
+        // Status State Kuis
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let answersState = []; // Menyimpan indeks jawaban yang telah DIKONFIRMASI (checked)
+        let tempSelectedIdx = null; // Menyimpan indeks pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+
+        // === INTEGRASI MODE TEMA ===
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
+        const themeToggleText = document.getElementById('themeToggleText');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Mode Siang';
+            } else {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Mode Malam';
+            }
+        }
+
+        // === ENGINE KUIS ===
+        function shuffleQuestions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initiateQuiz() {
+            const countInput = document.getElementById('questionCountInput');
+            let maxCount = parseInt(countInput.value);
+
+            if(isNaN(maxCount) || maxCount < 1) maxCount = 10;
+            if(maxCount > bankSoal.length) maxCount = bankSoal.length;
+
+            const shuffled = shuffleQuestions([...bankSoal]);
+            quizQuestions = shuffled.slice(0, maxCount);
+            
+            currentIdx = 0;
+            answersState = new Array(maxCount).fill(null);
+            tempSelectedIdx = null;
+
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const activeQuestion = quizQuestions[currentIdx];
+            const totalQuestions = quizQuestions.length;
+
+            // Bar Progress
+            document.getElementById('progressText').textContent = `Soal ${currentIdx + 1} dari ${totalQuestions}`;
+            const percent = ((currentIdx + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Data Pertanyaan
+            document.getElementById('questionMeta').textContent = activeQuestion.kategori || "Pilihan Ganda";
+            document.getElementById('questionText').textContent = activeQuestion.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            // Cek apakah soal aktif saat ini SUDAH DIKONFIRMASI jawabannya
+            const confirmedAnswer = answersState[currentIdx];
+
+            activeQuestion.o.forEach((optStr, optIdx) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                
+                if (confirmedAnswer !== null) {
+                    // JIKA SUDAH DIKONFIRMASI
+                    btn.disabled = true; // Kunci opsi agar tidak bisa diklik lagi
+                    
+                    if (optIdx === activeQuestion.a) {
+                        // Kunci jawaban asli yang benar (hijau)
+                        btn.style.borderColor = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-bg)';
+                        btn.style.color = 'var(--success-color)';
+                    } else if (optIdx === confirmedAnswer) {
+                        // Jawaban salah pilihan user (merah)
+                        btn.style.borderColor = 'var(--danger-color)';
+                        btn.style.backgroundColor = 'var(--danger-bg)';
+                        btn.style.color = 'var(--danger-color)';
+                    } else {
+                        // Opsi salah lainnya (diredupkan)
+                        btn.style.opacity = '0.5';
+                    }
+                } else {
+                    // JIKA BELUM DIKONFIRMASI
+                    if (tempSelectedIdx === optIdx) {
+                        btn.classList.add('selected'); // Sorot biru pilihan sementara
+                    }
+                    btn.onclick = () => handleTempSelection(optIdx);
+                }
+
+                const badge = document.createElement('span');
+                badge.className = 'option-badge';
+                badge.textContent = String.fromCharCode(65 + optIdx); // A, B, C, D, E
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = optStr.substring(3); // Potong string "A. "
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+                li.appendChild(btn);
+                container.appendChild(li);
+            });
+
+            // Kelola Box Feedback Pembahasan
+            const feedbackBox = document.getElementById('feedbackBox');
+            const actionBtn = document.getElementById('actionBtn');
+
+            if (confirmedAnswer !== null) {
+                // Tampilkan pembahasan instan jika jawaban telah dikunci
+                feedbackBox.style.display = 'block';
+                if (confirmedAnswer === activeQuestion.a) {
+                    feedbackBox.className = 'explanation-box correct';
+                    feedbackBox.innerHTML = `<strong>✔ JAWABAN BENAR!</strong><br>${activeQuestion.p}`;
+                } else {
+                    feedbackBox.className = 'explanation-box wrong';
+                    feedbackBox.innerHTML = `<strong>❌ JAWABAN SALAH!</strong><br>Jawaban benar adalah: <strong>${activeQuestion.o[activeQuestion.a]}</strong><br>${activeQuestion.p}`;
+                }
+                
+                // Ubah fungsionalitas Tombol Utama menjadi "Lanjut"
+                actionBtn.disabled = false;
+                if (currentIdx === totalQuestions - 1) {
+                    actionBtn.textContent = 'Selesai & Lihat Skor';
+                } else {
+                    actionBtn.textContent = 'Lanjut';
+                }
+            } else {
+                // Sembunyikan pembahasan jika belum dikonfirmasi
+                feedbackBox.style.display = 'none';
+                
+                // Set tombol utama menjadi "Cek Jawaban"
+                actionBtn.textContent = 'Cek Jawaban';
+                actionBtn.disabled = (tempSelectedIdx === null); // Aktif hanya jika user telah memilih opsi sementara
+            }
+
+            // Tombol Kembali
+            document.getElementById('backBtn').disabled = (currentIdx === 0);
+        }
+
+        // Menyimpan pilihan jawaban sementara (sebelum diklik Cek Jawaban)
+        function handleTempSelection(optIdx) {
+            tempSelectedIdx = optIdx;
+            renderQuestion(); // Re-render untuk menyorot pilihan
+        }
+
+        // Mengatur eksekusi tombol aksi utama (Cek Jawaban atau Lanjut)
+        function handlePrimaryAction() {
+            const confirmedAnswer = answersState[currentIdx];
+
+            if (confirmedAnswer === null) {
+                // AKSI 1: Melakukan Konfirmasi Jawaban (Cek Jawaban)
+                if (tempSelectedIdx !== null) {
+                    answersState[currentIdx] = tempSelectedIdx;
+                    renderQuestion(); // Re-render untuk menampilkan hasil penilaian
+                }
+            } else {
+                // AKSI 2: Berpindah ke Soal Selanjutnya (Lanjut)
+                if (currentIdx < quizQuestions.length - 1) {
+                    currentIdx++;
+                    // Kembalikan status pilihan sementara ke null untuk soal berikutnya
+                    tempSelectedIdx = (answersState[currentIdx] !== null) ? answersState[currentIdx] : null;
+                    renderQuestion();
+                } else {
+                    showQuizResult();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                // Ambil jawaban yang pernah dikonfirmasi sebelumnya jika ada
+                tempSelectedIdx = answersState[currentIdx];
+                renderQuestion();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (answersState[idx] === q.a) correctCount++;
+            });
+
+            const total = quizQuestions.length;
+            const finalScore = Math.round((correctCount / total) * 100);
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('statScore').textContent = `${finalScore}/100`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = total - correctCount;
+        }
+
+        // --- ENGINE SCROLL REVEAL (UNTUK HAL KUIS) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(el => el.classList.add('reveal-active'));
+        });
+    </script>
+</body>
+</html>
