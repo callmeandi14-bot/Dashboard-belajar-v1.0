@@ -53,7 +53,7 @@
                 </div>
             </a>
 
-            <!-- Card 2: DDPLG -->
+            <!-- Card 2: Dasar-Dasar RPL (DDPLG) -->
             <a href="ddplg.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">💻</div>
@@ -105,7 +105,7 @@
                 </div>
             </a>
 
-            <!-- Card 6: Seni Rupa (BARU!) -->
+            <!-- Card 6: Seni Rupa -->
             <a href="senirupa.html" class="card-subject scroll-reveal">
                 <div>
                     <div class="subject-icon">🎨</div>
@@ -117,12 +117,13 @@
                     <span class="mulai-btn-text">Mulai Tes →</span>
                 </div>
             </a>
-            
-                        <a href="dwb.html" class="card-subject scroll-reveal">
+
+            <!-- Card 7: Proyek IPAS (BARU!) -->
+            <a href="ipas.html" class="card-subject scroll-reveal">
                 <div>
-                    <div class="subject-icon">💻</div>
-                    <h3 class="subject-title">DwB-Desain Web</h3>
-                    <p class="subject-description">sebuah kode elemen html dan css dan pengertiannya.</p>
+                    <div class="subject-icon">🔬</div>
+                    <h3 class="subject-title">Proyek IPAS</h3>
+                    <p class="subject-description">Soal HOTS Makhluk Hidup & Lingkungan, Zat & Perubahannya, Energi, Bumi & Antariksa, serta Interaksi Sosial Ekonomi Kelas X SMK.</p>
                 </div>
                 <div class="subject-meta">
                     <span class="soal-count">50 Soal Pilihan E</span>
@@ -173,21 +174,18 @@
             const revealCallback = (entries, observer) => {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
-                        // Tambahkan delay kecil bertahap (stagger) khusus pada load bersamaan
                         setTimeout(() => {
                             entry.target.classList.add('reveal-active');
-                        }, index * 100);
-                        
-                        // Hentikan pemantauan elemen yang sudah muncul agar performa lancar
+                        }, index * 80);
                         observer.unobserve(entry.target);
                     }
                 });
             };
 
             const revealObserver = new IntersectionObserver(revealCallback, {
-                root: null, // Menggunakan viewport browser
-                threshold: 0.12, // Elemen muncul setelah 12% masuk layar
-                rootMargin: "0px 0px -40px 0px" // Trigger sedikit sebelum elemen menyentuh batas bawah
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px 0px -20px 0px"
             });
 
             reveals.forEach(el => revealObserver.observe(el));
@@ -195,4 +193,3 @@
     </script>
 </body>
 </html>
-
